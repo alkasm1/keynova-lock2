@@ -4,19 +4,16 @@
   <meta charset="UTF-8" />
   <title>Keynova Lock</title>
 
-  <!-- روابط PWA والأيقونة -->
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="icon.png" type="image/png" />
   <meta name="theme-color" content="#ff8800" />
 
-  <!-- تسجيل Service Worker -->
   <script>
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("sw.js");
     }
   </script>
 
-  <!-- تنسيقات داخلية بخلفية سوداء -->
   <style>
     body {
       font-family: 'Tajawal', Arial, sans-serif;
@@ -25,38 +22,38 @@
       padding: 20px;
       text-align: center;
     }
-
     input[type="file"], button, select {
       margin-top: 10px;
       padding: 10px;
       font-size: 1em;
       border-radius: 6px;
     }
-
     button {
       background: #ff8800;
       color: #fff;
       border: none;
       cursor: pointer;
     }
-
     button:hover {
       background: #e67600;
     }
-
     select {
       background: #2c2c2c;
       color: #fff;
       border: 1px solid #666;
     }
-
     .result {
-      margin-top: 30px;
+      margin-top: 20px;
       font-size: 1.2em;
     }
-
     .success { color: #00ff99; }
+    .warning { color: #ffaa00; }
     .fail { color: #ff4444; }
+    #matchBar {
+      margin-top: 10px;
+      width: 80%;
+      height: 16px;
+    }
     h1 { color: #ff8800; }
   </style>
 </head>
@@ -64,13 +61,12 @@
 
   <h1>🔐 Keynova Lock</h1>
 
-  <!-- واجهة التحقق -->
   <h3>🔓 محاولة الفتح</h3>
   <input type="file" id="verifyInput" accept="image/*" />
   <button onclick="verifyKey()">تحقق من الصورة</button>
   <div class="result" id="result"></div>
+  <progress id="matchBar" value="0" max="100" style="display:none;"></progress>
 
-  <!-- إعدادات بعد التحقق -->
   <div id="securedActions" style="display:none;">
     <h3>🔧 إعدادات Keynova</h3>
     <button onclick="goToKeyChange()">🛠️ تغيير المفتاح</button>
@@ -78,14 +74,12 @@
     <button onclick="removeKey()">🗑️ إزالة المفتاح</button>
   </div>
 
-  <!-- تغيير المفتاح -->
   <div id="keySection" style="display:none;">
     <h3>🖼️ تعيين صورة كمفتاح جديد</h3>
     <input type="file" id="setKeyInput" accept="image/*" />
     <button onclick="setKey()">حفظ المفتاح</button>
   </div>
 
-  <!-- واجهة الحماية -->
   <div id="protectionSection" style="display:none;">
     <h3>🛡️ الحماية البصرية</h3>
     <select id="protectedTarget">
@@ -98,11 +92,9 @@
     <br />
     <button onclick="protectSelected()">🔒 تطبيق الحماية</button>
     <button onclick="clearProtection()">🧹 إلغاء الحماية</button>
-
     <div class="result" id="protectionStatus"></div>
   </div>
 
-  <!-- الأكواد التنفيذية -->
   <script>
     async function calculateHash(file) {
       const buffer = await file.arrayBuffer();
@@ -123,23 +115,36 @@
       }
 
       const currentHash = await calculateHash(file);
-      const resultDiv = document.getElementById("result");
+      const minLength = Math.min(currentHash.length, storedHash.length);
+      let differences = 0;
+      for (let i = 0; i < minLength; i++) {
+        if (currentHash[i] !== storedHash[i]) differences++;
+      }
+      const matchPercent = Math.round(((minLength - differences) / minLength) * 100);
 
-      if (currentHash === storedHash) {
-        resultDiv.innerHTML = "✅ تم التحقق بنجاح!";
+      const resultDiv = document.getElementById("result");
+      const bar = document.getElementById("matchBar");
+      bar.value = matchPercent;
+      bar.style.display = "block";
+
+      if (matchPercent >= 90) {
+        resultDiv.innerHTML = `✅ تم التحقق بنجاح بنسبة تطابق ${matchPercent}%`;
         resultDiv.className = "result success";
         document.getElementById("securedActions").style.display = "block";
-
-        setTimeout(() => {
-          alert("⏳ انتهت صلاحية الجلسة، يرجى إعادة التحقق");
-          document.getElementById("securedActions").style.display = "none";
-          document.getElementById("keySection").style.display = "none";
-          document.getElementById("protectionSection").style.display = "none";
-        }, 600000);
+      } else if (matchPercent >= 70) {
+        resultDiv.innerHTML = `⚠️ نسبة التطابق ${matchPercent}%. قد تكون الصورة غير دقيقة.`;
+        resultDiv.className = "result warning";
       } else {
-        resultDiv.innerHTML = "❌ الصورة لا تطابق المفتاح.";
+        resultDiv.innerHTML = `❌ نسبة التطابق ${matchPercent}%. محتمل أن تكون مزيفة.`;
         resultDiv.className = "result fail";
       }
+
+      setTimeout(() => {
+        document.getElementById("securedActions").style.display = "none";
+        document.getElementById("keySection").style.display = "none";
+        document.getElementById("protectionSection").style.display = "none";
+        bar.style.display = "none";
+      }, 600000);
     }
 
     async function setKey() {
