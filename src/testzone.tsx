@@ -1,48 +1,67 @@
-import { useState } from "react";
-import { getImageHash } from "./utils/hash";
-import { saveHashLocally, verifyHash } from "./utils/storage";
-import { lockItem, isItemUnlocked } from "./lock/lockManager";
+import React, { useState } from "react";
+import { getImageHash } from "../utils/hash"; // تأكد من المسار الصحيح
 
-export default function TestZone() {
-  const [hash, setHash] = useState("");
-    const [message, setMessage] = useState("");
+const TestZone: React.FC = () => {
+  const [matchPercent, setMatchPercent] = useState<number | null>(null);
+  const [feedbackColor, setFeedbackColor] = useState<string>("gray");
+  const [message, setMessage] = useState<string>("");
 
-      const handleSave = async (e: React.ChangeEvent<HTMLInputElement>) => {
-          const file = e.target.files?.[0];
-              if (file) {
-                    const imgHash = await getImageHash(file);
-                          saveHashLocally(imgHash);
-                                lockItem("test_panel", imgHash);
-                                      setHash(imgHash);
-                                            setMessage("✅ المفتاح محفوظ وتم قفل العنصر!");
-                                                  console.log("Saved Hash:", imgHash);
-                                                      }
-                                                        };
+  const calculateSimilarity = (hash1: string, hash2: string): number => {
+    let differences = 0;
+    for (let i = 0; i < hash1.length; i++) {
+      if (hash1[i] !== hash2[i]) differences++;
+    }
+    const percent = ((hash1.length - differences) / hash1.length) * 100;
+    return Math.round(percent);
+  };
 
-                                                          const handleVerify = async (e: React.ChangeEvent<HTMLInputElement>) => {
-                                                              const file = e.target.files?.[0];
-                                                                  if (file) {
-                                                                        const imgHash = await getImageHash(file);
-                                                                              const match = verifyHash(imgHash);
-                                                                                    const unlock = isItemUnlocked("test_panel", imgHash);
-                                                                                          setMessage(match && unlock ? "✅ تحقق ناجح وفُك القفل!" : "❌ فشل التحقق!");
-                                                                                                console.log("Input Hash:", imgHash);
-                                                                                                      console.log("Stored:", localStorage.getItem("keynova_hash"));
-                                                                                                          }
-                                                                                                            };
+  const handleVerify = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
 
-                                                                                                              return (
-                                                                                                                  <div style={{ padding: "2rem" }}>
-                                                                                                                        <h2>🔬 صفحة اختبار Keynova Lock</h2>
+    const inputHash = await getImageHash(file);
+    const storedHash = localStorage.getItem("keynova_hash");
 
-                                                                                                                              <label>⬆️ اختر صورة لحفظ المفتاح</label>
-                                                                                                                                    <input type="file" accept="image/*" onChange={handleSave} />
+    if (!storedHash) {
+      setMessage("⚠️ لا يوجد مفتاح مخزن. الرجاء حفظ مفتاح أولًا.");
+      setFeedbackColor("gray");
+      setMatchPercent(null);
+      return;
+    }
 
-                                                                                                                                          <label style={{ marginTop: "1rem" }}>⬆️ اختر صورة للتحقق</label>
-                                                                                                                                                <input type="file" accept="image/*" onChange={handleVerify} />
+    const percent = calculateSimilarity(storedHash, inputHash);
+    setMatchPercent(percent);
 
-                                                                                                                                                      <p><strong>Hash الحالي:</strong> {hash}</p>
-                                                                                                                                                            <p><strong>النتيجة:</strong> {message}</p>
-                                                                                                                                                                </div>
-                                                                                                                                                                  );
-                                                                                                                                                                  }
+    if (percent >= 90) {
+      setMessage(`✅ تم التحقق بنجاح بنسبة تطابق ${percent}%`);
+      setFeedbackColor("green");
+    } else if (percent >= 70) {
+      setMessage(`⚠️ نسبة التطابق ${percent}%. قد تكون الصورة غير دقيقة.`);
+      setFeedbackColor("orange");
+    } else {
+      setMessage(`❌ نسبة التطابق ${percent}%. محتمل أن تكون مزيفة.`);
+      setFeedbackColor("red");
+    }
+  };
+
+  return (
+    <div style={{ padding: "1rem", textAlign: "center" }}>
+      <h2>منطقة اختبار الصورة</h2>
+      <input type="file" accept="image/*" onChange={handleVerify} />
+      {matchPercent !== null && (
+        <div style={{ marginTop: "1rem" }}>
+          <p style={{ color: feedbackColor, fontWeight: "bold", fontSize: "1.2rem" }}>
+            {message}
+          </p>
+          <progress
+            value={matchPercent}
+            max={100}
+            style={{ width: "80%", height: "16px" }}
+          />
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default TestZone;
