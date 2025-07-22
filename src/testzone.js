@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { getImageHash } from "../utils/hash"; // تأكد من المسار الصحيح
+import { getImageHash } from "../utils/hash"; // تأكد من أن هذا الملف يُصدّر الدالة بنجاح
 
-const TestZone: React.FC = () => {
-  const [matchPercent, setMatchPercent] = useState<number | null>(null);
-  const [feedbackColor, setFeedbackColor] = useState<string>("gray");
-  const [message, setMessage] = useState<string>("");
+const TestZone = () => {
+  const [matchPercent, setMatchPercent] = useState(null);
+  const [feedbackColor, setFeedbackColor] = useState("gray");
+  const [message, setMessage] = useState("");
 
-  const calculateSimilarity = (hash1: string, hash2: string): number => {
+  const calculateSimilarity = (hash1, hash2) => {
     let differences = 0;
     for (let i = 0; i < hash1.length; i++) {
       if (hash1[i] !== hash2[i]) differences++;
@@ -15,7 +15,7 @@ const TestZone: React.FC = () => {
     return Math.round(percent);
   };
 
-  const handleVerify = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleVerify = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -53,11 +53,7 @@ const TestZone: React.FC = () => {
           <p style={{ color: feedbackColor, fontWeight: "bold", fontSize: "1.2rem" }}>
             {message}
           </p>
-          <progress
-            value={matchPercent}
-            max={100}
-            style={{ width: "80%", height: "16px" }}
-          />
+          <progress value={matchPercent} max={100} style={{ width: "80%", height: "16px" }} />
         </div>
       )}
     </div>
