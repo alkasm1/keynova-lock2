@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { getImageHash } from "../utils/hash"; // تأكد من أن هذا الملف يُصدّر الدالة بنجاح
+import { getImageHash } from "../utils/hash"; // تأكد من مسار الاستيراد حسب مجلدك
 
 const TestZone = () => {
   const [matchPercent, setMatchPercent] = useState(null);
@@ -7,11 +7,14 @@ const TestZone = () => {
   const [message, setMessage] = useState("");
 
   const calculateSimilarity = (hash1, hash2) => {
+    const minLength = Math.min(hash1.length, hash2.length);
     let differences = 0;
-    for (let i = 0; i < hash1.length; i++) {
+
+    for (let i = 0; i < minLength; i++) {
       if (hash1[i] !== hash2[i]) differences++;
     }
-    const percent = ((hash1.length - differences) / hash1.length) * 100;
+
+    const percent = ((minLength - differences) / minLength) * 100;
     return Math.round(percent);
   };
 
@@ -31,6 +34,7 @@ const TestZone = () => {
 
     const percent = calculateSimilarity(storedHash, inputHash);
     setMatchPercent(percent);
+    console.log("نسبة التطابق:", percent); // للاختبار في Console
 
     if (percent >= 90) {
       setMessage(`✅ تم التحقق بنجاح بنسبة تطابق ${percent}%`);
@@ -50,10 +54,24 @@ const TestZone = () => {
       <input type="file" accept="image/*" onChange={handleVerify} />
       {matchPercent !== null && (
         <div style={{ marginTop: "1rem" }}>
-          <p style={{ color: feedbackColor, fontWeight: "bold", fontSize: "1.2rem" }}>
+          <p
+            style={{
+              color: feedbackColor,
+              fontWeight: "bold",
+              fontSize: "1.2rem",
+              marginBottom: "0.5rem",
+            }}
+          >
             {message}
           </p>
-          <progress value={matchPercent} max={100} style={{ width: "80%", height: "16px" }} />
+          <p style={{ fontSize: "1rem", color: feedbackColor }}>
+            نسبة التطابق: {matchPercent}%
+          </p>
+          <progress
+            value={matchPercent}
+            max={100}
+            style={{ width: "80%", height: "16px" }}
+          />
         </div>
       )}
     </div>
