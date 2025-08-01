@@ -403,6 +403,31 @@
       font-weight: 600;
     }
     
+    .troubleshoot-section {
+      margin-top: 30px;
+      padding: 20px;
+      background: rgba(243, 156, 18, 0.1);
+      border-radius: var(--border-radius);
+      border: 1px solid rgba(243, 156, 18, 0.3);
+    }
+    
+    .troubleshoot-section h3 {
+      color: var(--warning);
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .troubleshoot-steps {
+      padding-right: 20px;
+    }
+    
+    .troubleshoot-steps li {
+      margin-bottom: 10px;
+      line-height: 1.6;
+    }
+    
     footer {
       text-align: center;
       margin-top: 50px;
@@ -514,6 +539,16 @@
         <progress id="matchBar" value="0" max="100"></progress>
         
         <div class="result" id="result"></div>
+        
+        <div class="troubleshoot-section">
+          <h3><i class="fas fa-exclamation-triangle"></i> استكشاف الأخطاء وإصلاحها</h3>
+          <ul class="troubleshoot-steps">
+            <li>تأكد من استخدام نفس الصورة الأصلية المستخدمة في تعيين المفتاح</li>
+            <li>تجنب تحرير الصورة أو تغيير تنسيقها</li>
+            <li>اختبر الصورة على جهاز آخر للتأكد من عدم وجود مشاكل في الجهاز</li>
+            <li>إذا استمرت المشكلة، أعد تعيين المفتاح من قسم الإعدادات</li>
+          </ul>
+        </div>
       </div>
     </div>
     
@@ -572,7 +607,7 @@
           <div class="info-item">
             <i class="fas fa-lock"></i>
             <div class="info-title">مستوى الأمان</div>
-            <div class="info-value">SHA-512</div>
+            <div class="info-value">SHA-256</div>
           </div>
         </div>
       </div>
@@ -628,9 +663,9 @@
     
     <footer>
       <p>Keynova Lock v2.5 | نظام حماية متطور باستخدام الصور كمفاتيح</p>
-      <p>جميع الحقوق محفوظة © م: رأفت عمر 2025</p>
+      <p>جميع الحقوق محفوظة ©  2025</p>
       <p class="developer">
-        <i class="fas fa-code"></i> تم التطوير بواسطة: Alkasm
+        <i class="fas fa-code"></i> تم التطوير بواسطة:م: رأفت عمر 
       </p>
     </footer>
   </div>
@@ -769,12 +804,18 @@
       });
     }
     
-    // حساب بصمة الصورة
+    // حساب بصمة الصورة - باستخدام SHA-256
     async function calculateHash(file) {
-      const buffer = await file.arrayBuffer();
-      const hashBuffer = await crypto.subtle.digest("SHA-512", buffer);
-      const hashArray = Array.from(new Uint8Array(hashBuffer));
-      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+      try {
+        const buffer = await file.arrayBuffer();
+        const hashBuffer = await crypto.subtle.digest("SHA-256", buffer);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+      } catch (error) {
+        console.error('حدث خطأ في حساب البصمة:', error);
+        showResult('❌ حدث خطأ أثناء معالجة الصورة', 'fail');
+        throw error;
+      }
     }
     
     // التحقق من صحة الصورة
