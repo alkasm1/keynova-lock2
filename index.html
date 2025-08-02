@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Keynova Lock - نظام القفل البصري المتطور</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -428,6 +426,20 @@
       line-height: 1.6;
     }
     
+    .preview-container {
+      margin-top: 20px;
+      text-align: center;
+    }
+    
+    .preview-image {
+      max-width: 200px;
+      max-height: 200px;
+      border-radius: 8px;
+      border: 2px solid var(--highlight);
+      display: none;
+      margin: 0 auto;
+    }
+    
     footer {
       text-align: center;
       margin-top: 50px;
@@ -525,6 +537,10 @@
           <div class="file-name" id="fileName">لم يتم اختيار أي ملف</div>
         </div>
         
+        <div class="preview-container">
+          <img id="imagePreview" class="preview-image" alt="معاينة الصورة">
+        </div>
+        
         <div class="btn-group">
           <button class="btn btn-primary" onclick="verifyKey()">
             <i class="fas fa-check-circle"></i> تحقق من الصورة
@@ -571,6 +587,10 @@
             <input type="file" id="setKeyInput" accept="image/*">
           </div>
           <div class="file-name" id="newKeyName">لم يتم اختيار أي ملف</div>
+        </div>
+        
+        <div class="preview-container">
+          <img id="keyPreview" class="preview-image" alt="معاينة الصورة">
         </div>
         
         <div class="btn-group">
@@ -662,10 +682,10 @@
     </div>
     
     <footer>
-      <p>Keynova Lock v2.5 | نظام حماية متطور باستخدام الصور كمفاتيح</p>
-      <p>جميع الحقوق محفوظة ©  2025</p>
+      <p>Keynova Lock v3.0 | نظام حماية متطور باستخدام الصور كمفاتيح</p>
+      <p>جميع الحقوق محفوظة © رأفت عمر 2025</p>
       <p class="developer">
-        <i class="fas fa-code"></i> تم التطوير بواسطة:م: رأفت عمر 
+        <i class="fas fa-code"></i> تم التطوير بواسطة: Alkasm
       </p>
     </footer>
   </div>
@@ -675,6 +695,8 @@
     const keyStatusElement = document.getElementById('keyStatus');
     const keyDateElement = document.getElementById('keyDate');
     const protectedItemsList = document.getElementById('protectedItemsList');
+    const imagePreview = document.getElementById('imagePreview');
+    const keyPreview = document.getElementById('keyPreview');
     
     // تحديث واجهة المستخدم عند التحميل
     document.addEventListener('DOMContentLoaded', () => {
@@ -682,14 +704,31 @@
       updateProtectedItems();
       
       // إدارة عرض أسماء الملفات
-      document.getElementById('verifyInput').addEventListener('change', function() {
+      document.getElementById('verifyInput').addEventListener('change', function(e) {
         document.getElementById('fileName').textContent = this.files[0] ? this.files[0].name : 'لم يتم اختيار أي ملف';
+        previewImage(e, imagePreview);
       });
       
-      document.getElementById('setKeyInput').addEventListener('change', function() {
+      document.getElementById('setKeyInput').addEventListener('change', function(e) {
         document.getElementById('newKeyName').textContent = this.files[0] ? this.files[0].name : 'لم يتم اختيار أي ملف';
+        previewImage(e, keyPreview);
       });
     });
+    
+    // معاينة الصورة
+    function previewImage(event, previewElement) {
+      const file = event.target.files[0];
+      if (!file) return;
+      
+      const reader = new FileReader();
+      
+      reader.onload = function(e) {
+        previewElement.src = e.target.result;
+        previewElement.style.display = 'block';
+      }
+      
+      reader.readAsDataURL(file);
+    }
     
     // تبديل الألسنة
     function switchTab(tabName) {
@@ -804,17 +843,17 @@
       });
     }
     
-    // حساب بصمة الصورة - باستخدام SHA-256
+    // حساب بصمة الصورة - الطريقة الأصلية التي كانت تعمل
     async function calculateHash(file) {
       try {
+        // الطريقة الأصلية التي كانت تعمل في الكود الأساسي
         const buffer = await file.arrayBuffer();
         const hashBuffer = await crypto.subtle.digest("SHA-256", buffer);
         const hashArray = Array.from(new Uint8Array(hashBuffer));
         return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
       } catch (error) {
         console.error('حدث خطأ في حساب البصمة:', error);
-        showResult('❌ حدث خطأ أثناء معالجة الصورة', 'fail');
-        throw error;
+        throw new Error('حدث خطأ أثناء معالجة الصورة. يرجى المحاولة مرة أخرى أو استخدام صورة أخرى.');
       }
     }
     
@@ -837,10 +876,10 @@
       }
       
       try {
-        // محاكاة وقت المعالجة
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        
+        // حساب البصمة باستخدام الطريقة الأصلية
         const currentHash = await calculateHash(file);
+        
+        // حساب نسبة التطابق
         const minLength = Math.min(currentHash.length, storedHash.length);
         let differences = 0;
         
@@ -856,6 +895,7 @@
         // إخفاء مؤشر التحميل
         document.getElementById("loader").style.display = "none";
         
+        // عرض النتيجة
         if (matchPercent >= 90) {
           showResult(`✅ تم فتح القفل بنجاح! نسبة التطابق: ${matchPercent}%`, "success");
           document.getElementById("securedActions").style.display = "block";
@@ -865,6 +905,7 @@
           showResult(`❌ فشل فتح القفل! نسبة التطابق ${matchPercent}%. الصورة غير مطابقة للمفتاح`, "fail");
         }
         
+        // إخفاء القفل بعد 10 دقائق
         setTimeout(() => {
           document.getElementById("securedActions").style.display = "none";
           bar.style.display = "none";
@@ -872,7 +913,7 @@
         
       } catch (error) {
         document.getElementById("loader").style.display = "none";
-        showResult("❌ حدث خطأ أثناء معالجة الصورة", "fail");
+        showResult("❌ " + error.message, "fail");
         console.error(error);
       }
     }
@@ -890,9 +931,7 @@
         document.getElementById("keyResult").className = "result";
         document.getElementById("loader").style.display = "block";
         
-        // محاكاة وقت المعالجة
-        await new Promise(resolve => setTimeout(resolve, 1800));
-        
+        // حساب البصمة باستخدام الطريقة الأصلية
         const hash = await calculateHash(file);
         localStorage.setItem("keynova_hash", hash);
         localStorage.setItem("key_date", new Date().toLocaleDateString('ar-EG'));
@@ -903,7 +942,7 @@
         document.getElementById("loader").style.display = "none";
       } catch (error) {
         document.getElementById("loader").style.display = "none";
-        showKeyResult("❌ حدث خطأ أثناء حفظ المفتاح", "fail");
+        showKeyResult("❌ " + error.message, "fail");
         console.error(error);
       }
     }
