@@ -682,7 +682,7 @@
     </div>
     
     <footer>
-      <p>Keynova Lock v3.0 | نظام حماية متطور باستخدام الصور كمفاتيح</p>
+      <p>Keynova Lock v4.0 | نظام حماية متطور باستخدام الصور كمفاتيح</p>
       <p>جميع الحقوق محفوظة © رأفت عمر 2025</p>
       <p class="developer">
         <i class="fas fa-code"></i> تم التطوير بواسطة: Alkasm
@@ -843,10 +843,10 @@
       });
     }
     
-    // حساب بصمة الصورة - الطريقة الأصلية التي كانت تعمل
+    // حساب بصمة الصورة - الطريقة الصحيحة
     async function calculateHash(file) {
       try {
-        // الطريقة الأصلية التي كانت تعمل في الكود الأساسي
+        // استخدام الطريقة الأصلية التي أثبتت فعاليتها
         const buffer = await file.arrayBuffer();
         const hashBuffer = await crypto.subtle.digest("SHA-256", buffer);
         const hashArray = Array.from(new Uint8Array(hashBuffer));
@@ -876,7 +876,7 @@
       }
       
       try {
-        // حساب البصمة باستخدام الطريقة الأصلية
+        // حساب البصمة باستخدام الطريقة الموثوقة
         const currentHash = await calculateHash(file);
         
         // حساب نسبة التطابق
@@ -931,7 +931,7 @@
         document.getElementById("keyResult").className = "result";
         document.getElementById("loader").style.display = "block";
         
-        // حساب البصمة باستخدام الطريقة الأصلية
+        // حساب البصمة باستخدام الطريقة الموثوقة
         const hash = await calculateHash(file);
         localStorage.setItem("keynova_hash", hash);
         localStorage.setItem("key_date", new Date().toLocaleDateString('ar-EG'));
