@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Keynova Lock - قفل بصري</title>
+  <title>Keynova Lock - قفل بصري آمن</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
   <style>
@@ -315,6 +315,25 @@
       margin-left: 10px;
     }
     
+    .no-key-message {
+      text-align: center;
+      padding: 30px;
+      color: var(--warning);
+    }
+    
+    .access-denied {
+      text-align: center;
+      padding: 30px;
+      color: var(--danger);
+      font-size: 18px;
+    }
+    
+    .access-denied i {
+      font-size: 48px;
+      margin-bottom: 15px;
+      display: block;
+    }
+    
     @media (max-width: 480px) {
       .container {
         padding: 10px;
@@ -349,8 +368,8 @@
     </header>
     
     <div class="tabs">
-      <button class="tab-btn active" onclick="openTab('verify')">فتح القفل</button>
-      <button class="tab-btn" onclick="openTab('settings')">الإعدادات</button>
+      <button id="verify-tab" class="tab-btn active" onclick="openTab('verify')">فتح القفل</button>
+      <button id="settings-tab" class="tab-btn" onclick="openTab('settings')">الإعدادات</button>
     </div>
     
     <!-- واجهة التحقق -->
@@ -385,51 +404,61 @@
     
     <!-- واجهة الإعدادات -->
     <div id="settings" class="tab-content">
-      <div class="card">
-        <div class="card-header">
-          <i class="fas fa-key"></i>
-          <h3>إدارة المفتاح</h3>
-        </div>
-        
-        <div class="form-group">
-          <input type="file" class="file-input" id="setKeyInput" accept="image/*">
-        </div>
-        
-        <button class="btn" onclick="setKey()">
-          <i class="fas fa-save"></i> تعيين مفتاح جديد
-        </button>
-        
-        <div class="action-buttons">
-          <button class="btn btn-danger" onclick="removeKey()">
-            <i class="fas fa-trash-alt"></i> إزالة المفتاح
-          </button>
-        </div>
+      <!-- رسالة عندما لا يوجد مفتاح -->
+      <div id="no-key-section" class="no-key-message hidden">
+        <i class="fas fa-key"></i>
+        <h3>لا يوجد مفتاح قفل محفوظ</h3>
+        <p>يرجى فتح القفل أولاً باستخدام مفتاحك الحالي لتعيين مفتاح جديد</p>
       </div>
       
-      <div class="card">
-        <div class="card-header">
-          <i class="fas fa-shield-alt"></i>
-          <h3>حماية الملفات والتطبيقات</h3>
+      <!-- محتوى الإعدادات عندما يكون المفتاح متاحاً -->
+      <div id="settings-content" class="hidden">
+        <div class="card">
+          <div class="card-header">
+            <i class="fas fa-key"></i>
+            <h3>إدارة المفتاح</h3>
+          </div>
+          
+          <div class="form-group">
+            <input type="file" class="file-input" id="setKeyInput" accept="image/*">
+          </div>
+          
+          <button class="btn" onclick="setKey()">
+            <i class="fas fa-save"></i> تعيين مفتاح جديد
+          </button>
+          
+          <div class="action-buttons">
+            <button class="btn btn-danger" onclick="removeKey()">
+              <i class="fas fa-trash-alt"></i> إزالة المفتاح
+            </button>
+          </div>
         </div>
         
-        <select id="protectedTarget">
-          <option value="">— اختر الهدف للحماية —</option>
-          <option value="images">📸 الصور</option>
-          <option value="docs">📄 المستندات</option>
-          <option value="apps">📱 التطبيقات</option>
-          <option value="custom">🧩 مخصص</option>
-        </select>
-        
-        <div class="action-buttons">
-          <button class="btn btn-success" onclick="protectSelected()">
-            <i class="fas fa-lock"></i> تطبيق الحماية
-          </button>
-          <button class="btn btn-secondary" onclick="clearProtection()">
-            <i class="fas fa-unlock"></i> إلغاء الحماية
-          </button>
+        <div class="card">
+          <div class="card-header">
+            <i class="fas fa-shield-alt"></i>
+            <h3>حماية الملفات والتطبيقات</h3>
+          </div>
+          
+          <select id="protectedTarget">
+            <option value="">— اختر الهدف للحماية —</option>
+            <option value="images">📸 الصور</option>
+            <option value="docs">📄 المستندات</option>
+            <option value="apps">📱 التطبيقات</option>
+            <option value="custom">🧩 مخصص</option>
+          </select>
+          
+          <div class="action-buttons">
+            <button class="btn btn-success" onclick="protectSelected()">
+              <i class="fas fa-lock"></i> تطبيق الحماية
+            </button>
+            <button class="btn btn-secondary" onclick="clearProtection()">
+              <i class="fas fa-unlock"></i> إلغاء الحماية
+            </button>
+          </div>
+          
+          <div class="result" id="protectionStatus"></div>
         </div>
-        
-        <div class="result" id="protectionStatus"></div>
       </div>
     </div>
     
@@ -478,7 +507,6 @@
       
       if (!storedHash) {
         showResult("لا يوجد مفتاح محفوظ، يرجى تعيين مفتاح أولًا", "fail");
-        openTab('settings');
         return;
       }
 
@@ -491,6 +519,8 @@
         if (currentHash === storedHash) {
           showResult("تم التحقق بنجاح! الجلسة مفعلة الآن", "success");
           document.getElementById("securedActions").classList.remove("hidden");
+          document.getElementById("settings-content").classList.remove("hidden");
+          document.getElementById("no-key-section").classList.add("hidden");
           startSessionTimer();
         } else {
           showResult("الصورة لا تطابق المفتاح المحفوظ", "fail");
@@ -537,7 +567,10 @@
       if (!confirmDelete) return;
 
       localStorage.removeItem("keynova_hash");
+      localStorage.removeItem("protected_target");
       document.getElementById("securedActions").classList.add("hidden");
+      document.getElementById("settings-content").classList.add("hidden");
+      document.getElementById("no-key-section").classList.remove("hidden");
       showResult("تمت إزالة المفتاح بنجاح", "success");
     }
 
@@ -614,6 +647,8 @@
     // قفل الجلسة
     function lockSession() {
       document.getElementById("securedActions").classList.add("hidden");
+      document.getElementById("settings-content").classList.add("hidden");
+      document.getElementById("no-key-section").classList.remove("hidden");
       showResult("انتهت صلاحية الجلسة، يرجى إعادة التحقق", "warning");
     }
 
@@ -635,6 +670,17 @@
       if (storedTarget) {
         document.getElementById("protectionStatus").textContent = `الحماية مفعّلة على: ${getTargetName(storedTarget)}`;
         document.getElementById("protectionStatus").className = "result success";
+      }
+      
+      // التحقق من وجود مفتاح
+      const hasKey = localStorage.getItem("keynova_hash") !== null;
+      
+      if (hasKey) {
+        document.getElementById("settings-content").classList.add("hidden");
+        document.getElementById("no-key-section").classList.add("hidden");
+      } else {
+        document.getElementById("settings-content").classList.add("hidden");
+        document.getElementById("no-key-section").classList.remove("hidden");
       }
     };
   </script>
