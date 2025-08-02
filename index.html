@@ -8,17 +8,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #1a1a2e;
-      --secondary: #16213e;
-      --accent: #0f3460;
-      --highlight: #e94560;
-      --light: #f0f5ff;
-      --success: #2ecc71;
-      --warning: #f39c12;
-      --danger: #e74c3c;
-      --border-radius: 16px;
-      --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-      --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      --primary: #000;
+      --secondary: #111;
+      --accent: #2c2c2c;
+      --highlight: #ff8800;
+      --light: #fff;
+      --success: #00ff99;
+      --warning: #ffaa00;
+      --danger: #ff4444;
+      --border-radius: 6px;
+      --shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+      --transition: all 0.3s ease;
     }
     
     * {
@@ -29,104 +29,94 @@
     }
     
     body {
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      background: var(--primary);
       color: var(--light);
       min-height: 100vh;
       padding: 20px;
       line-height: 1.6;
-      background-attachment: fixed;
     }
     
     .container {
-      max-width: 1000px;
+      max-width: 800px;
       margin: 0 auto;
     }
     
     header {
       text-align: center;
-      padding: 30px 0;
+      padding: 20px 0;
       margin-bottom: 20px;
-      animation: fadeIn 1s ease;
     }
     
     .logo {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 20px;
-      margin-bottom: 15px;
+      gap: 15px;
+      margin-bottom: 10px;
     }
     
     .logo-icon {
-      width: 80px;
-      height: 80px;
-      background: linear-gradient(135deg, var(--accent), var(--highlight));
+      width: 60px;
+      height: 60px;
+      background: var(--highlight);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: var(--shadow);
     }
     
     .logo-icon i {
-      font-size: 2.5rem;
+      font-size: 2rem;
       color: white;
     }
     
     h1 {
-      font-size: 2.8rem;
+      font-size: 2.2rem;
       font-weight: 800;
-      background: linear-gradient(to right, var(--light), #e94560);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 2px 10px rgba(233, 69, 96, 0.3);
+      color: var(--highlight);
     }
     
     .subtitle {
       color: rgba(255, 255, 255, 0.7);
-      font-size: 1.2rem;
-      margin-top: 10px;
-      max-width: 600px;
-      margin: 10px auto 0;
-      line-height: 1.8;
+      font-size: 1rem;
+      margin-top: 5px;
+      max-width: 500px;
+      margin: 5px auto 0;
     }
     
     .tabs {
       display: flex;
-      gap: 15px;
-      margin-bottom: 30px;
+      gap: 10px;
+      margin-bottom: 20px;
       justify-content: center;
       flex-wrap: wrap;
     }
     
     .tab {
-      padding: 16px 35px;
+      padding: 12px 25px;
       background: rgba(255, 255, 255, 0.08);
       border-radius: var(--border-radius);
       cursor: pointer;
       transition: var(--transition);
       font-weight: 600;
-      font-size: 1.1rem;
+      font-size: 1rem;
       display: flex;
       align-items: center;
-      gap: 10px;
-      border: 2px solid transparent;
+      gap: 8px;
+      border: 1px solid transparent;
     }
     
     .tab:hover {
-      background: rgba(255, 255, 255, 0.15);
-      transform: translateY(-3px);
+      background: rgba(255, 255, 255, 0.12);
     }
     
     .tab.active {
-      background: var(--accent);
-      box-shadow: 0 5px 20px rgba(15, 52, 96, 0.5);
-      border-color: rgba(233, 69, 96, 0.3);
+      background: var(--highlight);
+      box-shadow: var(--shadow);
     }
     
     .tab-content {
       display: none;
-      animation: fadeIn 0.6s ease;
     }
     
     .tab-content.active {
@@ -136,33 +126,26 @@
     .card {
       background: rgba(255, 255, 255, 0.05);
       border-radius: var(--border-radius);
-      padding: 30px;
-      margin-bottom: 25px;
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(10px);
+      padding: 20px;
+      margin-bottom: 20px;
       border: 1px solid rgba(255, 255, 255, 0.1);
       transition: var(--transition);
     }
     
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-    }
-    
     .card-title {
-      font-size: 1.5rem;
-      margin-bottom: 25px;
+      font-size: 1.3rem;
+      margin-bottom: 20px;
       display: flex;
       align-items: center;
-      gap: 15px;
+      gap: 12px;
       color: var(--highlight);
     }
     
     .card-title i {
-      font-size: 1.4rem;
-      width: 45px;
-      height: 45px;
-      background: rgba(233, 69, 96, 0.15);
+      font-size: 1.2rem;
+      width: 35px;
+      height: 35px;
+      background: rgba(255, 136, 0, 0.2);
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -170,15 +153,15 @@
     }
     
     .input-group {
-      margin-bottom: 25px;
+      margin-bottom: 20px;
     }
     
     label {
       display: block;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       font-weight: 500;
       color: rgba(255, 255, 255, 0.9);
-      font-size: 1.1rem;
+      font-size: 1rem;
     }
     
     .file-input-wrapper {
@@ -202,11 +185,11 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 15px;
+      gap: 12px;
       background: rgba(255, 255, 255, 0.08);
       border: 2px dashed rgba(255, 255, 255, 0.15);
       border-radius: var(--border-radius);
-      padding: 25px;
+      padding: 20px;
       cursor: pointer;
       transition: var(--transition);
       text-align: center;
@@ -219,86 +202,71 @@
     }
     
     .file-input-label i {
-      font-size: 2.5rem;
+      font-size: 2rem;
       color: var(--highlight);
     }
     
     .file-input-label span {
-      font-size: 1.1rem;
-      margin-top: 10px;
+      font-size: 1rem;
+      margin-top: 8px;
     }
     
     .file-name {
-      margin-top: 15px;
-      font-size: 1rem;
+      margin-top: 10px;
+      font-size: 0.9rem;
       color: rgba(255, 255, 255, 0.7);
       text-align: center;
-      padding: 10px;
+      padding: 8px;
       background: rgba(0, 0, 0, 0.2);
-      border-radius: 10px;
+      border-radius: 4px;
     }
     
     .btn-group {
       display: flex;
-      gap: 20px;
+      gap: 15px;
       flex-wrap: wrap;
       justify-content: center;
-      margin-top: 25px;
+      margin-top: 20px;
     }
     
     .btn {
-      background: var(--accent);
+      background: var(--highlight);
       color: white;
       border: none;
-      padding: 16px 35px;
-      border-radius: 12px;
-      font-size: 1.1rem;
+      padding: 12px 25px;
+      border-radius: var(--border-radius);
+      font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
       transition: var(--transition);
       display: flex;
       align-items: center;
-      gap: 12px;
-      min-width: 220px;
+      gap: 8px;
+      min-width: 200px;
       justify-content: center;
-      box-shadow: 0 5px 15px rgba(15, 52, 96, 0.4);
     }
     
     .btn:hover {
-      background: var(--highlight);
-      transform: translateY(-5px);
-      box-shadow: 0 8px 25px rgba(233, 69, 96, 0.4);
+      background: #e67600;
+      transform: translateY(-2px);
     }
     
     .btn i {
-      font-size: 1.3rem;
-    }
-    
-    .btn-primary {
-      background: linear-gradient(to right, var(--accent), var(--highlight));
-    }
-    
-    .btn-success {
-      background: linear-gradient(to right, #27ae60, #2ecc71);
-    }
-    
-    .btn-warning {
-      background: linear-gradient(to right, #e67e22, #f39c12);
+      font-size: 1.1rem;
     }
     
     .btn-danger {
-      background: linear-gradient(to right, #c0392b, #e74c3c);
+      background: var(--danger);
     }
     
     .result {
-      margin-top: 30px;
-      padding: 20px;
+      margin-top: 20px;
+      padding: 15px;
       border-radius: var(--border-radius);
       text-align: center;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       font-weight: 600;
       display: none;
-      animation: fadeIn 0.5s ease;
     }
     
     .result.show {
@@ -306,58 +274,37 @@
     }
     
     .success {
-      background: rgba(46, 204, 113, 0.15);
+      background: rgba(0, 255, 153, 0.15);
       color: var(--success);
-      border: 1px solid rgba(46, 204, 113, 0.3);
+      border: 1px solid rgba(0, 255, 153, 0.3);
     }
     
     .warning {
-      background: rgba(243, 156, 18, 0.15);
+      background: rgba(255, 170, 0, 0.15);
       color: var(--warning);
-      border: 1px solid rgba(243, 156, 18, 0.3);
+      border: 1px solid rgba(255, 170, 0, 0.3);
     }
     
     .fail {
-      background: rgba(231, 76, 60, 0.15);
+      background: rgba(255, 68, 68, 0.15);
       color: var(--danger);
-      border: 1px solid rgba(231, 76, 60, 0.3);
-    }
-    
-    #matchBar {
-      margin: 30px auto;
-      width: 100%;
-      height: 25px;
-      border-radius: 12px;
-      background: rgba(255, 255, 255, 0.1);
-      overflow: hidden;
-      display: none;
-      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3);
-    }
-    
-    #matchBar::-webkit-progress-bar {
-      background: transparent;
-    }
-    
-    #matchBar::-webkit-progress-value {
-      background: linear-gradient(to right, var(--danger), var(--warning), var(--success));
-      border-radius: 12px;
-      transition: width 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+      border: 1px solid rgba(255, 68, 68, 0.3);
     }
     
     .loader {
       display: none;
       text-align: center;
-      margin: 30px 0;
+      margin: 20px 0;
     }
     
     .loader .spinner {
-      border: 4px solid rgba(255, 255, 255, 0.1);
-      border-top: 4px solid var(--highlight);
+      border: 3px solid rgba(255, 255, 255, 0.1);
+      border-top: 3px solid var(--highlight);
       border-radius: 50%;
-      width: 50px;
-      height: 50px;
+      width: 40px;
+      height: 40px;
       animation: spin 1s linear infinite;
-      margin: 0 auto 20px;
+      margin: 0 auto 15px;
     }
     
     @keyframes spin {
@@ -365,76 +312,71 @@
       100% { transform: rotate(360deg); }
     }
     
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
     .key-info {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      margin-top: 25px;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
     }
     
     .info-item {
       background: rgba(255, 255, 255, 0.05);
       border-radius: var(--border-radius);
-      padding: 20px;
+      padding: 15px;
       text-align: center;
     }
     
     .info-item i {
-      font-size: 2rem;
+      font-size: 1.5rem;
       color: var(--highlight);
-      margin-bottom: 15px;
+      margin-bottom: 10px;
     }
     
     .info-title {
-      font-size: 1.1rem;
+      font-size: 0.95rem;
       color: rgba(255, 255, 255, 0.7);
-      margin-bottom: 8px;
+      margin-bottom: 5px;
     }
     
     .info-value {
-      font-size: 1.3rem;
+      font-size: 1.1rem;
       font-weight: 600;
     }
     
     .troubleshoot-section {
-      margin-top: 30px;
-      padding: 20px;
-      background: rgba(243, 156, 18, 0.1);
+      margin-top: 20px;
+      padding: 15px;
+      background: rgba(255, 170, 0, 0.1);
       border-radius: var(--border-radius);
-      border: 1px solid rgba(243, 156, 18, 0.3);
+      border: 1px solid rgba(255, 170, 0, 0.3);
     }
     
     .troubleshoot-section h3 {
       color: var(--warning);
-      margin-bottom: 15px;
+      margin-bottom: 10px;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
     
     .troubleshoot-steps {
-      padding-right: 20px;
+      padding-right: 15px;
     }
     
     .troubleshoot-steps li {
-      margin-bottom: 10px;
-      line-height: 1.6;
+      margin-bottom: 8px;
+      line-height: 1.5;
     }
     
     .preview-container {
-      margin-top: 20px;
+      margin-top: 15px;
       text-align: center;
     }
     
     .preview-image {
-      max-width: 200px;
-      max-height: 200px;
-      border-radius: 8px;
+      max-width: 180px;
+      max-height: 180px;
+      border-radius: 6px;
       border: 2px solid var(--highlight);
       display: none;
       margin: 0 auto;
@@ -442,25 +384,25 @@
     
     footer {
       text-align: center;
-      margin-top: 50px;
-      padding-top: 25px;
+      margin-top: 30px;
+      padding-top: 20px;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
       color: rgba(255, 255, 255, 0.6);
-      font-size: 1rem;
+      font-size: 0.9rem;
     }
     
     footer p {
-      margin: 8px 0;
+      margin: 6px 0;
     }
     
     .developer {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      margin-top: 15px;
-      padding: 8px 20px;
-      background: rgba(233, 69, 96, 0.1);
-      border-radius: 30px;
+      gap: 6px;
+      margin-top: 10px;
+      padding: 6px 15px;
+      background: rgba(255, 136, 0, 0.1);
+      border-radius: 20px;
     }
     
     /* تصميم متجاوب */
@@ -478,12 +420,12 @@
       }
       
       h1 {
-        font-size: 2.2rem;
+        font-size: 1.8rem;
       }
       
       .logo-icon {
-        width: 65px;
-        height: 65px;
+        width: 50px;
+        height: 50px;
       }
     }
   </style>
@@ -542,7 +484,7 @@
         </div>
         
         <div class="btn-group">
-          <button class="btn btn-primary" onclick="verifyKey()">
+          <button class="btn" onclick="verifyKey()">
             <i class="fas fa-check-circle"></i> تحقق من الصورة
           </button>
         </div>
@@ -551,8 +493,6 @@
           <div class="spinner"></div>
           <div>جاري معالجة الصورة والتحقق منها...</div>
         </div>
-        
-        <progress id="matchBar" value="0" max="100"></progress>
         
         <div class="result" id="result"></div>
         
@@ -594,7 +534,7 @@
         </div>
         
         <div class="btn-group">
-          <button class="btn btn-success" onclick="setKey()">
+          <button class="btn" onclick="setKey()">
             <i class="fas fa-save"></i> حفظ المفتاح الجديد
           </button>
           <button class="btn btn-danger" onclick="removeKey()">
@@ -643,7 +583,7 @@
         
         <div class="input-group">
           <label>اختر نوع العناصر التي تريد حمايتها:</label>
-          <select id="protectedTarget" class="btn" style="width:100%; padding:15px; font-size:1.1rem;">
+          <select id="protectedTarget" style="width:100%; padding:12px; font-size:1rem; background: var(--accent); color: #fff; border: 1px solid #666; border-radius: var(--border-radius);">
             <option value="">— اختر الهدف للحماية —</option>
             <option value="images">📸 الصور والمكتبة</option>
             <option value="docs">📄 المستندات الهامة</option>
@@ -654,10 +594,10 @@
         </div>
         
         <div class="btn-group">
-          <button class="btn btn-primary" onclick="protectSelected()">
+          <button class="btn" onclick="protectSelected()">
             <i class="fas fa-lock"></i> تطبيق الحماية
           </button>
-          <button class="btn btn-warning" onclick="clearProtection()">
+          <button class="btn" onclick="clearProtection()" style="background: #2c2c2c;">
             <i class="fas fa-unlock"></i> إلغاء الحماية
           </button>
         </div>
@@ -769,11 +709,11 @@
       
       if (storedHash) {
         keyStatusElement.textContent = "مفعل";
-        keyStatusElement.style.color = "#2ecc71";
+        keyStatusElement.style.color = "#00ff99";
         keyDateElement.textContent = localStorage.getItem("key_date") || 'غير معروف';
       } else {
         keyStatusElement.textContent = "غير مفعل";
-        keyStatusElement.style.color = "#e74c3c";
+        keyStatusElement.style.color = "#ff4444";
         keyDateElement.textContent = 'غير متوفر';
       }
     }
@@ -802,38 +742,37 @@
           case 'images':
             icon = 'fa-images';
             text = 'مجلد الصور';
-            color = '#3498db';
+            color = '#00ff99';
             break;
           case 'docs':
             icon = 'fa-file-alt';
             text = 'المستندات الهامة';
-            color = '#2ecc71';
+            color = '#ffaa00';
             break;
           case 'apps':
             icon = 'fa-mobile-alt';
             text = 'التطبيقات المحمية';
-            color = '#9b59b6';
+            color = '#ff8800';
             break;
           case 'videos':
             icon = 'fa-video';
             text = 'الفيديوهات الخاصة';
-            color = '#e74c3c';
+            color = '#ff4444';
             break;
           case 'custom':
             icon = 'fa-folder';
             text = item.name || 'مجلد مخصص';
-            color = '#f39c12';
+            color = '#ff8800';
             break;
           default:
             icon = 'fa-folder';
             text = 'عنصر محمي';
-            color = '#1abc9c';
+            color = '#00ff99';
         }
         
         const itemElement = document.createElement('div');
         itemElement.className = 'info-item';
-        itemElement.style.border = `2px solid ${color}20`;
-        itemElement.style.background = `${color}08`;
+        itemElement.style.border = `1px solid ${color}50`;
         itemElement.innerHTML = `
           <i class="fas ${icon}" style="color:${color}"></i>
           <div class="info-title">${text}</div>
@@ -843,10 +782,9 @@
       });
     }
     
-    // حساب بصمة الصورة - الطريقة الصحيحة
+    // حساب بصمة الصورة - الطريقة الأصلية
     async function calculateHash(file) {
       try {
-        // استخدام الطريقة الأصلية التي أثبتت فعاليتها
         const buffer = await file.arrayBuffer();
         const hashBuffer = await crypto.subtle.digest("SHA-256", buffer);
         const hashArray = Array.from(new Uint8Array(hashBuffer));
@@ -865,7 +803,6 @@
       // إظهار مؤشر التحميل
       document.getElementById("loader").style.display = "block";
       document.getElementById("result").className = "result";
-      document.getElementById("matchBar").style.display = "none";
       
       const storedHash = localStorage.getItem("keynova_hash");
       if (!storedHash) {
@@ -879,37 +816,22 @@
         // حساب البصمة باستخدام الطريقة الموثوقة
         const currentHash = await calculateHash(file);
         
-        // حساب نسبة التطابق
-        const minLength = Math.min(currentHash.length, storedHash.length);
-        let differences = 0;
-        
-        for (let i = 0; i < minLength; i++) {
-          if (currentHash[i] !== storedHash[i]) differences++;
-        }
-        
-        const matchPercent = Math.round(((minLength - differences) / minLength) * 100);
-        const bar = document.getElementById("matchBar");
-        bar.value = matchPercent;
-        bar.style.display = "block";
-        
         // إخفاء مؤشر التحميل
         document.getElementById("loader").style.display = "none";
         
         // عرض النتيجة
-        if (matchPercent >= 90) {
-          showResult(`✅ تم فتح القفل بنجاح! نسبة التطابق: ${matchPercent}%`, "success");
+        if (currentHash === storedHash) {
+          showResult("✅ تم فتح القفل بنجاح!", "success");
           document.getElementById("securedActions").style.display = "block";
-        } else if (matchPercent >= 70) {
-          showResult(`⚠️ نسبة التطابق ${matchPercent}%. قد تكون الصورة غير دقيقة أو منخفضة الجودة`, "warning");
+          
+          // إخفاء القفل بعد 10 دقائق
+          setTimeout(() => {
+            document.getElementById("securedActions").style.display = "none";
+            showResult("⏳ انتهت صلاحية الجلسة، يرجى إعادة التحقق", "warning");
+          }, 600000);
         } else {
-          showResult(`❌ فشل فتح القفل! نسبة التطابق ${matchPercent}%. الصورة غير مطابقة للمفتاح`, "fail");
+          showResult("❌ فشل فتح القفل! الصورة غير مطابقة للمفتاح", "fail");
         }
-        
-        // إخفاء القفل بعد 10 دقائق
-        setTimeout(() => {
-          document.getElementById("securedActions").style.display = "none";
-          bar.style.display = "none";
-        }, 600000);
         
       } catch (error) {
         document.getElementById("loader").style.display = "none";
