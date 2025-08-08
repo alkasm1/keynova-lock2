@@ -164,24 +164,34 @@
     text-align: center;
     color: #777;
   }
-  .image-gallery {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-    margin-bottom: 15px;
-  }
   .image-gallery img {
     width: 80px;
     height: 80px;
-    object-fit: cover;
-    border-radius: 10px;
     cursor: pointer;
     border: 3px solid transparent;
+    border-radius: 10px;
+    margin: 5px;
+    object-fit: cover;
     transition: border-color 0.3s;
   }
   .image-gallery img.selected {
     border-color: var(--accent);
+  }
+  #verifyImageGallery img {
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    margin: 5px;
+    object-fit: cover;
+    cursor: pointer;
+    border: 3px solid transparent;
+    transition: border-color 0.3s;
+  }
+  #verifyImageGallery img.selected {
+    border-color: var(--success);
+  }
+  #verifyPassword {
+    margin-top: 10px;
   }
 </style>
 </head>
@@ -201,10 +211,7 @@
     <h2>فتح القفل باستخدام الصورة</h2>
 
     <div id="verifyImageGallery" class="image-gallery"></div>
-
-    <div class="form-group">
-      <input type="password" id="verifyPassword" placeholder="أدخل كلمة المرور" />
-    </div>
+    <input type="password" id="verifyPassword" placeholder="أدخل كلمة المرور" />
     <button class="btn" onclick="verifyKey()">
       تحقق من الصورة
     </button>
@@ -233,15 +240,9 @@
 
     <div id="setKeySection" class="hidden">
       <h3>تعيين مفتاح جديد</h3>
-
       <div id="setKeyImageGallery" class="image-gallery"></div>
-
-      <div class="form-group">
-        <input type="password" id="setKeyPassword" placeholder="أدخل كلمة المرور" />
-      </div>
-      <button class="btn" onclick="setKey()">
-        تعيين مفتاح جديد
-      </button>
+      <input type="password" id="setKeyPassword" placeholder="أدخل كلمة المرور" />
+      <button class="btn" onclick="setKey()">تعيين مفتاح جديد</button>
       <div id="setKeyResult" class="result-message"></div>
     </div>
 
@@ -255,56 +256,4 @@
     </div>
 
     <div class="key-management">
-      <button class="btn" onclick="applyProtection()">تطبيق الحماية</button>
-      <button class="btn" style="background-color: var(--fail);" onclick="removeProtection()">إلغاء الحماية</button>
-    </div>
-
-    <div class="session-timer" id="sessionTimer">الجلسة ستنتهي خلال 10:00</div>
-
-    <div class="key-management">
-      <button class="btn" onclick="showUnlock()">الإعدادات</button>
-      <button class="btn" style="background-color: var(--fail);" onclick="lockSession()">قفل الجلسة</button>
-    </div>
-
-    <p style="text-align:center; margin-top: 20px; font-size: 13px; color: #777;">
-      قد خزنت الصور في مجلد <code>images</code> بالجذر الرئيسي
-    </p>
-
-  </section>
-
-  <div id="securedActions" style="display:none; margin-top:20px;">
-    <h3>إجراءات مؤمنة</h3>
-    <p>تم فتح القفل بنجاح، يمكنك الآن الوصول إلى المحتوى المحمي.</p>
-    <button class="btn" onclick="logout()">تسجيل خروج</button>
-  </div>
-
-</div>
-
-<script>
-// التبديل بين التبويبات
-const tabs = document.querySelectorAll(".tab");
-const sections = document.querySelectorAll(".section");
-tabs.forEach(tab => {
-  tab.addEventListener("click", () => {
-    tabs.forEach(t => t.classList.remove("active"));
-    tab.classList.add("active");
-    const target = tab.getAttribute("data-target");
-    sections.forEach(s => {
-      s.classList.toggle("active", s.id === target);
-    });
-    if (target === "setKeySection") showSetKey();
-  });
-});
-
-// عرض/إخفاء قسم تعيين المفتاح
-function showSetKey() {
-  document.getElementById("setKeySection").classList.remove("hidden");
-}
-function showUnlock() {
-  tabs.forEach(t => {
-    t.classList.toggle("active", t.getAttribute("data-target") === "unlock-section");
-  });
-  sections.forEach(s => {
-    s.classList.toggle("active", s.id === "unlock-section");
-  });
-  document.getElementById("
+      <button class="btn" onclick="applyProtection()">تطبيق الحماية
