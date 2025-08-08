@@ -12,6 +12,7 @@
     --fail: #f44336;
     --warning: #ff9800;
     --accent: #2196f3;
+    --selected-border: 3px solid var(--accent);
   }
   body {
     background-color: var(--dark);
@@ -73,14 +74,15 @@
   .form-group {
     margin-bottom: 15px;
   }
-  input[type="password"], select {
-    padding: 15px;
+  input[type="password"] {
+    padding: 10px;
     border-radius: 10px;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    width: 100%;
+    width: calc(100% - 20px);
     font-size: 16px;
     background-color: rgba(255, 255, 255, 0.05);
     color: var(--light);
+    direction: ltr;
   }
   button.btn {
     width: 100%;
@@ -166,10 +168,10 @@
   }
   .image-selector {
     display: flex;
-    flex-wrap: wrap;
     gap: 10px;
+    overflow-x: auto;
+    padding: 10px 0;
     margin-bottom: 15px;
-    justify-content: center;
   }
   .image-selector img {
     width: 80px;
@@ -177,11 +179,11 @@
     object-fit: cover;
     border-radius: 10px;
     cursor: pointer;
-    border: 3px solid transparent;
+    border: 2px solid transparent;
     transition: border-color 0.3s;
   }
   .image-selector img.selected {
-    border-color: var(--accent);
+    border: var(--selected-border);
   }
 </style>
 </head>
@@ -200,14 +202,13 @@
   <section id="unlock-section" class="section active">
     <h2>فتح القفل باستخدام الصورة</h2>
 
-    <div class="image-selector" id="unlockImageSelector">
-      <!-- صور من 1 إلى 10 -->
-    </div>
+    <div class="image-selector" id="unlockImageSelector" title="اختر صورة المفتاح"></div>
+
     <div class="form-group">
       <input type="password" id="verifyPassword" placeholder="أدخل كلمة المرور" />
     </div>
     <button class="btn" onclick="verifyKey()">
-      تحقق من الصورة
+      تحقق من الصورة وكلمة المرور
     </button>
     <div id="verifyResult" class="result-message"></div>
 
@@ -228,15 +229,15 @@
     <h2>إدارة المفتاح</h2>
 
     <div class="key-management">
-      <button class="btn" onclick="showSetKey()">تعيين مفتاح جديد</button>
+      <button class="btn" onclick="toggleSetKeySection()">تعيين مفتاح جديد</button>
       <button class="btn" style="background-color: var(--fail);" onclick="removeKey()">إزالة المفتاح</button>
     </div>
 
     <div id="setKeySection" class="hidden">
       <h3>تعيين مفتاح جديد</h3>
-      <div class="image-selector" id="setKeyImageSelector">
-        <!-- صور من 1 إلى 10 -->
-      </div>
+
+      <div class="image-selector" id="setKeyImageSelector" title="اختر صورة المفتاح الجديد"></div>
+
       <div class="form-group">
         <input type="password" id="setKeyPassword" placeholder="أدخل كلمة المرور" />
       </div>
@@ -282,7 +283,6 @@
 </div>
 
 <script>
-// التبديل بين التبويبات
 const tabs = document.querySelectorAll(".tab");
 const sections = document.querySelectorAll(".section");
 tabs.forEach(tab => {
@@ -293,14 +293,5 @@ tabs.forEach(tab => {
     sections.forEach(s => {
       s.classList.toggle("active", s.id === target);
     });
-    if (target === "setKeySection") showSetKey();
-  });
-});
-
-function showSetKey() {
-  document.getElementById("setKeySection").classList.remove("hidden");
-}
-function showUnlock() {
-  // يتم تفعيل تبويب فتح القفل
-  tabs.forEach(t => {
-    t.classList.toggle("active", t
+    if(target === "settings-section") {
+      hideSet
