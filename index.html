@@ -164,20 +164,19 @@
     text-align: center;
     color: #777;
   }
-  /* معرض الصور للاختيار */
   .image-gallery {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    margin-bottom: 15px;
     justify-content: center;
+    margin-bottom: 15px;
   }
   .image-gallery img {
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     object-fit: cover;
-    cursor: pointer;
     border-radius: 10px;
+    cursor: pointer;
     border: 3px solid transparent;
     transition: border-color 0.3s;
   }
@@ -201,11 +200,8 @@
   <section id="unlock-section" class="section active">
     <h2>فتح القفل باستخدام الصورة</h2>
 
-    <div class="form-group">
-      <div id="verifyImageGallery" class="image-gallery">
-        <!-- صور من images/ ستُعرض هنا -->
-      </div>
-    </div>
+    <div id="verifyImageGallery" class="image-gallery"></div>
+
     <div class="form-group">
       <input type="password" id="verifyPassword" placeholder="أدخل كلمة المرور" />
     </div>
@@ -237,11 +233,9 @@
 
     <div id="setKeySection" class="hidden">
       <h3>تعيين مفتاح جديد</h3>
-      <div class="form-group">
-        <div id="setKeyImageGallery" class="image-gallery">
-          <!-- صور من images/ ستُعرض هنا -->
-        </div>
-      </div>
+
+      <div id="setKeyImageGallery" class="image-gallery"></div>
+
       <div class="form-group">
         <input type="password" id="setKeyPassword" placeholder="أدخل كلمة المرور" />
       </div>
@@ -254,4 +248,63 @@
     <h2>حماية الملفات والتطبيقات</h2>
     <p style="text-align:center; font-weight:bold; margin-bottom:10px;">— اختر الهدف للحماية —</p>
     <div class="protection-options" id="protectionOptions">
-      <span data-target="photos" class="selected" title="الصور">📸 الصور</
+      <span data-target="photos" class="selected" title="الصور">📸 الصور</span>
+      <span data-target="documents" title="المستندات">📄 المستندات</span>
+      <span data-target="apps" title="التطبيقات">📱 التطبيقات</span>
+      <span data-target="custom" title="مخصص">🧩 مخصص</span>
+    </div>
+
+    <div class="key-management">
+      <button class="btn" onclick="applyProtection()">تطبيق الحماية</button>
+      <button class="btn" style="background-color: var(--fail);" onclick="removeProtection()">إلغاء الحماية</button>
+    </div>
+
+    <div class="session-timer" id="sessionTimer">الجلسة ستنتهي خلال 10:00</div>
+
+    <div class="key-management">
+      <button class="btn" onclick="showUnlock()">الإعدادات</button>
+      <button class="btn" style="background-color: var(--fail);" onclick="lockSession()">قفل الجلسة</button>
+    </div>
+
+    <p style="text-align:center; margin-top: 20px; font-size: 13px; color: #777;">
+      قد خزنت الصور في مجلد <code>images</code> بالجذر الرئيسي
+    </p>
+
+  </section>
+
+  <div id="securedActions" style="display:none; margin-top:20px;">
+    <h3>إجراءات مؤمنة</h3>
+    <p>تم فتح القفل بنجاح، يمكنك الآن الوصول إلى المحتوى المحمي.</p>
+    <button class="btn" onclick="logout()">تسجيل خروج</button>
+  </div>
+
+</div>
+
+<script>
+// التبديل بين التبويبات
+const tabs = document.querySelectorAll(".tab");
+const sections = document.querySelectorAll(".section");
+tabs.forEach(tab => {
+  tab.addEventListener("click", () => {
+    tabs.forEach(t => t.classList.remove("active"));
+    tab.classList.add("active");
+    const target = tab.getAttribute("data-target");
+    sections.forEach(s => {
+      s.classList.toggle("active", s.id === target);
+    });
+    if (target === "setKeySection") showSetKey();
+  });
+});
+
+// عرض/إخفاء قسم تعيين المفتاح
+function showSetKey() {
+  document.getElementById("setKeySection").classList.remove("hidden");
+}
+function showUnlock() {
+  tabs.forEach(t => {
+    t.classList.toggle("active", t.getAttribute("data-target") === "unlock-section");
+  });
+  sections.forEach(s => {
+    s.classList.toggle("active", s.id === "unlock-section");
+  });
+  document.getElementById("
