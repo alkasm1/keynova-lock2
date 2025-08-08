@@ -569,8 +569,8 @@ if (!confirmDelete) return;
 
 localStorage.removeItem("keynova_hash");
 localStorage.removeItem("protected_target");
-document.getElementById("securedActions").classList.add("hidden");
-document.getElementById("settings-content").classList.add("hidden");
+document.getElementById("securedActions").classList.remove("hidden");
+document.getElementById("settings-content").classList.remove("hidden");
 document.getElementById("no-key-section").classList.remove("hidden");
 showResult("تمت إزالة المفتاح بنجاح", "success");
 }
