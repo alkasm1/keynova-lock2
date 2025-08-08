@@ -18,6 +18,7 @@
     color: var(--light);
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     margin: 0; padding: 0;
+    text-align: center;
   }
   .container {
     max-width: 600px;
@@ -31,7 +32,6 @@
     margin: 10px 0;
   }
   h1 {
-    text-align: center;
     color: var(--accent);
   }
   h2 {
@@ -66,28 +66,10 @@
   }
   .section {
     display: none;
+    text-align: right;
   }
   .section.active {
     display: block;
-  }
-  .image-selector {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-    margin-bottom: 15px;
-  }
-  .image-selector img {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    border: 2px solid transparent;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: border-color 0.3s;
-  }
-  .image-selector img.selected {
-    border-color: var(--accent);
   }
   .form-group {
     margin-bottom: 15px;
@@ -100,6 +82,7 @@
     font-size: 16px;
     background-color: rgba(255, 255, 255, 0.05);
     color: var(--light);
+    text-align: right;
   }
   button.btn {
     width: 100%;
@@ -133,6 +116,7 @@
   #securedActions {
     margin-top: 20px;
     display: none;
+    text-align: center;
   }
   .hidden {
     display: none !important;
@@ -152,6 +136,7 @@
     display: flex;
     gap: 15px;
     margin-bottom: 20px;
+    justify-content: center;
   }
   .key-management button {
     flex: 1;
@@ -161,6 +146,7 @@
     justify-content: space-around;
     margin-bottom: 20px;
     font-size: 20px;
+    direction: ltr;
   }
   .protection-options span {
     cursor: pointer;
@@ -183,13 +169,32 @@
     text-align: center;
     color: #777;
   }
+  /* عرض الصور كاختيارات */
+  .image-selector {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 15px 0;
+  }
+  .image-selector img {
+    width: 80px; height: 80px; object-fit: cover;
+    border: 3px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: border-color 0.3s;
+    direction: ltr;
+  }
+  .image-selector img.selected {
+    border-color: var(--accent);
+  }
 </style>
 </head>
 <body>
 <div class="container">
 
   <h1>Keynova Lock</h1>
-  <p style="text-align:center; font-weight:bold; margin-bottom:30px;">قفل بصري آمن باستخدام الصور<br>مطور البرنامج م: رأفت عمر</p>
+  <p style="font-weight:bold; margin-bottom:30px;">قفل بصري آمن باستخدام الصور<br>مطور البرنامج م: رأفت عمر</p>
 
   <div class="tabs">
     <div class="tab active" data-target="unlock-section">فتح القفل</div>
@@ -200,7 +205,9 @@
   <section id="unlock-section" class="section active">
     <h2>فتح القفل باستخدام الصورة</h2>
 
-    <div id="unlockImageSelector" class="image-selector"></div>
+    <div class="form-group image-selector" id="verifyImageSelector" style="text-align:center;">
+      <!-- صور الاختيار تظهر هنا -->
+    </div>
     <div class="form-group">
       <input type="password" id="verifyPassword" placeholder="أدخل كلمة المرور" />
     </div>
@@ -232,7 +239,9 @@
 
     <div id="setKeySection" class="hidden">
       <h3>تعيين مفتاح جديد</h3>
-      <div id="setKeyImageSelector" class="image-selector"></div>
+      <div class="form-group image-selector" id="setKeyImageSelector" style="text-align:center;">
+        <!-- صور اختيار المفتاح الجديد -->
+      </div>
       <div class="form-group">
         <input type="password" id="setKeyPassword" placeholder="أدخل كلمة المرور" />
       </div>
@@ -243,8 +252,8 @@
     </div>
 
     <h2>حماية الملفات والتطبيقات</h2>
-    <p style="text-align:center; font-weight:bold; margin-bottom:10px;">— اختر الهدف للحماية —</p>
-    <div class="protection-options" id="protectionOptions">
+    <p style="font-weight:bold; margin-bottom:10px;">— اختر الهدف للحماية —</p>
+    <div class="protection-options" id="protectionOptions" style="direction:ltr;">
       <span data-target="photos" class="selected" title="الصور">📸 الصور</span>
       <span data-target="documents" title="المستندات">📄 المستندات</span>
       <span data-target="apps" title="التطبيقات">📱 التطبيقات</span>
@@ -253,37 +262,4 @@
 
     <div class="key-management">
       <button class="btn" onclick="applyProtection()">تطبيق الحماية</button>
-      <button class="btn" style="background-color: var(--fail);" onclick="removeProtection()">إلغاء الحماية</button>
-    </div>
-
-    <div class="session-timer" id="sessionTimer">الجلسة ستنتهي خلال 10:00</div>
-
-    <div class="key-management">
-      <button class="btn" onclick="showUnlock()">الإعدادات</button>
-      <button class="btn" style="background-color: var(--fail);" onclick="lockSession()">قفل الجلسة</button>
-    </div>
-
-    <p style="text-align:center; margin-top: 20px; font-size: 13px; color: #777;">
-      قد خزنت الصور في مجلد <code>images</code> بالجذر الرئيسي
-    </p>
-
-  </section>
-
-  <div id="securedActions" style="display:none; margin-top:20px;">
-    <h3>إجراءات مؤمنة</h3>
-    <p>تم فتح القفل بنجاح، يمكنك الآن الوصول إلى المحتوى المحمي.</p>
-    <button class="btn" onclick="logout()">تسجيل خروج</button>
-  </div>
-
-</div>
-
-<script>
-// التبديل بين التبويبات
-const tabs = document.querySelectorAll(".tab");
-const sections = document.querySelectorAll(".section");
-tabs.forEach(tab => {
-  tab.addEventListener("click", () => {
-    tabs.forEach(t => t.classList.remove("active"));
-    tab.classList.add("active");
-    const target = tab.getAttribute("data-target");
-    sections.forEach(s => {
+      <button class="btn
