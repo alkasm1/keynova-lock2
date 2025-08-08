@@ -497,64 +497,66 @@ return null;
 
 // دالة التحقق من المفتاح
 async function verifyKey() {
-const fileInput = document.getElementById("verifyInput");
-if (!fileInput.files || fileInput.files.length === 0) {
-showResult("يرجى اختيار صورة للتحقق منها", "fail");
-return;
-}
+  const fileInput = document.getElementById("verifyInput");
+  if (!fileInput.files || fileInput.files.length === 0) {
+    showResult("يرجى اختيار صورة للتحقق منها", "fail");
+    return;
+  }
 
-const file = fileInput.files[0];
-const storedHash = localStorage.getItem("keynova_hash");
+  const file = fileInput.files[0];
+  const storedHash = localStorage.getItem("keynova_hash");
 
-if (!storedHash) {
-showResult("لا يوجد مفتاح محفوظ، يرجى تعيين مفتاح أولًا", "fail");
-return;
-}
+  if (!storedHash) {
+    showResult("لا يوجد مفتاح محفوظ، يرجى تعيين مفتاح أولًا", "warning");
+    document.getElementById("settings-content").classList.remove("hidden");  // إظهار إعدادات تعيين المفتاح
+    document.getElementById("no-key-section").classList.add("hidden");       // إخفاء رسالة عدم وجود مفتاح
+    return;
+  }
 
-showResult("جاري التحقق من الصورة...", "warning");
+  showResult("جاري التحقق من الصورة...", "warning");
 
-try {
-const currentHash = await calculateHash(file);
-if (!currentHash) return;
+  try {
+    const currentHash = await calculateHash(file);
+    if (!currentHash) return;
 
-if (currentHash === storedHash) {
-showResult("تم التحقق بنجاح! الجلسة مفعلة الآن", "success");
-document.getElementById("securedActions").classList.remove("hidden");
-document.getElementById("settings-content").classList.remove("hidden");
-document.getElementById("no-key-section").classList.add("hidden");
-startSessionTimer();
-} else {
-showResult("الصورة لا تطابق المفتاح المحفوظ", "fail");
-}
-} catch (error) {
-console.error("Verification error:", error);
-showResult("حدث خطأ أثناء عملية التحقق", "fail");
-}
+    if (currentHash === storedHash) {
+      showResult("تم التحقق بنجاح! الجلسة مفعلة الآن", "success");
+      document.getElementById("securedActions").classList.remove("hidden");
+      document.getElementById("settings-content").classList.remove("hidden");
+      document.getElementById("no-key-section").classList.add("hidden");
+      startSessionTimer();
+    } else {
+      showResult("الصورة لا تطابق المفتاح المحفوظ", "fail");
+    }
+  } catch (error) {
+    console.error("Verification error:", error);
+    showResult("حدث خطأ أثناء عملية التحقق", "fail");
+  }
 }
 
 // دالة تعيين مفتاح جديد
 async function setKey() {
-const fileInput = document.getElementById("setKeyInput");
-if (!fileInput.files || fileInput.files.length === 0) {
-showResult("يرجى اختيار صورة لتعيينها كمفتاح", "fail");
-return;
-}
+  const fileInput = document.getElementById("setKeyInput");
+  if (!fileInput.files || fileInput.files.length === 0) {
+    showResult("يرجى اختيار صورة لتعيينها كمفتاح", "fail");
+    return;
+  }
 
-const file = fileInput.files[0];
-const confirmChange = confirm("هل أنت متأكد من تغيير المفتاح؟ لن تتمكن من فتح القفل بدون هذه الصورة.");
+  const file = fileInput.files[0];
+  const confirmChange = confirm("هل أنت متأكد من تغيير المفتاح؟ لن تتمكن من فتح القفل بدون هذه الصورة.");
 
-if (!confirmChange) return;
+  if (!confirmChange) return;
 
-try {
-const hash = await calculateHash(file);
-if (!hash) return;
+  try {
+    const hash = await calculateHash(file);
+    if (!hash) return;
 
-localStorage.setItem("keynova_hash", hash);
-showResult("تم حفظ المفتاح الجديد بنجاح", "success");
-} catch (error) {
-console.error("Error setting key:", error);
-showResult("حدث خطأ أثناء حفظ المفتاح", "fail");
-}
+    localStorage.setItem("keynova_hash", hash);
+    showResult("تم حفظ المفتاح الجديد بنجاح", "success");
+  } catch (error) {
+    console.error("Error setting key:", error);
+    showResult("حدث خطأ أثناء حفظ المفتاح", "fail");
+  }
 }
 
 // إزالة المفتاح
@@ -569,8 +571,8 @@ if (!confirmDelete) return;
 
 localStorage.removeItem("keynova_hash");
 localStorage.removeItem("protected_target");
-document.getElementById("securedActions").classList.remove("hidden");
-document.getElementById("settings-content").classList.remove("hidden");
+document.getElementById("securedActions").classList.add("hidden");
+document.getElementById("settings-content").classList.add("hidden");
 document.getElementById("no-key-section").classList.remove("hidden");
 showResult("تمت إزالة المفتاح بنجاح", "success");
 }
