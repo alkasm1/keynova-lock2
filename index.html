@@ -1,468 +1,213 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Keynova Lock - قفل بصري آمن</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#5D5CDE',
-                        'primary-dark': '#4B4ACF'
-                    },
-                    fontFamily: {
-                        'arabic': ['Cairo', 'Segoe UI', 'system-ui', 'sans-serif']
-                    }
-                }
-            }
-        }
-    </script>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Cairo', sans-serif; }
-        .fade-in { animation: fadeIn 0.5s ease-in; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .bounce-in { animation: bounceIn 0.6s ease-out; }
-        @keyframes bounceIn { 
-            0% { transform: scale(0.3); opacity: 0; }
-            50% { transform: scale(1.05); }
-            70% { transform: scale(0.9); }
-            100% { transform: scale(1); opacity: 1; }
-        }
-        .glass { backdrop-filter: blur(10px); background: rgba(255, 255, 255, 0.1); }
-        .dark .glass { background: rgba(0, 0, 0, 0.2); }
-    </style>
+  <meta charset="UTF-8" />
+  <title>Keynova Lock</title>
+
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="icon.png" type="image/png" />
+  <meta name="theme-color" content="#ff8800" />
+
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("sw.js");
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Tajawal', Arial, sans-serif;
+      background-color: #000;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+    input[type="file"], button, select {
+      margin-top: 10px;
+      padding: 10px;
+      font-size: 1em;
+      border-radius: 6px;
+    }
+    button {
+      background: #ff8800;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #e67600;
+    }
+    select {
+      background: #2c2c2c;
+      color: #fff;
+      border: 1px solid #666;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 1.2em;
+    }
+    .success { color: #00ff99; }
+    .warning { color: #ffaa00; }
+    .fail { color: #ff4444; }
+    #matchBar {
+      margin-top: 10px;
+      width: 80%;
+      height: 16px;
+    }
+    h1 { color: #ff8800; }
+  </style>
 </head>
-<body class="bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 min-h-screen transition-colors duration-300">
-    
-    <!-- Header -->
-    <header class="bg-white dark:bg-gray-800 shadow-lg border-b-4 border-primary">
-        <div class="container mx-auto px-4 py-6">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-4 space-x-reverse">
-                    <div class="w-12 h-12 bg-gradient-to-br from-primary to-primary-dark rounded-lg flex items-center justify-center">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-                        </svg>
-                    </div>
-                    <div>
-                        <h1 class="text-2xl font-bold text-gray-800 dark:text-white">Keynova Lock</h1>
-                        <p class="text-sm text-gray-600 dark:text-gray-300">قفل بصري آمن باستخدام الصور</p>
-                    </div>
-                </div>
-                <div class="text-sm text-gray-500 dark:text-gray-400">
-                    مطور البرنامج: م. رأفت عمر
-                </div>
-            </div>
-        </div>
-    </header>
+<body>
 
-    <!-- Main Container -->
-    <div class="container mx-auto px-4 py-8">
-        
-        <!-- Status Display -->
-        <div id="statusCard" class="mb-8 p-6 rounded-xl glass border border-white/20 dark:border-gray-700/50 fade-in">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-3 space-x-reverse">
-                    <div id="lockIcon" class="w-10 h-10 rounded-full flex items-center justify-center">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-                        </svg>
-                    </div>
-                    <div>
-                        <h2 id="statusTitle" class="text-lg font-semibold text-gray-800 dark:text-white">القفل غير مفعل</h2>
-                        <p id="statusDesc" class="text-sm text-gray-600 dark:text-gray-300">لم يتم تعيين مفتاح بعد</p>
-                    </div>
-                </div>
-                <button id="resetBtn" class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors duration-200 opacity-50 cursor-not-allowed" disabled>
-                    إعادة تعيين
-                </button>
-            </div>
-        </div>
+  <h1>🔐 Keynova Lock</h1>
 
-        <!-- Main Content -->
-        <div class="grid lg:grid-cols-2 gap-8">
-            
-            <!-- Image Selection Panel -->
-            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
-                <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-6 flex items-center">
-                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                    </svg>
-                    اختيار الصورة المفتاحية
-                </h3>
-                
-                <!-- Image Grid -->
-                <div class="grid grid-cols-3 gap-4 mb-6">
-                    <div class="image-option border-2 border-transparent hover:border-primary rounded-lg overflow-hidden cursor-pointer transition-all duration-200" data-image="pattern1">
-                        <div class="w-full h-24 bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center">
-                            <div class="w-8 h-8 bg-white rounded-full"></div>
-                        </div>
-                    </div>
-                    <div class="image-option border-2 border-transparent hover:border-primary rounded-lg overflow-hidden cursor-pointer transition-all duration-200" data-image="pattern2">
-                        <div class="w-full h-24 bg-gradient-to-br from-blue-400 to-green-500 flex items-center justify-center">
-                            <div class="w-6 h-6 bg-white transform rotate-45"></div>
-                        </div>
-                    </div>
-                    <div class="image-option border-2 border-transparent hover:border-primary rounded-lg overflow-hidden cursor-pointer transition-all duration-200" data-image="pattern3">
-                        <div class="w-full h-24 bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center">
-                            <div class="w-4 h-8 bg-white rounded-full"></div>
-                        </div>
-                    </div>
-                    <div class="image-option border-2 border-transparent hover:border-primary rounded-lg overflow-hidden cursor-pointer transition-all duration-200" data-image="pattern4">
-                        <div class="w-full h-24 bg-gradient-to-br from-green-400 to-teal-500 flex items-center justify-center">
-                            <div class="grid grid-cols-2 gap-1">
-                                <div class="w-3 h-3 bg-white rounded"></div>
-                                <div class="w-3 h-3 bg-white rounded"></div>
-                                <div class="w-3 h-3 bg-white rounded"></div>
-                                <div class="w-3 h-3 bg-white rounded"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="image-option border-2 border-transparent hover:border-primary rounded-lg overflow-hidden cursor-pointer transition-all duration-200" data-image="pattern5">
-                        <div class="w-full h-24 bg-gradient-to-br from-indigo-400 to-purple-500 flex items-center justify-center">
-                            <div class="w-6 h-2 bg-white rounded-full"></div>
-                        </div>
-                    </div>
-                    <div class="image-option border-2 border-transparent hover:border-primary rounded-lg overflow-hidden cursor-pointer transition-all duration-200" data-image="pattern6">
-                        <div class="w-full h-24 bg-gradient-to-br from-pink-400 to-rose-500 flex items-center justify-center">
-                            <div class="flex space-x-1">
-                                <div class="w-2 h-6 bg-white rounded"></div>
-                                <div class="w-2 h-4 bg-white rounded"></div>
-                                <div class="w-2 h-8 bg-white rounded"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div id="selectedImageDisplay" class="hidden mb-4 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                    <p class="text-sm text-gray-600 dark:text-gray-300">الصورة المحددة:</p>
-                    <div id="selectedImagePreview" class="mt-2 w-20 h-20 rounded-lg overflow-hidden border-2 border-primary"></div>
-                </div>
-            </div>
+  <h3>🔓 محاولة الفتح</h3>
+  <input type="file" id="verifyInput" accept="image/*" />
+  <button onclick="verifyKey()">تحقق من الصورة</button>
+  <div class="result" id="result"></div>
+  <progress id="matchBar" value="0" max="100" style="display:none;"></progress>
 
-            <!-- Password and Actions Panel -->
-            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
-                <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-6 flex items-center">
-                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-3.586l4.293-4.293A6 6 0 0115 7z"></path>
-                    </svg>
-                    كلمة المرور والإجراءات
-                </h3>
-                
-                <!-- Password Input -->
-                <div class="mb-6">
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                        كلمة المرور
-                    </label>
-                    <input type="password" id="passwordInput" class="w-full px-4 py-3 text-base border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors duration-200" placeholder="أدخل كلمة المرور">
-                </div>
+  <div id="securedActions" style="display:none;">
+    <h3>🔧 إعدادات Keynova</h3>
+    <button onclick="goToKeyChange()">🛠️ تغيير المفتاح</button>
+    <button onclick="goToProtection()">🗂️ حماية الملفات / التطبيقات</button>
+    <button onclick="removeKey()">🗑️ إزالة المفتاح</button>
+  </div>
 
-                <!-- Action Buttons -->
-                <div class="space-y-4">
-                    <button id="setKeyBtn" class="w-full px-6 py-3 bg-primary hover:bg-primary-dark text-white rounded-lg font-medium transition-colors duration-200 flex items-center justify-center">
-                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-                        </svg>
-                        تعيين المفتاح الجديد
-                    </button>
-                    
-                    <button id="unlockBtn" class="w-full px-6 py-3 bg-green-500 hover:bg-green-600 text-white rounded-lg font-medium transition-colors duration-200 flex items-center justify-center">
-                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"></path>
-                        </svg>
-                        فتح القفل
-                    </button>
-                </div>
-            </div>
-        </div>
+  <div id="keySection" style="display:none;">
+    <h3>🖼️ تعيين صورة كمفتاح جديد</h3>
+    <input type="file" id="setKeyInput" accept="image/*" />
+    <button onclick="setKey()">حفظ المفتاح</button>
+  </div>
 
-        <!-- Instructions -->
-        <div class="mt-8 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-6">
-            <h4 class="text-lg font-semibold text-blue-800 dark:text-blue-200 mb-4 flex items-center">
-                <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-                تعليمات الاستخدام
-            </h4>
-            <ul class="text-blue-700 dark:text-blue-300 space-y-2 text-sm">
-                <li class="flex items-start">
-                    <span class="ml-2">•</span>
-                    <span>اختر صورة من المجموعة المتاحة وأدخل كلمة مرور قوية</span>
-                </li>
-                <li class="flex items-start">
-                    <span class="ml-2">•</span>
-                    <span>سيتم دمج الصورة مع كلمة المرور لإنشاء مفتاح فريد وآمن</span>
-                </li>
-                <li class="flex items-start">
-                    <span class="ml-2">•</span>
-                    <span>لفتح القفل، استخدم نفس الصورة وكلمة المرور المحددتين</span>
-                </li>
-                <li class="flex items-start">
-                    <span class="ml-2">•</span>
-                    <span>يمكنك تغيير المفتاح في أي وقت باختيار صورة جديدة وكلمة مرور مختلفة</span>
-                </li>
-            </ul>
-        </div>
-    </div>
+  <div id="protectionSection" style="display:none;">
+    <h3>🛡️ الحماية البصرية</h3>
+    <select id="protectedTarget">
+      <option value="">— اختر الهدف —</option>
+      <option value="images">📸 الصور</option>
+      <option value="docs">📄 المستندات</option>
+      <option value="apps">📱 التطبيقات</option>
+      <option value="custom">🧩 مخصص</option>
+    </select>
+    <br />
+    <button onclick="protectSelected()">🔒 تطبيق الحماية</button>
+    <button onclick="clearProtection()">🧹 إلغاء الحماية</button>
+    <div class="result" id="protectionStatus"></div>
+  </div>
 
-    <!-- Success/Error Modals -->
-    <div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg max-w-sm w-full mx-4 bounce-in">
-            <div class="text-center">
-                <div class="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                </div>
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2" id="successTitle">نجح!</h3>
-                <p class="text-gray-600 dark:text-gray-300 mb-4" id="successMessage">تم تنفيذ العملية بنجاح</p>
-                <button onclick="hideModal('successModal')" class="px-6 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors duration-200">
-                    موافق
-                </button>
-            </div>
-        </div>
-    </div>
+  <script>
+    async function calculateHash(file) {
+      const buffer = await file.arrayBuffer();
+      const hashBuffer = await crypto.subtle.digest("SHA-256", buffer);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
 
-    <div id="errorModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg max-w-sm w-full mx-4 bounce-in">
-            <div class="text-center">
-                <div class="w-16 h-16 bg-red-100 dark:bg-red-900 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <svg class="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                </div>
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">خطأ!</h3>
-                <p class="text-gray-600 dark:text-gray-300 mb-4" id="errorMessage">حدث خطأ في العملية</p>
-                <button onclick="hideModal('errorModal')" class="px-6 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors duration-200">
-                    موافق
-                </button>
-            </div>
-        </div>
-    </div>
+    async function verifyKey() {
+      const file = document.getElementById("verifyInput").files[0];
+      if (!file) return alert("يرجى اختيار صورة للتحقق منها");
 
-    <script>
-        // Dark mode detection
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            document.documentElement.classList.add('dark');
-        }
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
-            if (event.matches) {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-            }
-        });
+      const storedHash = localStorage.getItem("keynova_hash");
+      if (!storedHash) {
+        alert("🔒 لا يوجد مفتاح محفوظ، يرجى تعيين مفتاح أولًا");
+        goToKeyChange();
+        return;
+      }
 
-        // App state
-        let selectedImage = null;
-        let storedKey = localStorage.getItem('keynovaKey');
-        let isUnlocked = false;
+      const currentHash = await calculateHash(file);
+      const minLength = Math.min(currentHash.length, storedHash.length);
+      let differences = 0;
+      for (let i = 0; i < minLength; i++) {
+        if (currentHash[i] !== storedHash[i]) differences++;
+      }
+      const matchPercent = Math.round(((minLength - differences) / minLength) * 100);
 
-        // Elements
-        const imageOptions = document.querySelectorAll('.image-option');
-        const selectedImageDisplay = document.getElementById('selectedImageDisplay');
-        const selectedImagePreview = document.getElementById('selectedImagePreview');
-        const passwordInput = document.getElementById('passwordInput');
-        const setKeyBtn = document.getElementById('setKeyBtn');
-        const unlockBtn = document.getElementById('unlockBtn');
-        const resetBtn = document.getElementById('resetBtn');
-        const statusCard = document.getElementById('statusCard');
-        const statusTitle = document.getElementById('statusTitle');
-        const statusDesc = document.getElementById('statusDesc');
-        const lockIcon = document.getElementById('lockIcon');
+      const resultDiv = document.getElementById("result");
+      const bar = document.getElementById("matchBar");
+      bar.value = matchPercent;
+      bar.style.display = "block";
 
-        // Initialize app
-        updateUI();
+      if (matchPercent >= 90) {
+        resultDiv.innerHTML = `✅ تم التحقق بنجاح بنسبة تطابق ${matchPercent}%`;
+        resultDiv.className = "result success";
+        document.getElementById("securedActions").style.display = "block";
+      } else if (matchPercent >= 70) {
+        resultDiv.innerHTML = `⚠️ نسبة التطابق ${matchPercent}%. قد تكون الصورة غير دقيقة.`;
+        resultDiv.className = "result warning";
+      } else {
+        resultDiv.innerHTML = `❌ نسبة التطابق ${matchPercent}%. محتمل أن تكون مزيفة.`;
+        resultDiv.className = "result fail";
+      }
 
-        // Image selection
-        imageOptions.forEach(option => {
-            option.addEventListener('click', function() {
-                // Remove previous selection
-                imageOptions.forEach(opt => opt.classList.remove('border-primary', 'ring-2', 'ring-primary', 'ring-opacity-50'));
-                
-                // Add selection to current
-                this.classList.add('border-primary', 'ring-2', 'ring-primary', 'ring-opacity-50');
-                
-                selectedImage = this.dataset.image;
-                
-                // Show selected image
-                selectedImageDisplay.classList.remove('hidden');
-                selectedImagePreview.innerHTML = this.innerHTML;
-            });
-        });
+      setTimeout(() => {
+        document.getElementById("securedActions").style.display = "none";
+        document.getElementById("keySection").style.display = "none";
+        document.getElementById("protectionSection").style.display = "none";
+        bar.style.display = "none";
+      }, 600000);
+    }
 
-        // Set key
-        setKeyBtn.addEventListener('click', function() {
-            if (!selectedImage) {
-                showError('يرجى اختيار صورة أولاً');
-                return;
-            }
-            
-            const password = passwordInput.value.trim();
-            if (!password) {
-                showError('يرجى إدخال كلمة مرور');
-                return;
-            }
+    async function setKey() {
+      const file = document.getElementById("setKeyInput").files[0];
+      if (!file) return alert("يرجى اختيار صورة لتعيينها");
 
-            // Create hash from image + password
-            const combinedData = selectedImage + password;
-            const hash = CryptoJS.SHA256(combinedData).toString();
-            
-            // Store key
-            localStorage.setItem('keynovaKey', hash);
-            localStorage.setItem('keynovaImage', selectedImage);
-            storedKey = hash;
-            
-            showSuccess('تم تعيين المفتاح بنجاح', 'تم حفظ المفتاح الجديد بأمان');
-            updateUI();
-            clearInputs();
-        });
+      const confirmChange = confirm("هل أنت متأكد من تغيير المفتاح؟");
+      if (!confirmChange) return;
 
-        // Unlock
-        unlockBtn.addEventListener('click', function() {
-            if (!storedKey) {
-                showError('لم يتم تعيين أي مفتاح بعد');
-                return;
-            }
-            
-            if (!selectedImage) {
-                showError('يرجى اختيار الصورة المفتاحية');
-                return;
-            }
-            
-            const password = passwordInput.value.trim();
-            if (!password) {
-                showError('يرجى إدخال كلمة المرور');
-                return;
-            }
+      const hash = await calculateHash(file);
+      localStorage.setItem("keynova_hash", hash);
+      alert("✅ تم حفظ المفتاح الجديد بنجاح");
+    }
 
-            // Create hash and compare
-            const combinedData = selectedImage + password;
-            const hash = CryptoJS.SHA256(combinedData).toString();
-            
-            if (hash === storedKey) {
-                isUnlocked = true;
-                showSuccess('تم فتح القفل بنجاح!', 'مرحباً بك! القفل مفتوح الآن');
-                updateUI();
-                clearInputs();
-                
-                // Auto lock after 30 seconds
-                setTimeout(() => {
-                    if (isUnlocked) {
-                        isUnlocked = false;
-                        updateUI();
-                        showInfo('تم قفل النظام تلقائياً لأمان إضافي');
-                    }
-                }, 30000);
-            } else {
-                showError('فشل في فتح القفل - تأكد من الصورة وكلمة المرور');
-            }
-        });
+    function goToKeyChange() {
+      document.getElementById("keySection").style.display = "block";
+    }
 
-        // Reset key
-        resetBtn.addEventListener('click', function() {
-            showConfirmDialog('هل أنت متأكد من إعادة تعيين المفتاح؟ سيتم حذف المفتاح الحالي نهائياً.', function() {
-                localStorage.removeItem('keynovaKey');
-                localStorage.removeItem('keynovaImage');
-                storedKey = null;
-                isUnlocked = false;
-                updateUI();
-                clearInputs();
-                showSuccess('تم إعادة التعيين', 'تم حذف المفتاح بنجاح');
-            });
-        });
+    function goToProtection() {
+      document.getElementById("protectionSection").style.display = "block";
+      const storedTarget = localStorage.getItem("protected_target");
+      const statusDiv = document.getElementById("protectionStatus");
 
-        // Helper functions
-        function updateUI() {
-            const hasKey = !!storedKey;
-            const savedImage = localStorage.getItem('keynovaImage');
-            
-            // Update status
-            if (isUnlocked) {
-                statusTitle.textContent = 'القفل مفتوح';
-                statusDesc.textContent = 'النظام مفتوح ويمكن الوصول إليه';
-                lockIcon.className = 'w-10 h-10 rounded-full flex items-center justify-center bg-green-100 dark:bg-green-900 text-green-500';
-                lockIcon.innerHTML = '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"></path></svg>';
-            } else if (hasKey) {
-                statusTitle.textContent = 'القفل مفعل';
-                statusDesc.textContent = 'تم تعيين المفتاح - النظام محمي';
-                lockIcon.className = 'w-10 h-10 rounded-full flex items-center justify-center bg-red-100 dark:bg-red-900 text-red-500';
-                lockIcon.innerHTML = '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>';
-            } else {
-                statusTitle.textContent = 'القفل غير مفعل';
-                statusDesc.textContent = 'لم يتم تعيين مفتاح بعد';
-                lockIcon.className = 'w-10 h-10 rounded-full flex items-center justify-center bg-gray-100 dark:bg-gray-700 text-gray-500';
-                lockIcon.innerHTML = '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>';
-            }
-            
-            // Update button states
-            resetBtn.disabled = !hasKey;
-            resetBtn.className = hasKey ? 
-                'px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors duration-200' :
-                'px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors duration-200 opacity-50 cursor-not-allowed';
-        }
+      if (storedTarget) {
+        statusDiv.innerHTML = `✅ الحماية مفعّلة على: <strong>${storedTarget}</strong>`;
+        statusDiv.className = "result success";
+      } else {
+        statusDiv.innerHTML = "⚠️ لا توجد حماية حالية";
+        statusDiv.className = "result fail";
+      }
+    }
 
-        function clearInputs() {
-            passwordInput.value = '';
-            selectedImage = null;
-            selectedImageDisplay.classList.add('hidden');
-            imageOptions.forEach(opt => opt.classList.remove('border-primary', 'ring-2', 'ring-primary', 'ring-opacity-50'));
-        }
+    function protectSelected() {
+      const target = document.getElementById("protectedTarget").value;
+      const statusDiv = document.getElementById("protectionStatus");
 
-        function showSuccess(title, message) {
-            document.getElementById('successTitle').textContent = title;
-            document.getElementById('successMessage').textContent = message;
-            document.getElementById('successModal').classList.remove('hidden');
-            document.getElementById('successModal').classList.add('flex');
-        }
+      if (!target) {
+        statusDiv.innerHTML = "⚠️ يرجى اختيار هدف";
+        statusDiv.className = "result fail";
+        return;
+      }
 
-        function showError(message) {
-            document.getElementById('errorMessage').textContent = message;
-            document.getElementById('errorModal').classList.remove('hidden');
-            document.getElementById('errorModal').classList.add('flex');
-        }
+      localStorage.setItem("protected_target", target);
+      statusDiv.innerHTML = `✅ تم حماية: <strong>${target}</strong>`;
+      statusDiv.className = "result success";
+    }
 
-        function showInfo(message) {
-            // Reuse success modal for info
-            showSuccess('معلومة', message);
-        }
+    function clearProtection() {
+      localStorage.removeItem("protected_target");
+      const statusDiv = document.getElementById("protectionStatus");
+      statusDiv.innerHTML = "🧹 تم إلغاء الحماية";
+      statusDiv.className = "result fail";
+    }
 
-        function hideModal(modalId) {
-            document.getElementById(modalId).classList.add('hidden');
-            document.getElementById(modalId).classList.remove('flex');
-        }
+    function removeKey() {
+      const confirmDelete = confirm("هل أنت متأكد من إزالة المفتاح؟");
+      if (!confirmDelete) return;
 
-        function showConfirmDialog(message, onConfirm) {
-            const modal = document.createElement('div');
-            modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
-            modal.innerHTML = `
-                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg max-w-sm w-full mx-4 bounce-in">
-                    <div class="text-center">
-                        <div class="w-16 h-16 bg-yellow-100 dark:bg-yellow-900 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <svg class="w-8 h-8 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L4.314 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">تأكيد</h3>
-                        <p class="text-gray-600 dark:text-gray-300 mb-6">${message}</p>
-                        <div class="flex justify-center space-x-3 space-x-reverse">
-                            <button class="px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200" onclick="this.closest('.fixed').remove()">
-                                إلغاء
-                            </button>
-                            <button class="px-4 py-2 bg-red-500 text-white hover:bg-red-600 rounded-lg transition-colors duration-200" onclick="this.closest('.fixed').remove(); (${onConfirm})()">
-                                تأكيد
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `;
-            document.body.appendChild(modal);
-        }
-    </script>
+      localStorage.removeItem("keynova_hash");
+      alert("✅ تمت إزالة المفتاح");
+      document.getElementById("securedActions").style.display = "none";
+    }
+  </script>
+
 </body>
 </html>
