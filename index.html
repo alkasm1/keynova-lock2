@@ -937,8 +937,8 @@ window.onload = function() {
   const hasKey = localStorage.getItem("keynova_combined_hash") !== null;
 
   if (hasKey) {
-    document.getElementById("settings-content").classList.remove("hidden");
-    document.getElementById("no-key-section").classList.remove("hidden");
+    document.getElementById("settings-content").classList.add("hidden");
+    document.getElementById("no-key-section").classList.add("hidden");
   } else {
     document.getElementById("settings-content").classList.remove("hidden");
     document.getElementById("no-key-section").classList.remove("hidden");
