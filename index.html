@@ -4,831 +4,946 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Keynova Lock - قفل بصري آمن</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
-  --primary: #ff8800;
-  --primary-dark: #e67600;
-  --dark: #121212;
-  --dark-light: #1e1e1e;
-  --light: #f5f5f5;
-  --success: #00c853;
-  --danger: #ff4444;
-  --warning: #ffbb33;
-  --gray: #b9b9b9;
+--primary: #ff8800;
+--primary-dark: #e67600;
+--dark: #121212;
+--dark-light: #1e1e1e;
+--light: #f5f5f5;
+--success: #00c853;
+--danger: #ff4444;
+--warning: #ffbb33;
+--gray: #8d8d8d;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
 body {
-  font-family: 'Tajawal', Arial, sans-serif;
-  background-color: var(--dark);
-  color: var(--light);
-  min-height: 100vh;
-  padding: 20px;
-  direction: rtl;
-  text-align: right;
+font-family: 'Tajawal', Arial, sans-serif;
+background-color: var(--dark);
+color: var(--light);
+min-height: 100vh;
+padding: 20px;
+direction: rtl;
+text-align: right;
 }
 
-.container { max-width: 520px; margin: 0 auto; padding: 20px; }
-header { text-align: center; padding: 20px 0 30px; position: relative; }
-.logo {
-  background: linear-gradient(135deg, #ff8800, #ff5500);
-  width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 15px;
-  display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 5px 15px rgba(255, 136, 0, 0.3);
+.container {
+max-width: 500px;
+margin: 0 auto;
+padding: 20px;
 }
-.logo i { font-size: 36px; color: white; }
-h1 { color: var(--primary); font-size: 28px; margin-bottom: 5px; }
-.subtitle { color: var(--gray); font-size: 14px; font-weight: 400; }
+
+header {
+text-align: center;
+padding: 20px 0 30px;
+position: relative;
+}
+
+.logo {
+background: linear-gradient(135deg, #ff8800, #ff5500);
+width: 80px;
+height: 80px;
+border-radius: 50%;
+margin: 0 auto 15px;
+display: flex;
+align-items: center;
+justify-content: center;
+box-shadow: 0 5px 15px rgba(255, 136, 0, 0.3);
+}
+
+.logo i {
+font-size: 36px;
+color: white;
+}
+
+h1 {
+color: var(--primary);
+font-size: 28px;
+margin-bottom: 5px;
+}
+
+.subtitle {
+color: var(--gray);
+font-size: 16px;
+font-weight: 400;
+}
 
 .card {
-  background-color: var(--dark-light);
-  border-radius: 16px; padding: 20px; margin-bottom: 20px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s ease; border: 1px solid rgba(255, 255, 255, 0.05);
+background-color: var(--dark-light);
+border-radius: 16px;
+padding: 25px;
+margin-bottom: 20px;
+box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+transition: all 0.3s ease;
+border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.card-header { display: flex; align-items: center; margin-bottom: 15px; color: var(--primary); }
-.card-header i { font-size: 20px; margin-left: 10px; }
-.card-header h3 { font-size: 18px; font-weight: 700; }
-
-.form-group { margin-bottom: 14px; }
-.input {
-  width: 100%; padding: 14px 44px 14px 14px;
-  background-color: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 10px; color: var(--light); font-size: 16px;
-  transition: all 0.3s ease;
+.card-header {
+display: flex;
+align-items: center;
+margin-bottom: 20px;
+color: var(--primary);
 }
-.input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 2px rgba(255, 136, 0, 0.2); }
 
-.input-wrapper { position: relative; }
-.input-wrapper .toggle {
-  position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
-  background: transparent; border: none; color: var(--gray); cursor: pointer;
-  font-size: 16px;
+.card-header i {
+font-size: 22px;
+margin-left: 10px;
+}
+
+.card-header h3 {
+font-size: 20px;
+font-weight: 700;
+}
+
+.form-group {
+margin-bottom: 20px;
+}
+
+.file-input {
+width: 100%;
+padding: 15px;
+background-color: rgba(255, 255, 255, 0.05);
+border: 1px solid rgba(255, 255, 255, 0.1);
+border-radius: 10px;
+color: var(--light);
+font-size: 16px;
+cursor: pointer;
+transition: all 0.3s ease;
+}
+
+.file-input:hover {
+border-color: var(--primary);
+}
+
+.file-input:focus {
+outline: none;
+border-color: var(--primary);
+box-shadow: 0 0 0 2px rgba(255, 136, 0, 0.2);
 }
 
 .image-gallery {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-  gap: 10px; max-height: 300px; overflow-y: auto; padding: 10px;
-  background: rgba(255, 255, 255, 0.03); border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-.image-item {
-  position: relative; aspect-ratio: 1; border-radius: 8px; overflow: hidden;
-  cursor: pointer; transition: all 0.25s ease; border: 2px solid transparent;
-  display: flex; align-items: center; justify-content: center; background: #0f0f0f;
-}
-.image-item:hover { transform: translateY(-2px); border-color: var(--primary); }
-.image-item.selected { border-color: var(--primary); box-shadow: 0 0 10px rgba(255, 136, 0, 0.5); }
-.image-item img { width: 100%; height: 100%; object-fit: cover; }
-.image-number {
-  position: absolute; top: 5px; right: 5px; background: rgba(0, 0, 0, 0.7); color: white;
-  border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center;
-  font-size: 12px; font-weight: bold;
-}
-.image-badge {
-  position: absolute; left: 6px; bottom: 6px; font-size: 11px; color: white;
-  background: rgba(0,0,0,.6); padding: 2px 6px; border-radius: 999px;
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+gap: 10px;
+max-height: 300px;
+overflow-y: auto;
+padding: 10px;
+background: rgba(255, 255, 255, 0.03);
+border-radius: 10px;
+border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.tile-upload {
-  border: 2px dashed rgba(255, 255, 255, 0.2); color: var(--gray);
-  display: flex; flex-direction: column; gap: 6px;
+.image-item {
+position: relative;
+aspect-ratio: 1;
+border-radius: 8px;
+overflow: hidden;
+cursor: pointer;
+transition: all 0.3s ease;
+border: 2px solid transparent;
 }
-.tile-upload i { font-size: 24px; color: var(--primary); }
-.tile-upload span { font-size: 12px; }
+
+.image-item:hover {
+transform: scale(1.05);
+border-color: var(--primary);
+}
+
+.image-item.selected {
+border-color: var(--primary);
+box-shadow: 0 0 10px rgba(255, 136, 0, 0.5);
+}
+
+.image-item img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+}
+
+.image-number {
+position: absolute;
+top: 5px;
+right: 5px;
+background: rgba(0, 0, 0, 0.7);
+color: white;
+border-radius: 50%;
+width: 20px;
+height: 20px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 12px;
+font-weight: bold;
+}
 
 .btn {
-  display: block; width: 100%; padding: 14px; background: var(--primary); color: white;
-  border: none; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer;
-  transition: all 0.3s ease; margin-top: 10px; text-align: center;
+display: block;
+width: 100%;
+padding: 15px;
+background: var(--primary);
+color: white;
+border: none;
+border-radius: 10px;
+font-size: 18px;
+font-weight: 700;
+cursor: pointer;
+transition: all 0.3s ease;
+margin-top: 10px;
+text-align: center;
 }
-.btn:hover { background: var(--primary-dark); transform: translateY(-1px); box-shadow: 0 5px 15px rgba(255, 136, 0, 0.3); }
-.btn:active { transform: translateY(0); }
-.btn-secondary { background: rgba(255, 255, 255, 0.1); }
-.btn-danger { background: var(--danger); }
-.btn-success { background: var(--success); }
+
+.btn:hover {
+background: var(--primary-dark);
+transform: translateY(-2px);
+box-shadow: 0 5px 15px rgba(255, 136, 0, 0.3);
+}
+
+.btn:active {
+transform: translateY(0);
+}
+
+.btn-secondary {
+background: rgba(255, 255, 255, 0.1);
+}
+
+.btn-secondary:hover {
+background: rgba(255, 255, 255, 0.2);
+box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-danger {
+background: var(--danger);
+}
+
+.btn-danger:hover {
+background: #e53935;
+box-shadow: 0 5px 15px rgba(255, 68, 68, 0.3);
+}
+
+.btn-success {
+background: var(--success);
+}
+
+.btn-success:hover {
+background: #00b248;
+box-shadow: 0 5px 15px rgba(0, 200, 83, 0.3);
+}
 
 select {
-  width: 100%; padding: 14px; background-color: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px;
-  color: var(--light); font-size: 16px; margin-bottom: 12px;
+width: 100%;
+padding: 15px;
+background-color: rgba(255, 255, 255, 0.05);
+border: 1px solid rgba(255, 255, 255, 0.1);
+border-radius: 10px;
+color: var(--light);
+font-size: 16px;
+margin-bottom: 15px;
 }
-select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 2px rgba(255, 136, 0, 0.2); }
+
+select:focus {
+outline: none;
+border-color: var(--primary);
+box-shadow: 0 0 0 2px rgba(255, 136, 0, 0.2);
+}
 
 .result {
-  padding: 12px; border-radius: 10px; margin-top: 10px; text-align: center;
-  font-size: 15px; font-weight: 500; display: none;
+padding: 15px;
+border-radius: 10px;
+margin-top: 20px;
+text-align: center;
+font-size: 18px;
+font-weight: 500;
+display: none;
 }
-.success { background-color: rgba(0, 200, 83, 0.15); color: #00ff99; display: block; }
-.fail { background-color: rgba(255, 68, 68, 0.15); color: #ff6b6b; display: block; }
-.warning { background-color: rgba(255, 187, 51, 0.15); color: #ffbb33; display: block; }
 
-.hidden { display: none; }
+.success {
+background-color: rgba(0, 200, 83, 0.15);
+color: #00ff99;
+display: block;
+}
+
+.fail {
+background-color: rgba(255, 68, 68, 0.15);
+color: #ff4444;
+display: block;
+}
+
+.warning {
+background-color: rgba(255, 187, 51, 0.15);
+color: #ffbb33;
+display: block;
+}
+
+.hidden {
+display: none;
+}
 
 .action-buttons {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 15px;
+margin-top: 20px;
 }
-.action-buttons .btn { margin: 0; }
+
+.action-buttons .btn {
+margin: 0;
+}
 
 .session-timeout {
-  background: rgba(255, 187, 51, 0.1); border: 1px solid rgba(255, 187, 51, 0.2);
-  padding: 10px; border-radius: 10px; text-align: center; margin-top: 10px; font-size: 14px; color: var(--warning);
+background: rgba(255, 187, 51, 0.1);
+border: 1px solid rgba(255, 187, 51, 0.2);
+padding: 10px;
+border-radius: 10px;
+text-align: center;
+margin-top: 20px;
+font-size: 14px;
+color: var(--warning);
 }
 
 .instructions {
-  background: rgba(255, 255, 255, 0.03); border-radius: 10px; padding: 12px; margin-top: 15px; border-right: 3px solid var(--primary);
+background: rgba(255, 255, 255, 0.03);
+border-radius: 10px;
+padding: 15px;
+margin-top: 25px;
+border-left: 3px solid var(--primary);
 }
-.instructions h4 { color: var(--primary); margin-bottom: 8px; font-size: 16px; }
-.instructions li { margin-bottom: 6px; color: var(--gray); font-size: 14px; }
+
+.instructions h4 {
+color: var(--primary);
+margin-bottom: 10px;
+}
+
+.instructions ul {
+padding-right: 20px;
+}
+
+.instructions li {
+margin-bottom: 8px;
+color: var(--gray);
+}
+
+.tab-content {
+display: none;
+}
+
+.active-tab {
+display: block;
+}
 
 .tabs {
-  display: flex; justify-content: space-between; background: rgba(255, 255, 255, 0.05);
-  border-radius: 12px; padding: 5px; margin-bottom: 15px;
+display: flex;
+justify-content: space-between;
+background: rgba(255, 255, 255, 0.05);
+border-radius: 12px;
+padding: 5px;
+margin-bottom: 20px;
 }
+
 .tab-btn {
-  flex: 1; padding: 10px; text-align: center; background: transparent; color: var(--gray);
-  border: none; border-radius: 10px; cursor: pointer; font-weight: 600; transition: all 0.3s ease;
+flex: 1;
+padding: 12px;
+text-align: center;
+background: transparent;
+color: var(--gray);
+border: none;
+border-radius: 10px;
+cursor: pointer;
+font-weight: 500;
+transition: all 0.3s ease;
 }
-.tab-btn.active { background: var(--primary); color: white; box-shadow: 0 4px 10px rgba(255, 136, 0, 0.3); }
-.tab-content { display: none; }
-.tab-content.active-tab { display: block; }
 
-.small {
-  font-size: 12px; color: var(--gray);
+.tab-btn.active {
+background: var(--primary);
+color: white;
+box-shadow: 0 4px 10px rgba(255, 136, 0, 0.3);
 }
-.row { display: flex; gap: 8px; align-items: center; }
-.row .input { flex: 1; }
-.icon-btn {
-  background: rgba(255,255,255,0.08); color: var(--light); border: 1px solid rgba(255,255,255,0.12);
-  padding: 8px 10px; border-radius: 8px; cursor: pointer; transition: .2s;
-}
-.icon-btn:hover { background: rgba(255,255,255,0.16); }
 
-.user-image-actions {
-  position: absolute; top: 6px; left: 6px; display: flex; gap: 6px; z-index: 2;
+.status-icon {
+margin-left: 10px;
 }
-.user-image-actions button {
-  background: rgba(0,0,0,.55); color: #fff; border: 0; padding: 4px 6px; font-size: 11px;
-  border-radius: 6px; cursor: pointer;
+
+.no-key-message {
+text-align: center;
+padding: 30px;
+color: var(--warning);
+}
+
+.access-denied {
+text-align: center;
+padding: 30px;
+color: var(--danger);
+font-size: 18px;
+}
+
+.access-denied i {
+font-size: 48px;
+margin-bottom: 15px;
+display: block;
 }
 
 @media (max-width: 480px) {
-  .container { padding: 10px; }
-  .card { padding: 16px; }
-  .action-buttons { grid-template-columns: 1fr; }
-  h1 { font-size: 24px; }
+.container {
+padding: 10px;
+}
+
+.card {
+padding: 20px;
+}
+
+.action-buttons {
+grid-template-columns: 1fr;
+}
+
+h1 {
+font-size: 24px;
+}
+
+.card-header h3 {
+font-size: 18px;
+}
+
+.image-gallery {
+grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+}
 }
 </style>
 </head>
 <body>
 <div class="container">
-  <header>
-    <div class="logo"><i class="fas fa-lock"></i></div>
-    <h1>Keynova Lock</h1>
-    <p class="subtitle">قفل بصري آمن باستخدام الصور وكلمة المرور</p>
-    <p class="subtitle">مطور البرنامج م: رأفت عمر</p>
-  </header>
+<header>
+<div class="logo">
+<i class="fas fa-lock"></i>
+</div>
+<h1>Keynova Lock</h1>
+<p class="subtitle">قفل بصري آمن باستخدام الصور وكلمة المرور</p>
+<p class="subtitle">مطور البرنامج م: رأفت عمر</p>
+</header>
 
-  <div class="tabs">
-    <button id="tab-verify" class="tab-btn active" data-tab="verify">فتح القفل</button>
-    <button id="tab-settings" class="tab-btn" data-tab="settings">الإعدادات</button>
-  </div>
-
-  <!-- فتح القفل -->
-  <div id="verify" class="tab-content active-tab">
-    <div class="card">
-      <div class="card-header">
-        <i class="fas fa-unlock-alt"></i><h3>افتح القفل باستخدام الصورة + كلمة المرور</h3>
-      </div>
-
-      <div class="form-group">
-        <label style="color: var(--primary); margin-bottom: 8px; display: block; font-weight: 600;">اختر الصورة:</label>
-        <div class="image-gallery" id="verifyGallery"></div>
-        <div class="small">يمكنك إضافة صورة من الاستديو وسيتم حفظ نسخة مصغّرة محلياً.</div>
-      </div>
-
-      <div class="form-group">
-        <label style="color: var(--primary); margin-bottom: 8px; display: block; font-weight: 600;">كلمة المرور:</label>
-        <div class="input-wrapper">
-          <input type="password" class="input" id="verifyPassword" placeholder="أدخل كلمة المرور">
-          <button class="toggle" aria-label="إظهار/إخفاء" data-toggle="#verifyPassword"><i class="far fa-eye"></i></button>
-        </div>
-        <div class="small" id="attemptInfo"></div>
-      </div>
-
-      <button class="btn" id="btnVerify"><i class="fas fa-check-circle"></i> تحقق من المفتاح</button>
-      <div class="result" id="result"></div>
-    </div>
-
-    <div class="instructions">
-      <h4><i class="fas fa-info-circle"></i> تعليمات هامة</h4>
-      <ul>
-        <li>اختر نفس الصورة التي تم تعيينها كمفتاح (من المعرض المدمج أو من الاستديو).</li>
-        <li>أدخل كلمة المرور الصحيحة المرتبطة بتلك الصورة.</li>
-        <li>سيتم حظر المحاولة لمدة قصيرة بعد عدة محاولات خاطئة.</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- الإعدادات -->
-  <div id="settings" class="tab-content">
-    <div id="no-key-section" class="card">
-      <div class="card-header">
-        <i class="fas fa-key"></i><h3>لا يوجد مفتاح مُفعّل</h3>
-      </div>
-      <p class="small">قم بتعيين مفتاح جديد أدناه. بعد التعيين، استخدمه لفتح القفل.</p>
-    </div>
-
-    <div id="settings-content" class="card">
-      <div class="card-header">
-        <i class="fas fa-key"></i><h3>إدارة المفتاح</h3>
-      </div>
-
-      <div class="form-group">
-        <label style="color: var(--primary); margin-bottom: 8px; display: block; font-weight: 600;">اختر صورة المفتاح:</label>
-        <div class="image-gallery" id="settingsGallery"></div>
-      </div>
-
-      <div class="form-group">
-        <label style="color: var(--primary); margin-bottom: 8px; display: block; font-weight: 600;">كلمة المرور الجديدة:</label>
-        <div class="input-wrapper">
-          <input type="password" class="input" id="setKeyPassword" placeholder="أدخل كلمة مرور قوية">
-          <button class="toggle" aria-label="إظهار/إخفاء" data-toggle="#setKeyPassword"><i class="far fa-eye"></i></button>
-        </div>
-        <div class="small" id="pwStrength"></div>
-      </div>
-
-      <button class="btn" id="btnSetKey"><i class="fas fa-save"></i> تعيين مفتاح جديد</button>
-
-      <div class="action-buttons">
-        <button class="btn btn-danger" id="btnRemoveKey"><i class="fas fa-trash-alt"></i> إزالة المفتاح</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-header">
-        <i class="fas fa-shield-alt"></i><h3>حماية الملفات والتطبيقات</h3>
-      </div>
-
-      <select id="protectedTarget">
-        <option value="">-- اختر الهدف للحماية --</option>
-        <option value="images">📸 الصور</option>
-        <option value="docs">📄 المستندات</option>
-        <option value="apps">📱 التطبيقات</option>
-        <option value="custom">🧩 مخصص</option>
-      </select>
-
-      <div class="action-buttons">
-        <button class="btn btn-success" id="btnProtect"><i class="fas fa-lock"></i> تطبيق الحماية</button>
-        <button class="btn btn-secondary" id="btnUnprotect"><i class="fas fa-unlock"></i> إلغاء الحماية</button>
-      </div>
-
-      <div class="result" id="protectionStatus"></div>
-    </div>
-  </div>
-
-  <!-- بعد التحقق -->
-  <div id="securedActions" class="hidden">
-    <div class="session-timeout">
-      <i class="fas fa-clock"></i> الجلسة ستنتهي خلال <span id="sessionTimer">10:00</span>
-    </div>
-    <div class="action-buttons">
-      <button class="btn" data-tab-jump="settings"><i class="fas fa-cog"></i> الإعدادات</button>
-      <button class="btn btn-secondary" id="btnLock"><i class="fas fa-lock"></i> قفل الجلسة</button>
-    </div>
-  </div>
+<div class="tabs">
+<button id="verify-tab" class="tab-btn active" onclick="openTab('verify')">فتح القفل</button>
+<button id="settings-tab" class="tab-btn" onclick="openTab('settings')">الإعدادات</button>
 </div>
 
-<!-- مدخلات الملفات المخفية (التحقق/الإعدادات) -->
-<input type="file" accept="image/*" capture="environment" id="fileVerify" class="hidden">
-<input type="file" accept="image/*" capture="environment" id="fileSettings" class="hidden">
+<!-- واجهة التحقق -->
+<div id="verify" class="tab-content active-tab">
+<div class="card">
+<div class="card-header">
+<i class="fas fa-unlock-alt"></i>
+<h3>فتح القفل باستخدام الصورة وكلمة المرور</h3>
+</div>
+
+<div class="form-group">
+<label style="color: var(--primary); margin-bottom: 10px; display: block; font-weight: 500;">اختر الصورة:</label>
+<div class="image-gallery" id="verifyGallery">
+<!-- سيتم إنشاء الصور ديناميكياً -->
+</div>
+</div>
+
+<div class="form-group">
+<label style="color: var(--primary); margin-bottom: 10px; display: block; font-weight: 500;">كلمة المرور:</label>
+<input type="password" class="file-input" id="verifyPassword" placeholder="أدخل كلمة المرور" style="font-size: 16px;">
+</div>
+
+<button class="btn" onclick="verifyKey()">
+<i class="fas fa-check-circle"></i> تحقق من المفتاح
+</button>
+
+<div class="result" id="result"></div>
+</div>
+
+<div class="instructions">
+<h4><i class="fas fa-info-circle"></i> تعليمات هامة</h4>
+<ul>
+<li>اختر نفس الصورة التي تم تعيينها كمفتاح</li>
+<li>أدخل كلمة المرور الصحيحة التي تم تعيينها مع الصورة</li>
+<li>تأكد من صحة كلمة المرور والصورة المختارة</li>
+<li>إذا لم تنجح، تحقق من الصورة وكلمة المرور مرة أخرى</li>
+</ul>
+</div>
+</div>
+
+<!-- واجهة الإعدادات -->
+<div id="settings" class="tab-content">
+<!-- رسالة عندما لا يوجد مفتاح -->
+<div id="no-key-section" class="no-key-message hidden">
+<i class="fas fa-key"></i>
+<h3>لا يوجد مفتاح قفل محفوظ</h3>
+<p>يرجى فتح القفل أولاً باستخدام مفتاحك الحالي لتعيين مفتاح جديد</p>
+</div>
+
+<!-- محتوى الإعدادات عندما يكون المفتاح متاحاً -->
+<div id="settings-content" class="hidden">
+<div class="card">
+<div class="card-header">
+<i class="fas fa-key"></i>
+<h3>إدارة المفتاح</h3>
+</div>
+
+<div class="form-group">
+<label style="color: var(--primary); margin-bottom: 10px; display: block; font-weight: 500;">اختر صورة المفتاح:</label>
+<div class="image-gallery" id="settingsGallery">
+<!-- سيتم إنشاء الصور ديناميكياً -->
+</div>
+</div>
+
+<div class="form-group">
+<label style="color: var(--primary); margin-bottom: 10px; display: block; font-weight: 500;">كلمة المرور الجديدة:</label>
+<input type="password" class="file-input" id="setKeyPassword" placeholder="أدخل كلمة مرور قوية" style="font-size: 16px;">
+</div>
+
+<button class="btn" onclick="setKey()">
+<i class="fas fa-save"></i> تعيين مفتاح جديد
+</button>
+
+<div class="action-buttons">
+<button class="btn btn-danger" onclick="removeKey()">
+<i class="fas fa-trash-alt"></i> إزالة المفتاح
+</button>
+</div>
+</div>
+
+<div class="card">
+<div class="card-header">
+<i class="fas fa-shield-alt"></i>
+<h3>حماية الملفات والتطبيقات</h3>
+</div>
+
+<select id="protectedTarget">
+<option value="">-- اختر الهدف للحماية --</option>
+<option value="images">📸 الصور</option>
+<option value="docs">📄 المستندات</option>
+<option value="apps">📱 التطبيقات</option>
+<option value="custom">🧩 مخصص</option>
+</select>
+
+<div class="action-buttons">
+<button class="btn btn-success" onclick="protectSelected()">
+<i class="fas fa-lock"></i> تطبيق الحماية
+</button>
+<button class="btn btn-secondary" onclick="clearProtection()">
+<i class="fas fa-unlock"></i> إلغاء الحماية
+</button>
+</div>
+
+<div class="result" id="protectionStatus"></div>
+</div>
+</div>
+</div>
+
+<!-- قسم الإجراءات بعد التحقق -->
+<div id="securedActions" class="hidden">
+<div class="session-timeout">
+<i class="fas fa-clock"></i> الجلسة ستنتهي خلال <span id="sessionTimer">10:00</span>
+</div>
+
+<div class="action-buttons">
+<button class="btn" onclick="openTab('settings')">
+<i class="fas fa-cog"></i> الإعدادات
+</button>
+<button class="btn btn-secondary" onclick="lockSession()">
+<i class="fas fa-lock"></i> قفل الجلسة
+</button>
+</div>
+</div>
+</div>
 
 <script>
-/* ======= حالة التطبيق ======= */
-const LS_KEYS = {
-  COMBINED_HASH: 'keynova_combined_hash',
-  USER_IMAGES: 'keynova_user_images',
-  PROTECTED_TARGET: 'protected_target',
-  LOCKOUT_UNTIL: 'keynova_lockout_until',
-  ATTEMPTS: 'keynova_attempts',
-  KEY_META: 'keynova_key_meta'
-};
+let selectedVerifyImage = null;
+let selectedSettingsImage = null;
 
-const state = {
-  selectedVerify: null,   // {type:'builtin'|'user', id, hash}
-  selectedSettings: null, // {type:'builtin'|'user', id, hash}
-  userImages: []          // [{id, name, dataUrl, hash}]
-};
-
-let sessionTimerHandle = null;
-
-/* ======= أدوات مساعدة ======= */
-function toUint8ArrayFromDataURL(dataUrl) {
-  const [meta, b64] = dataUrl.split(',');
-  const bin = atob(b64);
-  const bytes = new Uint8Array(bin.length);
-  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
-  return bytes;
-}
-
-async function sha256Hex(bytes) {
-  const buf = await crypto.subtle.digest('SHA-256', bytes);
-  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
-}
-
-async function hashDataURL(dataUrl) {
-  return sha256Hex(toUint8ArrayFromDataURL(dataUrl));
-}
-
-async function combinedHash(imageHash, password) {
-  const enc = new TextEncoder().encode(`${imageHash}:${password}`);
-  return sha256Hex(enc);
-}
-
-function showResult(message, type = 'success') {
-  const el = document.getElementById('result');
-  el.textContent = message;
-  el.className = 'result ' + type;
-}
-
-function showStatus(id, message, type = 'success') {
-  const el = document.getElementById(id);
-  el.textContent = message;
-  el.className = 'result ' + type;
-}
-
-function isLockedOut() {
-  const until = parseInt(localStorage.getItem(LS_KEYS.LOCKOUT_UNTIL) || '0', 10);
-  const now = Date.now();
-  return now < until ? until - now : 0;
-}
-
-function setLockout(ms) {
-  localStorage.setItem(LS_KEYS.LOCKOUT_UNTIL, (Date.now() + ms).toString());
-}
-
-function getAttempts() {
-  return parseInt(localStorage.getItem(LS_KEYS.ATTEMPTS) || '0', 10);
-}
-function setAttempts(n) {
-  localStorage.setItem(LS_KEYS.ATTEMPTS, String(n));
-  const info = document.getElementById('attemptInfo');
-  const left = Math.max(0, 5 - n);
-  info.textContent = left > 0 ? `المحاولات المتبقية: ${left} من 5` : 'تم بلوغ الحد. انتظر قليلاً لإعادة المحاولة.';
-}
-
-function assessPassword(pw) {
-  let score = 0;
-  if (pw.length >= 8) score++;
-  if (/[A-Z]/.test(pw)) score++;
-  if (/[a-z]/.test(pw)) score++;
-  if (/\d/.test(pw)) score++;
-  if (/[^A-Za-z0-9]/.test(pw)) score++;
-  return score; // 0..5
-}
-
-function fmtTime(ms) {
-  const total = Math.ceil(ms / 1000);
-  const m = Math.floor(total / 60);
-  const s = total % 60;
-  return `${m}:${s < 10 ? '0' : ''}${s}`;
-}
-
-/* ======= المعرض المدمج (صور مولّدة) ======= */
-function generateBuiltinDataURL(i) {
-  const canvas = document.createElement('canvas');
-  canvas.width = 128; canvas.height = 128;
-  const ctx = canvas.getContext('2d');
-
-  const g = ctx.createLinearGradient(0, 0, 128, 128);
-  const hue1 = (i * 17) % 360;
-  const hue2 = (hue1 + 60) % 360;
-  g.addColorStop(0, `hsl(${hue1}, 70%, 60%)`);
-  g.addColorStop(1, `hsl(${hue2}, 70%, 40%)`);
-  ctx.fillStyle = g;
-  ctx.fillRect(0, 0, 128, 128);
-
-  ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
-  ctx.fillRect(10 + (i % 3) * 20, 10 + (i % 4) * 15, 30, 30);
-  ctx.fillRect(50 + (i % 2) * 25, 50 + (i % 3) * 20, 25, 25);
-
-  return canvas.toDataURL('image/png');
-}
-
-/* ======= إدارة صور المستخدم ======= */
-function loadUserImages() {
-  try {
-    state.userImages = JSON.parse(localStorage.getItem(LS_KEYS.USER_IMAGES) || '[]');
-  } catch { state.userImages = []; }
-}
-function saveUserImages() {
-  localStorage.setItem(LS_KEYS.USER_IMAGES, JSON.stringify(state.userImages));
-}
-
-async function addUserImageFromFile(file, galleryId) {
-  if (!file || !file.type.startsWith('image/')) return;
-  const dataUrl = await readAndResize(file, 192);
-  const hash = await hashDataURL(dataUrl);
-  const id = 'u-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8);
-  const name = file.name || 'صورة';
-  state.userImages.unshift({ id, name, dataUrl, hash });
-  saveUserImages();
-  createImageGallery(galleryId, galleryId === 'settingsGallery');
-  // تحديد الصورة المضافة مباشرة
-  selectImage({ type: 'user', id, hash }, galleryId === 'settingsGallery');
-}
-
-function removeUserImage(id) {
-  const idx = state.userImages.findIndex(x => x.id === id);
-  if (idx >= 0) {
-    state.userImages.splice(idx, 1);
-    saveUserImages();
-    createImageGallery('verifyGallery', false);
-    createImageGallery('settingsGallery', true);
-  }
-}
-
-function renameUserImage(id, newName) {
-  const img = state.userImages.find(x => x.id === id);
-  if (img) {
-    img.name = newName || img.name;
-    saveUserImages();
-    createImageGallery('verifyGallery', false);
-    createImageGallery('settingsGallery', true);
-  }
-}
-
-function readFileAsDataURL(file) {
-  return new Promise((resolve, reject) => {
-    const fr = new FileReader();
-    fr.onload = () => resolve(fr.result);
-    fr.onerror = reject;
-    fr.readAsDataURL(file);
-  });
-}
-
-async function readAndResize(file, maxSize) {
-  const srcUrl = await readFileAsDataURL(file);
-  const img = new Image();
-  img.src = srcUrl;
-  await img.decode();
-  const scale = Math.min(maxSize / img.width, maxSize / img.height, 1);
-  const w = Math.max(1, Math.round(img.width * scale));
-  const h = Math.max(1, Math.round(img.height * scale));
-  const canvas = document.createElement('canvas');
-  canvas.width = w; canvas.height = h;
-  const ctx = canvas.getContext('2d');
-  ctx.drawImage(img, 0, 0, w, h);
-  // JPEG لتقليل الحجم
-  return canvas.toDataURL('image/jpeg', 0.8);
-}
-
-/* ======= بناء المعارض ======= */
-async function createImageGallery(containerId, isSettings = false) {
+// إنشاء الصور في المعرض
+function createImageGallery(containerId, isSettings = false) {
   const container = document.getElementById(containerId);
   container.innerHTML = '';
-
-  // بطاقة الإضافة
-  const addTile = document.createElement('div');
-  addTile.className = 'image-item tile-upload';
-  addTile.innerHTML = '<i class="fas fa-plus"></i><span>إضافة من الاستديو</span>';
-  addTile.onclick = () => document.getElementById(isSettings ? 'fileSettings' : 'fileVerify').click();
-  container.appendChild(addTile);
-
-  // صور مضافة من المستخدم
-  state.userImages.forEach(img => {
-    const item = document.createElement('div');
-    item.className = 'image-item';
-    item.dataset.type = 'user';
-    item.dataset.id = img.id;
-    item.dataset.hash = img.hash;
-    item.title = img.name;
-
-    const image = document.createElement('img');
-    image.src = img.dataUrl;
-    image.alt = img.name;
-
-    const badge = document.createElement('div');
-    badge.className = 'image-badge';
-    badge.textContent = 'من الاستديو';
-
-    // أزرار صغيرة (إعادة تسمية/حذف)
-    const actions = document.createElement('div');
-    actions.className = 'user-image-actions';
-    const btnRename = document.createElement('button');
-    btnRename.innerHTML = '<i class="fas fa-pen"></i>';
-    btnRename.title = 'إعادة تسمية';
-    btnRename.onclick = (e) => {
-      e.stopPropagation();
-      const newName = prompt('اسم الصورة:', img.name);
-      if (newName !== null) renameUserImage(img.id, newName.trim());
-    };
-    const btnDelete = document.createElement('button');
-    btnDelete.innerHTML = '<i class="fas fa-trash"></i>';
-    btnDelete.title = 'حذف';
-    btnDelete.onclick = (e) => {
-      e.stopPropagation();
-      if (confirm('حذف هذه الصورة من القائمة؟')) removeUserImage(img.id);
-    };
-    actions.append(btnRename, btnDelete);
-
-    item.append(image, badge, actions);
-    item.onclick = () => {
-      selectImage({ type: 'user', id: img.id, hash: img.hash }, isSettings);
-    };
-    container.appendChild(item);
-  });
-
-  // المعرض المدمج
+  
   for (let i = 1; i <= 20; i++) {
-    const item = document.createElement('div');
-    item.className = 'image-item';
-    item.dataset.type = 'builtin';
-    item.dataset.id = String(i);
-
-    const dataUrl = generateBuiltinDataURL(i);
-    const hash = await hashDataURL(dataUrl);
-    item.dataset.hash = hash;
-
-    const image = document.createElement('img');
-    image.src = dataUrl; image.alt = `صورة ${i}`;
+    const imageItem = document.createElement('div');
+    imageItem.className = 'image-item';
+    imageItem.onclick = () => selectImage(i, isSettings);
+    
+    // إنشاء صورة ملونة باستخدام Canvas
+    const canvas = document.createElement('canvas');
+    canvas.width = 100;
+    canvas.height = 100;
+    const ctx = canvas.getContext('2d');
+    
+    // إنشاء تدرج لوني مختلف لكل صورة
+    const gradient = ctx.createLinearGradient(0, 0, 100, 100);
+    const hue1 = (i * 17) % 360; // توزيع الألوان بشكل متنوع
+    const hue2 = (hue1 + 60) % 360;
+    gradient.addColorStop(0, `hsl(${hue1}, 70%, 60%)`);
+    gradient.addColorStop(1, `hsl(${hue2}, 70%, 40%)`);
+    
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, 100, 100);
+    
+    // إضافة نمط هندسي
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+    ctx.fillRect(10 + (i % 3) * 20, 10 + (i % 4) * 15, 30, 30);
+    ctx.fillRect(50 + (i % 2) * 25, 50 + (i % 3) * 20, 25, 25);
+    
+    const img = document.createElement('img');
+    img.src = canvas.toDataURL();
+    img.alt = `صورة ${i}`;
+    
     const numberDiv = document.createElement('div');
-    numberDiv.className = 'image-number'; numberDiv.textContent = i;
-
-    const badge = document.createElement('div');
-    badge.className = 'image-badge'; badge.textContent = 'مدمج';
-
-    item.append(image, numberDiv, badge);
-    item.onclick = () => {
-      selectImage({ type: 'builtin', id: i, hash }, isSettings);
-    };
-    container.appendChild(item);
+    numberDiv.className = 'image-number';
+    numberDiv.textContent = i;
+    
+    imageItem.appendChild(img);
+    imageItem.appendChild(numberDiv);
+    imageItem.dataset.imageId = i;
+    
+    container.appendChild(imageItem);
   }
 }
 
-function selectImage(sel, isSettings) {
+// اختيار صورة
+function selectImage(imageId, isSettings = false) {
   const galleryId = isSettings ? 'settingsGallery' : 'verifyGallery';
   const container = document.getElementById(galleryId);
-  container.querySelectorAll('.image-item').forEach(el => el.classList.remove('selected'));
-
-  // اجعل العنصر المختار مميزاً (عدا بطاقة الإضافة)
-  const query = `.image-item[data-id="${sel.id}"][data-type="${sel.type}"]`;
-  const selectedEl = container.querySelector(query);
-  if (selectedEl) selectedEl.classList.add('selected');
-
-  if (isSettings) state.selectedSettings = sel;
-  else state.selectedVerify = sel;
-}
-
-/* ======= تبويبات ======= */
-function openTab(tabName) {
-  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active-tab'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  const content = document.getElementById(tabName);
-  content.classList.add('active-tab');
-  const tabBtn = document.querySelector(`.tab-btn[data-tab="${tabName}"]`);
-  if (tabBtn) tabBtn.classList.add('active');
-}
-
-/* ======= التحقق/التعيين/الجلسة ======= */
-async function verifyKey() {
-  const lockMsLeft = isLockedOut();
-  if (lockMsLeft > 0) {
-    showResult(`محظور مؤقتاً. انتظر ${fmtTime(lockMsLeft)} ثم أعد المحاولة.`, 'warning');
-    return;
-  }
-
-  if (!state.selectedVerify) {
-    showResult('يرجى اختيار صورة للتحقق منها', 'fail'); return;
-  }
-  const password = document.getElementById('verifyPassword').value;
-  if (!password) {
-    showResult('يرجى إدخال كلمة المرور', 'fail'); return;
-  }
-
-  const storedHash = localStorage.getItem(LS_KEYS.COMBINED_HASH);
-  if (!storedHash) {
-    showResult('لا يوجد مفتاح محفوظ، قم بتعيين مفتاح أولاً من الإعدادات', 'warning');
-    openTab('settings');
-    return;
-  }
-
-  showResult('جاري التحقق...', 'warning');
-  const currentHash = await combinedHash(state.selectedVerify.hash, password);
-  if (currentHash === storedHash) {
-    showResult('تم التحقق بنجاح! الجلسة مفعلة الآن', 'success');
-    document.getElementById('securedActions').classList.remove('hidden');
-    document.getElementById('settings-content').classList.remove('hidden');
-    document.getElementById('no-key-section').classList.add('hidden');
-    setAttempts(0); // إعادة الضبط
-    startSessionTimer();
+  
+  // إزالة التحديد السابق
+  container.querySelectorAll('.image-item').forEach(item => {
+    item.classList.remove('selected');
+  });
+  
+  // تحديد الصورة الجديدة
+  const selectedItem = container.querySelector(`[data-image-id="${imageId}"]`);
+  selectedItem.classList.add('selected');
+  
+  if (isSettings) {
+    selectedSettingsImage = imageId;
   } else {
-    const n = getAttempts() + 1;
-    setAttempts(n);
-    if (n >= 5) {
-      setLockout(30_000); // 30 ثانية حظر
-      showResult('محاولات خاطئة متكررة. تم الحظر المؤقت لمدة 30 ثانية.', 'fail');
+    selectedVerifyImage = imageId;
+  }
+}
+
+// دالة لحساب بصمة مركبة من الصورة وكلمة المرور
+async function calculateCombinedHash(imageId, password) {
+  try {
+    // إنشاء string مركب من معرف الصورة وكلمة المرور
+    const combinedData = `image_${imageId}_password_${password}`;
+    const encoder = new TextEncoder();
+    const data = encoder.encode(combinedData);
+    
+    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  } catch (error) {
+    console.error("Error calculating hash:", error);
+    showResult("حدث خطأ أثناء معالجة البيانات", "fail");
+    return null;
+  }
+}
+
+// دالة التحقق من المفتاح
+async function verifyKey() {
+  if (!selectedVerifyImage) {
+    showResult("يرجى اختيار صورة للتحقق منها", "fail");
+    return;
+  }
+
+  const password = document.getElementById("verifyPassword").value;
+  if (!password) {
+    showResult("يرجى إدخال كلمة المرور", "fail");
+    return;
+  }
+
+  const storedHash = localStorage.getItem("keynova_combined_hash");
+
+  if (!storedHash) {
+    showResult("لا يوجد مفتاح محفوظ، يرجى تعيين مفتاح أولًا", "warning");
+    document.getElementById("settings-content").classList.remove("hidden");
+    document.getElementById("no-key-section").classList.add("hidden");
+    return;
+  }
+
+  showResult("جاري التحقق من المفتاح...", "warning");
+
+  try {
+    const currentHash = await calculateCombinedHash(selectedVerifyImage, password);
+    if (!currentHash) return;
+
+    if (currentHash === storedHash) {
+      showResult("تم التحقق بنجاح! الجلسة مفعلة الآن", "success");
+      document.getElementById("securedActions").classList.remove("hidden");
+      document.getElementById("settings-content").classList.remove("hidden");
+      document.getElementById("no-key-section").classList.add("hidden");
+      startSessionTimer();
     } else {
-      showResult('الصورة أو كلمة المرور غير صحيحة', 'fail');
+      showResult("الصورة أو كلمة المرور غير صحيحة", "fail");
     }
+  } catch (error) {
+    console.error("Verification error:", error);
+    showResult("حدث خطأ أثناء عملية التحقق", "fail");
   }
 }
 
+// دالة تعيين مفتاح جديد
 async function setKey() {
-  if (!state.selectedSettings) {
-    showResult('يرجى اختيار صورة لتعيينها كمفتاح', 'fail'); return;
+  if (!selectedSettingsImage) {
+    showResult("يرجى اختيار صورة لتعيينها كمفتاح", "fail");
+    return;
   }
-  const pw = document.getElementById('setKeyPassword').value;
-  if (!pw) { showResult('يرجى إدخال كلمة مرور', 'fail'); return; }
-  if (pw.length < 6) { showResult('كلمة المرور يجب أن تكون 6 أحرف على الأقل', 'fail'); return; }
 
-  const ok = await confirmDialog('تأكيد تغيير المفتاح؟ لن تتمكن من فتح القفل بدون هذه الصورة وهذه الكلمة.');
-  if (!ok) return;
-
-  const hash = await combinedHash(state.selectedSettings.hash, pw);
-  localStorage.setItem(LS_KEYS.COMBINED_HASH, hash);
-  localStorage.setItem(LS_KEYS.KEY_META, JSON.stringify({
-    type: state.selectedSettings.type, id: state.selectedSettings.id, imageHash: state.selectedSettings.hash
-  }));
-  showResult('تم حفظ المفتاح الجديد بنجاح', 'success');
-
-  // تنظيف كلمة المرور فقط
-  document.getElementById('setKeyPassword').value = '';
-  document.getElementById('pwStrength').textContent = '';
-}
-
-function removeKey() {
-  if (!localStorage.getItem(LS_KEYS.COMBINED_HASH)) {
-    showResult('لا يوجد مفتاح محفوظ', 'fail'); return;
+  const password = document.getElementById("setKeyPassword").value;
+  if (!password) {
+    showResult("يرجى إدخال كلمة مرور", "fail");
+    return;
   }
-  confirmDialog('إزالة المفتاح؟ لن تتمكن من استخدام القفل بعد ذلك حتى تعيين مفتاح جديد.')
-    .then(ok => {
-      if (!ok) return;
-      localStorage.removeItem(LS_KEYS.COMBINED_HASH);
-      localStorage.removeItem(LS_KEYS.KEY_META);
-      localStorage.removeItem(LS_KEYS.PROTECTED_TARGET);
-      document.getElementById('securedActions').classList.add('hidden');
-      document.getElementById('settings-content').classList.remove('hidden'); // للسماح بتعيين مفتاح جديد
-      document.getElementById('no-key-section').classList.remove('hidden');
-      showResult('تمت إزالة المفتاح بنجاح', 'success');
-      showStatus('protectionStatus', '', 'success');
+
+  if (password.length < 4) {
+    showResult("كلمة المرور يجب أن تكون 4 أحرف على الأقل", "fail");
+    return;
+  }
+
+  // إنشاء modal تأكيد مخصص
+  const confirmChange = await showConfirmDialog("هل أنت متأكد من تغيير المفتاح؟ لن تتمكن من فتح القفل بدون هذه الصورة وكلمة المرور.");
+  if (!confirmChange) return;
+
+  try {
+    const hash = await calculateCombinedHash(selectedSettingsImage, password);
+    if (!hash) return;
+
+    localStorage.setItem("keynova_combined_hash", hash);
+    showResult("تم حفظ المفتاح الجديد بنجاح", "success");
+    
+    // مسح الحقول
+    document.getElementById("setKeyPassword").value = '';
+    selectedSettingsImage = null;
+    document.querySelectorAll('#settingsGallery .image-item').forEach(item => {
+      item.classList.remove('selected');
     });
+  } catch (error) {
+    console.error("Error setting key:", error);
+    showResult("حدث خطأ أثناء حفظ المفتاح", "fail");
+  }
 }
 
+// إزالة المفتاح
+async function removeKey() {
+  if (!localStorage.getItem("keynova_combined_hash")) {
+    showResult("لا يوجد مفتاح محفوظ", "fail");
+    return;
+  }
+
+  const confirmDelete = await showConfirmDialog("هل أنت متأكد من إزالة المفتاح؟ لن تتمكن من استخدام القفل بعد هذه العملية.");
+  if (!confirmDelete) return;
+
+  localStorage.removeItem("keynova_combined_hash");
+  localStorage.removeItem("protected_target");
+  document.getElementById("securedActions").classList.add("hidden");
+  document.getElementById("settings-content").classList.add("hidden");
+  document.getElementById("no-key-section").classList.remove("hidden");
+  showResult("تمت إزالة المفتاح بنجاح", "success");
+}
+
+// دالة إنشاء modal تأكيد مخصص
+function showConfirmDialog(message) {
+  return new Promise((resolve) => {
+    const modal = document.createElement('div');
+    modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+    modal.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    `;
+    
+    modal.innerHTML = `
+      <div style="
+        background: var(--dark-light);
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        max-width: 400px;
+        width: 90%;
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      ">
+        <i class="fas fa-question-circle" style="font-size: 48px; color: var(--warning); margin-bottom: 20px;"></i>
+        <p style="color: var(--light); margin-bottom: 30px; font-size: 16px; line-height: 1.5;">${message}</p>
+        <div style="display: flex; gap: 15px; justify-content: center;">
+          <button id="cancelBtn" style="
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--light);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+          ">إلغاء</button>
+          <button id="confirmBtn" style="
+            padding: 12px 24px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+          ">تأكيد</button>
+        </div>
+      </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    modal.querySelector('#cancelBtn').onclick = () => {
+      document.body.removeChild(modal);
+      resolve(false);
+    };
+    
+    modal.querySelector('#confirmBtn').onclick = () => {
+      document.body.removeChild(modal);
+      resolve(true);
+    };
+    
+    // إغلاق عند النقر خارج المحتوى
+    modal.onclick = (e) => {
+      if (e.target === modal) {
+        document.body.removeChild(modal);
+        resolve(false);
+      }
+    };
+  });
+}
+
+// حماية الهدف المحدد
+function protectSelected() {
+  const target = document.getElementById("protectedTarget").value;
+  
+  if (!target) {
+    showResult("يرجى اختيار هدف للحماية", "fail");
+    return;
+  }
+
+  localStorage.setItem("protected_target", target);
+  showResult(`تم تفعيل الحماية على: ${getTargetName(target)}`, "success");
+}
+
+// إلغاء الحماية
+function clearProtection() {
+  if (!localStorage.getItem("protected_target")) {
+    showResult("لا توجد حماية مفعلة حالياً", "fail");
+    return;
+  }
+
+  localStorage.removeItem("protected_target");
+  showResult("تم إلغاء الحماية بنجاح", "success");
+}
+
+// تبديل التبويبات
+function openTab(tabName) {
+  // إخفاء جميع التبويبات
+  document.querySelectorAll('.tab-content').forEach(tab => {
+    tab.classList.remove('active-tab');
+  });
+
+  // إظهار التبويب المطلوب
+  document.getElementById(tabName).classList.add('active-tab');
+
+  // تحديث أزرار التبويبات
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.classList.remove('active');
+  });
+
+  event.currentTarget.classList.add('active');
+}
+
+// عرض النتائج
+function showResult(message, type) {
+  const resultDiv = document.getElementById("result");
+  resultDiv.textContent = message;
+  resultDiv.className = "result " + type;
+}
+
+// بدء مؤقت الجلسة
 function startSessionTimer() {
-  clearInterval(sessionTimerHandle);
-  let timeLeft = 600; // 10 دقائق
-  const timerElement = document.getElementById('sessionTimer');
-  sessionTimerHandle = setInterval(() => {
-    const m = Math.floor(timeLeft / 60), s = timeLeft % 60;
-    timerElement.textContent = `${m}:${s < 10 ? '0' : ''}${s}`;
-    if (timeLeft-- <= 0) {
-      clearInterval(sessionTimerHandle);
+  let timeLeft = 600; // 10 دقائق بالثواني
+  const timerElement = document.getElementById("sessionTimer");
+
+  const timer = setInterval(() => {
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+
+    timerElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+    if (timeLeft <= 0) {
+      clearInterval(timer);
       lockSession();
+    } else {
+      timeLeft--;
     }
   }, 1000);
 }
 
+// قفل الجلسة
 function lockSession() {
-  clearInterval(sessionTimerHandle);
-  document.getElementById('securedActions').classList.add('hidden');
-  showResult('انتهت صلاحية الجلسة، يرجى إعادة التحقق', 'warning');
-  // تنظيف اختياري (لا نحذف الصور)
-  state.selectedVerify = null;
-  state.selectedSettings = null;
-  document.getElementById('verifyPassword').value = '';
-  document.querySelectorAll('.image-item').forEach(item => item.classList.remove('selected'));
-}
-
-/* ======= حوار تأكيد بسيط ======= */
-function confirmDialog(message) {
-  return new Promise(resolve => {
-    const modal = document.createElement('div');
-    modal.style.cssText = `
-      position: fixed; inset: 0; background: rgba(0,0,0,.55);
-      display: flex; align-items: center; justify-content: center; z-index: 9999;
-    `;
-    modal.innerHTML = `
-      <div style="background: var(--dark-light); padding: 22px; border-radius: 14px; width: min(420px, 92vw);
-        border: 1px solid rgba(255,255,255,.1); text-align: center;">
-        <i class="fas fa-question-circle" style="font-size: 44px; color: var(--warning);"></i>
-        <p style="margin: 16px 0 22px; line-height: 1.6;">${message}</p>
-        <div style="display:flex; gap:10px; justify-content:center;">
-          <button id="cCancel" class="icon-btn">إلغاء</button>
-          <button id="cOk" class="btn" style="margin:0; padding:10px 18px;">تأكيد</button>
-        </div>
-      </div>
-    `;
-    modal.addEventListener('click', (e) => { if (e.target === modal) { document.body.removeChild(modal); resolve(false); }});
-    modal.querySelector('#cCancel').onclick = () => { document.body.removeChild(modal); resolve(false); };
-    modal.querySelector('#cOk').onclick = () => { document.body.removeChild(modal); resolve(true); };
-    document.body.appendChild(modal);
+  document.getElementById("securedActions").classList.add("hidden");
+  document.getElementById("settings-content").classList.add("hidden");
+  document.getElementById("no-key-section").classList.remove("hidden");
+  showResult("انتهت صلاحية الجلسة، يرجى إعادة التحقق", "warning");
+  
+  // مسح التحديدات
+  selectedVerifyImage = null;
+  selectedSettingsImage = null;
+  document.getElementById("verifyPassword").value = '';
+  document.querySelectorAll('.image-item').forEach(item => {
+    item.classList.remove('selected');
   });
 }
 
-/* ======= حماية الأهداف (تجريبية) ======= */
-function protectSelected() {
-  const target = document.getElementById('protectedTarget').value;
-  if (!target) { showResult('يرجى اختيار هدف للحماية', 'fail'); return; }
-  localStorage.setItem(LS_KEYS.PROTECTED_TARGET, target);
-  showStatus('protectionStatus', `تم تفعيل الحماية على: ${getTargetName(target)}`, 'success');
-}
-function clearProtection() {
-  if (!localStorage.getItem(LS_KEYS.PROTECTED_TARGET)) {
-    showStatus('protectionStatus', 'لا توجد حماية مفعلة حالياً', 'fail'); return;
-  }
-  localStorage.removeItem(LS_KEYS.PROTECTED_TARGET);
-  showStatus('protectionStatus', 'تم إلغاء الحماية بنجاح', 'success');
-}
+// الحصول على اسم الهدف
 function getTargetName(target) {
-  const m = { images: 'الصور', docs: 'المستندات', apps: 'التطبيقات', custom: 'مخصص' };
-  return m[target] || target;
+  const targets = {
+    'images': 'الصور',
+    'docs': 'المستندات',
+    'apps': 'التطبيقات',
+    'custom': 'مخصص'
+  };
+  return targets[target] || target;
 }
 
-/* ======= تهيئة الأحداث ======= */
-function wireEvents() {
-  // تبويبات
-  document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.addEventListener('click', () => openTab(btn.dataset.tab));
-  });
-  document.querySelectorAll('[data-tab-jump]').forEach(btn => {
-    btn.addEventListener('click', () => openTab(btn.getAttribute('data-tab-jump')));
-  });
-
-  // أزرار رئيسية
-  document.getElementById('btnVerify').onclick = verifyKey;
-  document.getElementById('btnSetKey').onclick = setKey;
-  document.getElementById('btnRemoveKey').onclick = removeKey;
-  document.getElementById('btnLock').onclick = lockSession;
-
-  // حماية
-  document.getElementById('btnProtect').onclick = protectSelected;
-  document.getElementById('btnUnprotect').onclick = clearProtection;
-
-  // اختيار الملف (التحقق/الإعدادات)
-  document.getElementById('fileVerify').addEventListener('change', async (e) => {
-    const file = e.target.files?.[0];
-    if (file) await addUserImageFromFile(file, 'verifyGallery');
-    e.target.value = ''; // للسماح باختيار نفس الملف لاحقاً
-  });
-  document.getElementById('fileSettings').addEventListener('change', async (e) => {
-    const file = e.target.files?.[0];
-    if (file) await addUserImageFromFile(file, 'settingsGallery');
-    e.target.value = '';
-  });
-
-  // إظهار/إخفاء كلمات المرور
-  document.querySelectorAll('.toggle').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const input = document.querySelector(btn.getAttribute('data-toggle'));
-      if (!input) return;
-      input.type = input.type === 'password' ? 'text' : 'password';
-      btn.innerHTML = input.type === 'password' ? '<i class="far fa-eye"></i>' : '<i class="far fa-eye-slash"></i>';
-    });
-  });
-
-  // قوة كلمة المرور
-  document.getElementById('setKeyPassword').addEventListener('input', (e) => {
-    const score = assessPassword(e.target.value);
-    const tips = ['ضعيفة جداً', 'ضعيفة', 'متوسطة', 'جيدة', 'قوية', 'قوية جداً'];
-    const colors = ['#ff6b6b', '#ff9e6b', '#ffbb33', '#ffd166', '#9cff6b', '#00ff99'];
-    const el = document.getElementById('pwStrength');
-    el.textContent = e.target.value ? `قوة الكلمة: ${tips[score]}` : '';
-    el.style.color = colors[score];
-  });
-}
-
-/* ======= بدء التشغيل ======= */
-async function init() {
-  loadUserImages();
-  await createImageGallery('verifyGallery', false);
-  await createImageGallery('settingsGallery', true);
-
-  // حالة الحماية إن وجدت
-  const storedTarget = localStorage.getItem(LS_KEYS.PROTECTED_TARGET);
-  if (storedTarget) showStatus('protectionStatus', `الحماية مفعّلة على: ${getTargetName(storedTarget)}`, 'success');
-
-  // حالة المفتاح
-  const hasKey = !!localStorage.getItem(LS_KEYS.COMBINED_HASH);
-  document.getElementById('settings-content').classList.remove('hidden'); // نُظهرها لتعيين مفتاح
-  if (!hasKey) {
-    document.getElementById('no-key-section').classList.remove('hidden');
-  } else {
-    document.getElementById('no-key-section').classList.add('hidden');
+// تهيئة الصفحة عند التحميل
+window.onload = function() {
+  // إنشاء معارض الصور
+  createImageGallery('verifyGallery', false);
+  createImageGallery('settingsGallery', true);
+  
+  // تحميل حالة الحماية إن وجدت
+  const storedTarget = localStorage.getItem("protected_target");
+  if (storedTarget) {
+    document.getElementById("protectionStatus").textContent = `الحماية مفعّلة على: ${getTargetName(storedTarget)}`;
+    document.getElementById("protectionStatus").className = "result success";
   }
 
-  // المحاولات/الحظر
-  setAttempts(getAttempts());
-}
+  // التحقق من وجود مفتاح
+  const hasKey = localStorage.getItem("keynova_combined_hash") !== null;
 
-window.addEventListener('load', () => {
-  wireEvents();
-  init();
-});
+  if (hasKey) {
+    document.getElementById("settings-content").classList.add("hidden");
+    document.getElementById("no-key-section").classList.add("hidden");
+  } else {
+    document.getElementById("settings-content").classList.add("hidden");
+    document.getElementById("no-key-section").classList.remove("hidden");
+  }
+};
 </script>
 </body>
 </html>
