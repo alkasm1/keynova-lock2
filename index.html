@@ -3,998 +3,832 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Keynova Lock Pro - قفل بصري متقدم</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<title>Keynova Lock - قفل بصري آمن</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
---primary: #ff8800;
---primary-dark: #e67600;
---primary-light: #ffaa44;
---dark: #0a0a0a;
---dark-light: #1a1a1a;
---card-bg: #161616;
---light: #f5f5f5;
---success: #00c853;
---danger: #ff4444;
---warning: #ffbb33;
---gray: #8d8d8d;
---border: rgba(255, 255, 255, 0.1);
---shadow: rgba(0, 0, 0, 0.5);
+  --primary: #ff8800;
+  --primary-dark: #e67600;
+  --dark: #121212;
+  --dark-light: #1e1e1e;
+  --light: #f5f5f5;
+  --success: #00c853;
+  --danger: #ff4444;
+  --warning: #ffbb33;
+  --gray: #b9b9b9;
 }
 
-* {
-margin: 0;
-padding: 0;
-box-sizing: border-box;
-}
-
+* { margin: 0; padding: 0; box-sizing: border-box; }
 body {
-font-family: 'Tajawal', Arial, sans-serif;
-background: linear-gradient(135deg, var(--dark) 0%, var(--dark-light) 100%);
-color: var(--light);
-min-height: 100vh;
-padding: 20px;
-direction: rtl;
-text-align: right;
-position: relative;
-overflow-x: hidden;
+  font-family: 'Tajawal', Arial, sans-serif;
+  background-color: var(--dark);
+  color: var(--light);
+  min-height: 100vh;
+  padding: 20px;
+  direction: rtl;
+  text-align: right;
 }
 
-/* خلفية متحركة */
-body::before {
-content: '';
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background-image: 
-    radial-gradient(circle at 20% 80%, rgba(255, 136, 0, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(255, 136, 0, 0.08) 0%, transparent 50%),
-    radial-gradient(circle at 40% 40%, rgba(255, 136, 0, 0.05) 0%, transparent 50%);
-z-index: -1;
-animation: float 20s ease-in-out infinite;
-}
-
-@keyframes float {
-0%, 100% { transform: translate(0, 0) rotate(0deg); }
-33% { transform: translate(-20px, -20px) rotate(1deg); }
-66% { transform: translate(20px, -10px) rotate(-1deg); }
-}
-
-.container {
-max-width: 500px;
-margin: 0 auto;
-padding: 20px;
-animation: fadeInUp 0.8s ease-out;
-}
-
-@keyframes fadeInUp {
-from {
-    opacity: 0;
-    transform: translateY(30px);
-}
-to {
-    opacity: 1;
-    transform: translateY(0);
-}
-}
-
-header {
-text-align: center;
-padding: 20px 0 30px;
-position: relative;
-}
-
+.container { max-width: 520px; margin: 0 auto; padding: 20px; }
+header { text-align: center; padding: 20px 0 30px; position: relative; }
 .logo {
-background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-width: 90px;
-height: 90px;
-border-radius: 50%;
-margin: 0 auto 20px;
-display: flex;
-align-items: center;
-justify-content: center;
-box-shadow: 
-    0 5px 15px rgba(255, 136, 0, 0.3),
-    0 0 40px rgba(255, 136, 0, 0.2),
-    inset 0 2px 5px rgba(255, 255, 255, 0.2);
-position: relative;
-animation: pulse 2s ease-in-out infinite;
+  background: linear-gradient(135deg, #ff8800, #ff5500);
+  width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 15px;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 5px 15px rgba(255, 136, 0, 0.3);
 }
-
-@keyframes pulse {
-0%, 100% { transform: scale(1); }
-50% { transform: scale(1.05); }
-}
-
-.logo::after {
-content: '';
-position: absolute;
-width: 100%;
-height: 100%;
-border-radius: 50%;
-background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.1));
-animation: rotate 10s linear infinite;
-}
-
-@keyframes rotate {
-to { transform: rotate(360deg); }
-}
-
-.logo i {
-font-size: 40px;
-color: white;
-z-index: 1;
-}
-
-h1 {
-background: linear-gradient(135deg, var(--primary), var(--primary-light));
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-font-size: 32px;
-margin-bottom: 8px;
-font-weight: 800;
-letter-spacing: -1px;
-}
-
-.subtitle {
-color: var(--gray);
-font-size: 16px;
-font-weight: 400;
-opacity: 0.9;
-}
-
-.developer {
-color: var(--primary);
-font-size: 14px;
-margin-top: 5px;
-opacity: 0.8;
-}
+.logo i { font-size: 36px; color: white; }
+h1 { color: var(--primary); font-size: 28px; margin-bottom: 5px; }
+.subtitle { color: var(--gray); font-size: 14px; font-weight: 400; }
 
 .card {
-background: var(--card-bg);
-border-radius: 20px;
-padding: 30px;
-margin-bottom: 20px;
-box-shadow: 
-    0 10px 40px var(--shadow),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
-transition: all 0.3s ease;
-border: 1px solid var(--border);
-position: relative;
-overflow: hidden;
+  background-color: var(--dark-light);
+  border-radius: 16px; padding: 20px; margin-bottom: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease; border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.card::before {
-content: '';
-position: absolute;
-top: 0;
-left: -100%;
-width: 100%;
-height: 100%;
-background: linear-gradient(90deg, transparent, rgba(255, 136, 0, 0.1), transparent);
-transition: left 0.5s ease;
-}
+.card-header { display: flex; align-items: center; margin-bottom: 15px; color: var(--primary); }
+.card-header i { font-size: 20px; margin-left: 10px; }
+.card-header h3 { font-size: 18px; font-weight: 700; }
 
-.card:hover::before {
-left: 100%;
+.form-group { margin-bottom: 14px; }
+.input {
+  width: 100%; padding: 14px 44px 14px 14px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px; color: var(--light); font-size: 16px;
+  transition: all 0.3s ease;
 }
+.input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 2px rgba(255, 136, 0, 0.2); }
 
-.card-header {
-display: flex;
-align-items: center;
-margin-bottom: 25px;
-color: var(--primary);
-}
-
-.card-header i {
-font-size: 24px;
-margin-left: 12px;
-background: linear-gradient(135deg, var(--primary), var(--primary-light));
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-}
-
-.card-header h3 {
-font-size: 22px;
-font-weight: 700;
-}
-
-.form-group {
-margin-bottom: 25px;
-}
-
-.form-label {
-color: var(--primary);
-margin-bottom: 12px;
-display: block;
-font-weight: 500;
-font-size: 16px;
-}
-
-.input-field {
-width: 100%;
-padding: 15px 20px;
-background: rgba(255, 255, 255, 0.05);
-border: 2px solid rgba(255, 255, 255, 0.1);
-border-radius: 12px;
-color: var(--light);
-font-size: 16px;
-transition: all 0.3s ease;
-font-family: 'Tajawal', Arial, sans-serif;
-}
-
-.input-field:hover {
-border-color: rgba(255, 136, 0, 0.3);
-background: rgba(255, 255, 255, 0.08);
-}
-
-.input-field:focus {
-outline: none;
-border-color: var(--primary);
-box-shadow: 0 0 0 4px rgba(255, 136, 0, 0.15);
-background: rgba(255, 255, 255, 0.08);
-}
-
-/* قسم اختيار الصور */
-.image-selection-container {
-background: rgba(255, 255, 255, 0.03);
-border-radius: 12px;
-padding: 15px;
-border: 1px solid var(--border);
-}
-
-.image-source-tabs {
-display: flex;
-gap: 10px;
-margin-bottom: 15px;
-}
-
-.source-tab {
-flex: 1;
-padding: 10px;
-background: rgba(255, 255, 255, 0.05);
-border: 1px solid var(--border);
-border-radius: 8px;
-color: var(--gray);
-cursor: pointer;
-transition: all 0.3s ease;
-text-align: center;
-font-size: 14px;
-}
-
-.source-tab.active {
-background: var(--primary);
-color: white;
-border-color: var(--primary);
-box-shadow: 0 4px 15px rgba(255, 136, 0, 0.3);
-}
-
-.source-tab:hover:not(.active) {
-background: rgba(255, 255, 255, 0.08);
-border-color: rgba(255, 136, 0, 0.3);
-}
-
-.custom-image-upload {
-display: none;
-margin-bottom: 15px;
-}
-
-.custom-image-upload.active {
-display: block;
-}
-
-.upload-area {
-border: 2px dashed rgba(255, 136, 0, 0.3);
-border-radius: 12px;
-padding: 30px;
-text-align: center;
-background: rgba(255, 255, 255, 0.02);
-transition: all 0.3s ease;
-cursor: pointer;
-position: relative;
-overflow: hidden;
-}
-
-.upload-area:hover {
-border-color: var(--primary);
-background: rgba(255, 136, 0, 0.05);
-}
-
-.upload-area.drag-over {
-border-color: var(--primary);
-background: rgba(255, 136, 0, 0.1);
-transform: scale(1.02);
-}
-
-.upload-icon {
-font-size: 48px;
-color: var(--primary);
-margin-bottom: 15px;
-opacity: 0.8;
-}
-
-.upload-text {
-color: var(--gray);
-font-size: 16px;
-margin-bottom: 10px;
-}
-
-.upload-hint {
-color: var(--gray);
-font-size: 13px;
-opacity: 0.7;
-}
-
-.uploaded-image-preview {
-width: 100px;
-height: 100px;
-border-radius: 10px;
-margin: 15px auto;
-object-fit: cover;
-box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+.input-wrapper { position: relative; }
+.input-wrapper .toggle {
+  position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+  background: transparent; border: none; color: var(--gray); cursor: pointer;
+  font-size: 16px;
 }
 
 .image-gallery {
-display: grid;
-grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
-gap: 12px;
-max-height: 350px;
-overflow-y: auto;
-padding: 5px;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 10px; max-height: 300px; overflow-y: auto; padding: 10px;
+  background: rgba(255, 255, 255, 0.03); border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
-
-/* تحسين شريط التمرير */
-.image-gallery::-webkit-scrollbar {
-width: 8px;
-}
-
-.image-gallery::-webkit-scrollbar-track {
-background: rgba(255, 255, 255, 0.05);
-border-radius: 4px;
-}
-
-.image-gallery::-webkit-scrollbar-thumb {
-background: var(--primary);
-border-radius: 4px;
-opacity: 0.5;
-}
-
-.image-gallery::-webkit-scrollbar-thumb:hover {
-opacity: 0.8;
-}
-
 .image-item {
-position: relative;
-aspect-ratio: 1;
-border-radius: 10px;
-overflow: hidden;
-cursor: pointer;
-transition: all 0.3s ease;
-border: 3px solid transparent;
-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  position: relative; aspect-ratio: 1; border-radius: 8px; overflow: hidden;
+  cursor: pointer; transition: all 0.25s ease; border: 2px solid transparent;
+  display: flex; align-items: center; justify-content: center; background: #0f0f0f;
 }
-
-.image-item:hover {
-transform: translateY(-5px) scale(1.05);
-box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-border-color: rgba(255, 136, 0, 0.5);
-}
-
-.image-item.selected {
-border-color: var(--primary);
-box-shadow: 0 0 20px rgba(255, 136, 0, 0.5);
-transform: scale(1.05);
-}
-
-.image-item.selected::after {
-content: '\f00c';
-font-family: 'Font Awesome 6 Free';
-font-weight: 900;
-position: absolute;
-top: 50%;
-left: 50%;
-transform: translate(-50%, -50%);
-color: white;
-font-size: 24px;
-background: rgba(255, 136, 0, 0.9);
-width: 40px;
-height: 40px;
-border-radius: 50%;
-display: flex;
-align-items: center;
-justify-content: center;
-animation: checkIn 0.3s ease;
-}
-
-@keyframes checkIn {
-0% { transform: translate(-50%, -50%) scale(0); }
-100% { transform: translate(-50%, -50%) scale(1); }
-}
-
-.image-item img {
-width: 100%;
-height: 100%;
-object-fit: cover;
-transition: transform 0.3s ease;
-}
-
-.image-item:hover img {
-transform: scale(1.1);
-}
-
+.image-item:hover { transform: translateY(-2px); border-color: var(--primary); }
+.image-item.selected { border-color: var(--primary); box-shadow: 0 0 10px rgba(255, 136, 0, 0.5); }
+.image-item img { width: 100%; height: 100%; object-fit: cover; }
 .image-number {
-position: absolute;
-top: 5px;
-right: 5px;
-background: rgba(0, 0, 0, 0.8);
-color: white;
-border-radius: 50%;
-width: 24px;
-height: 24px;
-display: flex;
-align-items: center;
-justify-content: center;
-font-size: 12px;
-font-weight: bold;
-backdrop-filter: blur(10px);
+  position: absolute; top: 5px; right: 5px; background: rgba(0, 0, 0, 0.7); color: white;
+  border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: bold;
 }
+.image-badge {
+  position: absolute; left: 6px; bottom: 6px; font-size: 11px; color: white;
+  background: rgba(0,0,0,.6); padding: 2px 6px; border-radius: 999px;
+}
+
+.tile-upload {
+  border: 2px dashed rgba(255, 255, 255, 0.2); color: var(--gray);
+  display: flex; flex-direction: column; gap: 6px;
+}
+.tile-upload i { font-size: 24px; color: var(--primary); }
+.tile-upload span { font-size: 12px; }
 
 .btn {
-display: block;
-width: 100%;
-padding: 16px;
-background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-color: white;
-border: none;
-border-radius: 12px;
-font-size: 18px;
-font-weight: 700;
-cursor: pointer;
-transition: all 0.3s ease;
-margin-top: 10px;
-text-align: center;
-position: relative;
-overflow: hidden;
+  display: block; width: 100%; padding: 14px; background: var(--primary); color: white;
+  border: none; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer;
+  transition: all 0.3s ease; margin-top: 10px; text-align: center;
 }
-
-.btn::before {
-content: '';
-position: absolute;
-top: 50%;
-left: 50%;
-width: 0;
-height: 0;
-background: rgba(255, 255, 255, 0.2);
-border-radius: 50%;
-transform: translate(-50%, -50%);
-transition: width 0.6s ease, height 0.6s ease;
-}
-
-.btn:active::before {
-width: 300px;
-height: 300px;
-}
-
-.btn:hover {
-transform: translateY(-2px);
-box-shadow: 0 8px 25px rgba(255, 136, 0, 0.4);
-}
-
-.btn:active {
-transform: translateY(0);
-}
-
-.btn i {
-margin-left: 8px;
-}
-
-.btn-secondary {
-background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-}
-
-.btn-secondary:hover {
-background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.08));
-box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-}
-
-.btn-danger {
-background: linear-gradient(135deg, var(--danger), #d63333);
-}
-
-.btn-danger:hover {
-box-shadow: 0 8px 25px rgba(255, 68, 68, 0.4);
-}
-
-.btn-success {
-background: linear-gradient(135deg, var(--success), #00a843);
-}
-
-.btn-success:hover {
-box-shadow: 0 8px 25px rgba(0, 200, 83, 0.4);
-}
+.btn:hover { background: var(--primary-dark); transform: translateY(-1px); box-shadow: 0 5px 15px rgba(255, 136, 0, 0.3); }
+.btn:active { transform: translateY(0); }
+.btn-secondary { background: rgba(255, 255, 255, 0.1); }
+.btn-danger { background: var(--danger); }
+.btn-success { background: var(--success); }
 
 select {
-width: 100%;
-padding: 15px 20px;
-background: rgba(255, 255, 255, 0.05);
-border: 2px solid rgba(255, 255, 255, 0.1);
-border-radius: 12px;
-color: var(--light);
-font-size: 16px;
-margin-bottom: 15px;
-cursor: pointer;
-transition: all 0.3s ease;
-font-family: 'Tajawal', Arial, sans-serif;
+  width: 100%; padding: 14px; background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px;
+  color: var(--light); font-size: 16px; margin-bottom: 12px;
 }
+select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 2px rgba(255, 136, 0, 0.2); }
 
-select:hover {
-border-color: rgba(255, 136, 0, 0.3);
-background: rgba(255, 255, 255, 0.08);
-}
-
-select:focus {
-outline: none;
-border-color: var(--primary);
-box-shadow: 0 0 0 4px rgba(255, 136, 0, 0.15);
-}
-
-/* رسائل النتائج */
 .result {
-padding: 18px;
-border-radius: 12px;
-margin-top: 20px;
-text-align: center;
-font-size: 18px;
-font-weight: 500;
-display: none;
-animation: slideIn 0.3s ease;
+  padding: 12px; border-radius: 10px; margin-top: 10px; text-align: center;
+  font-size: 15px; font-weight: 500; display: none;
 }
+.success { background-color: rgba(0, 200, 83, 0.15); color: #00ff99; display: block; }
+.fail { background-color: rgba(255, 68, 68, 0.15); color: #ff6b6b; display: block; }
+.warning { background-color: rgba(255, 187, 51, 0.15); color: #ffbb33; display: block; }
 
-@keyframes slideIn {
-from {
-    opacity: 0;
-    transform: translateY(-10px);
-}
-to {
-    opacity: 1;
-    transform: translateY(0);
-}
-}
-
-.success {
-background: linear-gradient(135deg, rgba(0, 200, 83, 0.15), rgba(0, 200, 83, 0.1));
-color: #00ff99;
-border: 1px solid rgba(0, 200, 83, 0.3);
-display: block;
-}
-
-.success::before {
-content: '\f00c';
-font-family: 'Font Awesome 6 Free';
-font-weight: 900;
-margin-left: 10px;
-}
-
-.fail {
-background: linear-gradient(135deg, rgba(255, 68, 68, 0.15), rgba(255, 68, 68, 0.1));
-color: #ff6666;
-border: 1px solid rgba(255, 68, 68, 0.3);
-display: block;
-}
-
-.fail::before {
-content: '\f00d';
-font-family: 'Font Awesome 6 Free';
-font-weight: 900;
-margin-left: 10px;
-}
-
-.warning {
-background: linear-gradient(135deg, rgba(255, 187, 51, 0.15), rgba(255, 187, 51, 0.1));
-color: #ffbb33;
-border: 1px solid rgba(255, 187, 51, 0.3);
-display: block;
-}
-
-.warning::before {
-content: '\f071';
-font-family: 'Font Awesome 6 Free';
-font-weight: 900;
-margin-left: 10px;
-}
-
-.hidden {
-display: none !important;
-}
+.hidden { display: none; }
 
 .action-buttons {
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 15px;
-margin-top: 20px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;
 }
-
-.action-buttons .btn {
-margin: 0;
-}
+.action-buttons .btn { margin: 0; }
 
 .session-timeout {
-background: linear-gradient(135deg, rgba(255, 187, 51, 0.1), rgba(255, 187, 51, 0.05));
-border: 1px solid rgba(255, 187, 51, 0.2);
-padding: 15px;
-border-radius: 12px;
-text-align: center;
-margin-top: 20px;
-font-size: 16px;
-color: var(--warning);
-display: flex;
-align-items: center;
-justify-content: center;
-gap: 10px;
-}
-
-.session-timeout i {
-font-size: 20px;
+  background: rgba(255, 187, 51, 0.1); border: 1px solid rgba(255, 187, 51, 0.2);
+  padding: 10px; border-radius: 10px; text-align: center; margin-top: 10px; font-size: 14px; color: var(--warning);
 }
 
 .instructions {
-background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
-border-radius: 12px;
-padding: 20px;
-margin-top: 25px;
-border-left: 4px solid var(--primary);
-border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.03); border-radius: 10px; padding: 12px; margin-top: 15px; border-right: 3px solid var(--primary);
 }
-
-.instructions h4 {
-color: var(--primary);
-margin-bottom: 15px;
-font-size: 18px;
-display: flex;
-align-items: center;
-gap: 10px;
-}
-
-.instructions ul {
-padding-right: 25px;
-}
-
-.instructions li {
-margin-bottom: 10px;
-color: var(--gray);
-line-height: 1.6;
-}
-
-.tab-content {
-display: none;
-animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-from { opacity: 0; }
-to { opacity: 1; }
-}
-
-.active-tab {
-display: block;
-}
+.instructions h4 { color: var(--primary); margin-bottom: 8px; font-size: 16px; }
+.instructions li { margin-bottom: 6px; color: var(--gray); font-size: 14px; }
 
 .tabs {
-display: flex;
-justify-content: space-between;
-background: rgba(255, 255, 255, 0.05);
-border-radius: 14px;
-padding: 5px;
-margin-bottom: 25px;
-box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  display: flex; justify-content: space-between; background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px; padding: 5px; margin-bottom: 15px;
 }
-
 .tab-btn {
-flex: 1;
-padding: 14px;
-text-align: center;
-background: transparent;
-color: var(--gray);
-border: none;
-border-radius: 10px;
-cursor: pointer;
-font-weight: 600;
-transition: all 0.3s ease;
-font-size: 16px;
-position: relative;
+  flex: 1; padding: 10px; text-align: center; background: transparent; color: var(--gray);
+  border: none; border-radius: 10px; cursor: pointer; font-weight: 600; transition: all 0.3s ease;
+}
+.tab-btn.active { background: var(--primary); color: white; box-shadow: 0 4px 10px rgba(255, 136, 0, 0.3); }
+.tab-content { display: none; }
+.tab-content.active-tab { display: block; }
+
+.small {
+  font-size: 12px; color: var(--gray);
+}
+.row { display: flex; gap: 8px; align-items: center; }
+.row .input { flex: 1; }
+.icon-btn {
+  background: rgba(255,255,255,0.08); color: var(--light); border: 1px solid rgba(255,255,255,0.12);
+  padding: 8px 10px; border-radius: 8px; cursor: pointer; transition: .2s;
+}
+.icon-btn:hover { background: rgba(255,255,255,0.16); }
+
+.user-image-actions {
+  position: absolute; top: 6px; left: 6px; display: flex; gap: 6px; z-index: 2;
+}
+.user-image-actions button {
+  background: rgba(0,0,0,.55); color: #fff; border: 0; padding: 4px 6px; font-size: 11px;
+  border-radius: 6px; cursor: pointer;
 }
 
-.tab-btn::after {
-content: '';
-position: absolute;
-bottom: 0;
-left: 50%;
-width: 0;
-height: 3px;
-background: var(--primary);
-transition: all 0.3s ease;
-transform: translateX(-50%);
-}
-
-.tab-btn.active {
-background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-color: white;
-box-shadow: 0 4px 15px rgba(255, 136, 0, 0.3);
-}
-
-.tab-btn.active::after {
-width: 80%;
-}
-
-.no-key-message {
-text-align: center;
-padding: 40px;
-color: var(--warning);
-}
-
-.no-key-message i {
-font-size: 64px;
-margin-bottom: 20px;
-opacity: 0.8;
-}
-
-.no-key-message h3 {
-font-size: 24px;
-margin-bottom: 15px;
-}
-
-.no-key-message p {
-font-size: 16px;
-opacity: 0.8;
-}
-
-/* Modal تأكيد محسن */
-.confirm-modal {
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background: rgba(0, 0, 0, 0.8);
-display: flex;
-align-items: center;
-justify-content: center;
-z-index: 1000;
-backdrop-filter: blur(10px);
-animation: fadeIn 0.3s ease;
-}
-
-.confirm-content {
-background: var(--card-bg);
-padding: 35px;
-border-radius: 20px;
-box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
-max-width: 420px;
-width: 90%;
-text-align: center;
-border: 1px solid var(--border);
-animation: scaleIn 0.3s ease;
-}
-
-@keyframes scaleIn {
-from {
-    transform: scale(0.9);
-    opacity: 0;
-}
-to {
-    transform: scale(1);
-    opacity: 1;
-}
-}
-
-.confirm-icon {
-font-size: 56px;
-color: var(--warning);
-margin-bottom: 25px;
-}
-
-.confirm-message {
-color: var(--light);
-margin-bottom: 35px;
-font-size: 17px;
-line-height: 1.6;
-}
-
-.confirm-buttons {
-display: flex;
-gap: 15px;
-justify-content: center;
-}
-
-.confirm-btn {
-padding: 14px 28px;
-border: none;
-border-radius: 10px;
-cursor: pointer;
-font-size: 16px;
-font-weight: 600;
-transition: all 0.3s ease;
-min-width: 120px;
-}
-
-.confirm-btn.cancel {
-background: rgba(255, 255, 255, 0.1);
-color: var(--light);
-}
-
-.confirm-btn.cancel:hover {
-background: rgba(255, 255, 255, 0.15);
-}
-
-.confirm-btn.confirm {
-background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-color: white;
-}
-
-.confirm-btn.confirm:hover {
-transform: translateY(-2px);
-box-shadow: 0 5px 20px rgba(255, 136, 0, 0.4);
-}
-
-/* تحسينات للموبايل */
 @media (max-width: 480px) {
-.container {
-    padding: 10px;
-}
-
-.card {
-    padding: 20px;
-}
-
-.action-buttons {
-    grid-template-columns: 1fr;
-}
-
-h1 {
-    font-size: 26px;
-}
-
-.card-header h3 {
-    font-size: 18px;
-}
-
-.image-gallery {
-    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
-}
-
-.tabs {
-    padding: 4px;
-}
-
-.tab-btn {
-    padding: 12px;
-    font-size: 14px;
-}
-
-.confirm-content {
-    padding: 25px;
-}
-
-.confirm-buttons {
-    flex-direction: column;
-    width: 100%;
-}
-
-.confirm-btn {
-    width: 100%;
-}
-}
-
-/* تحسينات إضافية */
-.loading {
-display: inline-block;
-width: 20px;
-height: 20px;
-border: 3px solid rgba(255, 255, 255, 0.1);
-border-radius: 50%;
-border-top-color: var(--primary);
-animation: spin 1s ease-in-out infinite;
-}
-
-@keyframes spin {
-to { transform: rotate(360deg); }
-}
-
-/* تأثيرات التحميل */
-.processing {
-position: relative;
-overflow: hidden;
-}
-
-.processing::after {
-content: '';
-position: absolute;
-top: 0;
-left: -100%;
-width: 100%;
-height: 100%;
-background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-animation: shimmer 1.5s infinite;
-}
-
-@keyframes shimmer {
-to { left: 100%; }
+  .container { padding: 10px; }
+  .card { padding: 16px; }
+  .action-buttons { grid-template-columns: 1fr; }
+  h1 { font-size: 24px; }
 }
 </style>
 </head>
 <body>
 <div class="container">
-<header>
-    <div class="logo">
-        <i class="fas fa-shield-alt"></i>
-    </div>
-    <h1>Keynova Lock Pro</h1>
-    <p class="subtitle">قفل بصري متقدم باستخدام الصور وكلمة المرور</p>
-    <p class="developer">مطور البرنامج م: رأفت عمر</p>
-</header>
+  <header>
+    <div class="logo"><i class="fas fa-lock"></i></div>
+    <h1>Keynova Lock</h1>
+    <p class="subtitle">قفل بصري آمن باستخدام الصور وكلمة المرور</p>
+    <p class="subtitle">مطور البرنامج م: رأفت عمر</p>
+  </header>
 
-<div class="tabs">
-    <button id="verify-tab" class="tab-btn active" onclick="openTab('verify')">
-        <i class="fas fa-unlock"></i> فتح القفل
-    </button>
-    <button id="settings-tab" class="tab-btn" onclick="openTab('settings')">
-        <i class="fas fa-cog"></i> الإعدادات
-    </button>
-</div>
+  <div class="tabs">
+    <button id="tab-verify" class="tab-btn active" data-tab="verify">فتح القفل</button>
+    <button id="tab-settings" class="tab-btn" data-tab="settings">الإعدادات</button>
+  </div>
 
-<!-- واجهة التحقق -->
-<div id="verify" class="tab-content active-tab">
+  <!-- فتح القفل -->
+  <div id="verify" class="tab-content active-tab">
     <div class="card">
-        <div class="card-header">
-            <i class="fas fa-fingerprint"></i>
-            <h3>فتح القفل بالمفتاح البصري</h3>
+      <div class="card-header">
+        <i class="fas fa-unlock-alt"></i><h3>افتح القفل باستخدام الصورة + كلمة المرور</h3>
+      </div>
+
+      <div class="form-group">
+        <label style="color: var(--primary); margin-bottom: 8px; display: block; font-weight: 600;">اختر الصورة:</label>
+        <div class="image-gallery" id="verifyGallery"></div>
+        <div class="small">يمكنك إضافة صورة من الاستديو وسيتم حفظ نسخة مصغّرة محلياً.</div>
+      </div>
+
+      <div class="form-group">
+        <label style="color: var(--primary); margin-bottom: 8px; display: block; font-weight: 600;">كلمة المرور:</label>
+        <div class="input-wrapper">
+          <input type="password" class="input" id="verifyPassword" placeholder="أدخل كلمة المرور">
+          <button class="toggle" aria-label="إظهار/إخفاء" data-toggle="#verifyPassword"><i class="far fa-eye"></i></button>
         </div>
+        <div class="small" id="attemptInfo"></div>
+      </div>
 
-        <div class="form-group">
-            <label class="form-label">اختر الصورة المفتاح:</label>
-            <div class="image-selection-container">
-                <div class="image-source-tabs">
-                    <div class="source-tab active" onclick="switchImageSource('default', 'verify')">
-                        <i class="fas fa-images"></i> الصور الافتراضية
-                    </div>
-                    <div class="source-tab" onclick="switchImageSource('custom', 'verify')">
-                        <i class="fas fa-upload"></i> صورة مخصصة
-                    </div>
-                </div>
-                
-                <div id="verify-default-images" class="image-gallery">
-                    <!-- سيتم إنشاء الصور ديناميكياً -->
-                </div>
-                
-                <div id="verify-custom-upload" class="custom-image-upload">
-                    <input type="file" id="verifyFileInput" accept="image/*" style="display: none;">
-                    <div class="upload-area" onclick="document.getElementById('verifyFileInput').click()">
-                        <i class="fas fa-cloud-upload-alt upload-icon"></i>
-                        <div class="upload-text">اسحب الصورة هنا أو انقر للاختيار</div>
-                        <div class="upload-hint">PNG, JPG, JPEG (حد أقصى 5MB)</div>
-                    </div>
-                    <img id="verifyCustomPreview" class="uploaded-image-preview hidden">
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="form-label">كلمة المرور:</label>
-            <input type="password" class="input-field" id="verifyPassword" placeholder="أدخل كلمة المرور">
-        </div>
-
-        <button class="btn" onclick="verifyKey()">
-            <i class="fas fa-check-circle"></i> تحقق من المفتاح
-        </button>
-
-        <div class="result" id="result"></div>
+      <button class="btn" id="btnVerify"><i class="fas fa-check-circle"></i> تحقق من المفتاح</button>
+      <div class="result" id="result"></div>
     </div>
 
     <div class="instructions">
-        <h4><i class="fas fa-info-circle"></i> تعليمات الاستخدام</h4>
-        <ul>
-            <li>يمكنك استخدام الصور الافتراضية أو رفع صورة خاصة بك</li>
-            <li>اختر نفس الصورة التي تم تعيينها كمفتاح</li>
+      <h4><i class="fas fa-info-circle"></i> تعليمات هامة</h4>
+      <ul>
+        <li>اختر نفس الصورة التي تم تعيينها كمفتاح (من المعرض المدمج أو من الاستديو).</li>
+        <li>أدخل كلمة المرور الصحيحة المرتبطة بتلك الصورة.</li>
+        <li>سيتم حظر المحاولة لمدة قصيرة بعد عدة محاولات خاطئة.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- الإعدادات -->
+  <div id="settings" class="tab-content">
+    <div id="no-key-section" class="card">
+      <div class="card-header">
+        <i class="fas fa-key"></i><h3>لا يوجد مفتاح مُفعّل</h3>
+      </div>
+      <p class="small">قم بتعيين مفتاح جديد أدناه. بعد التعيين، استخدمه لفتح القفل.</p>
+    </div>
+
+    <div id="settings-content" class="card">
+      <div class="card-header">
+        <i class="fas fa-key"></i><h3>إدارة المفتاح</h3>
+      </div>
+
+      <div class="form-group">
+        <label style="color: var(--primary); margin-bottom: 8px; display: block; font-weight: 600;">اختر صورة المفتاح:</label>
+        <div class="image-gallery" id="settingsGallery"></div>
+      </div>
+
+      <div class="form-group">
+        <label style="color: var(--primary); margin-bottom: 8px; display: block; font-weight: 600;">كلمة المرور الجديدة:</label>
+        <div class="input-wrapper">
+          <input type="password" class="input" id="setKeyPassword" placeholder="أدخل كلمة مرور قوية">
+          <button class="toggle" aria-label="إظهار/إخفاء" data-toggle="#setKeyPassword"><i class="far fa-eye"></i></button>
+        </div>
+        <div class="small" id="pwStrength"></div>
+      </div>
+
+      <button class="btn" id="btnSetKey"><i class="fas fa-save"></i> تعيين مفتاح جديد</button>
+
+      <div class="action-buttons">
+        <button class="btn btn-danger" id="btnRemoveKey"><i class="fas fa-trash-alt"></i> إزالة المفتاح</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <i class="fas fa-shield-alt"></i><h3>حماية الملفات والتطبيقات</h3>
+      </div>
+
+      <select id="protectedTarget">
+        <option value="">-- اختر الهدف للحماية --</option>
+        <option value="images">📸 الصور</option>
+        <option value="docs">📄 المستندات</option>
+        <option value="apps">📱 التطبيقات</option>
+        <option value="custom">🧩 مخصص</option>
+      </select>
+
+      <div class="action-buttons">
+        <button class="btn btn-success" id="btnProtect"><i class="fas fa-lock"></i> تطبيق الحماية</button>
+        <button class="btn btn-secondary" id="btnUnprotect"><i class="fas fa-unlock"></i> إلغاء الحماية</button>
+      </div>
+
+      <div class="result" id="protectionStatus"></div>
+    </div>
+  </div>
+
+  <!-- بعد التحقق -->
+  <div id="securedActions" class="hidden">
+    <div class="session-timeout">
+      <i class="fas fa-clock"></i> الجلسة ستنتهي خلال <span id="sessionTimer">10:00</span>
+    </div>
+    <div class="action-buttons">
+      <button class="btn" data-tab-jump="settings"><i class="fas fa-cog"></i> الإعدادات</button>
+      <button class="btn btn-secondary" id="btnLock"><i class="fas fa-lock"></i> قفل الجلسة</button>
+    </div>
+  </div>
+</div>
+
+<!-- مدخلات الملفات المخفية (التحقق/الإعدادات) -->
+<input type="file" accept="image/*" capture="environment" id="fileVerify" class="hidden">
+<input type="file" accept="image/*" capture="environment" id="fileSettings" class="hidden">
+
+<script>
+/* ======= حالة التطبيق ======= */
+const LS_KEYS = {
+  COMBINED_HASH: 'keynova_combined_hash',
+  USER_IMAGES: 'keynova_user_images',
+  PROTECTED_TARGET: 'protected_target',
+  LOCKOUT_UNTIL: 'keynova_lockout_until',
+  ATTEMPTS: 'keynova_attempts',
+  KEY_META: 'keynova_key_meta'
+};
+
+const state = {
+  selectedVerify: null,   // {type:'builtin'|'user', id, hash}
+  selectedSettings: null, // {type:'builtin'|'user', id, hash}
+  userImages: []          // [{id, name, dataUrl, hash}]
+};
+
+let sessionTimerHandle = null;
+
+/* ======= أدوات مساعدة ======= */
+function toUint8ArrayFromDataURL(dataUrl) {
+  const [meta, b64] = dataUrl.split(',');
+  const bin = atob(b64);
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return bytes;
+}
+
+async function sha256Hex(bytes) {
+  const buf = await crypto.subtle.digest('SHA-256', bytes);
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+async function hashDataURL(dataUrl) {
+  return sha256Hex(toUint8ArrayFromDataURL(dataUrl));
+}
+
+async function combinedHash(imageHash, password) {
+  const enc = new TextEncoder().encode(`${imageHash}:${password}`);
+  return sha256Hex(enc);
+}
+
+function showResult(message, type = 'success') {
+  const el = document.getElementById('result');
+  el.textContent = message;
+  el.className = 'result ' + type;
+}
+
+function showStatus(id, message, type = 'success') {
+  const el = document.getElementById(id);
+  el.textContent = message;
+  el.className = 'result ' + type;
+}
+
+function isLockedOut() {
+  const until = parseInt(localStorage.getItem(LS_KEYS.LOCKOUT_UNTIL) || '0', 10);
+  const now = Date.now();
+  return now < until ? until - now : 0;
+}
+
+function setLockout(ms) {
+  localStorage.setItem(LS_KEYS.LOCKOUT_UNTIL, (Date.now() + ms).toString());
+}
+
+function getAttempts() {
+  return parseInt(localStorage.getItem(LS_KEYS.ATTEMPTS) || '0', 10);
+}
+function setAttempts(n) {
+  localStorage.setItem(LS_KEYS.ATTEMPTS, String(n));
+  const info = document.getElementById('attemptInfo');
+  const left = Math.max(0, 5 - n);
+  info.textContent = left > 0 ? `المحاولات المتبقية: ${left} من 5` : 'تم بلوغ الحد. انتظر قليلاً لإعادة المحاولة.';
+}
+
+function assessPassword(pw) {
+  let score = 0;
+  if (pw.length >= 8) score++;
+  if (/[A-Z]/.test(pw)) score++;
+  if (/[a-z]/.test(pw)) score++;
+  if (/\d/.test(pw)) score++;
+  if (/[^A-Za-z0-9]/.test(pw)) score++;
+  return score; // 0..5
+}
+
+function fmtTime(ms) {
+  const total = Math.ceil(ms / 1000);
+  const m = Math.floor(total / 60);
+  const s = total % 60;
+  return `${m}:${s < 10 ? '0' : ''}${s}`;
+}
+
+/* ======= المعرض المدمج (صور مولّدة) ======= */
+function generateBuiltinDataURL(i) {
+  const canvas = document.createElement('canvas');
+  canvas.width = 128; canvas.height = 128;
+  const ctx = canvas.getContext('2d');
+
+  const g = ctx.createLinearGradient(0, 0, 128, 128);
+  const hue1 = (i * 17) % 360;
+  const hue2 = (hue1 + 60) % 360;
+  g.addColorStop(0, `hsl(${hue1}, 70%, 60%)`);
+  g.addColorStop(1, `hsl(${hue2}, 70%, 40%)`);
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, 128, 128);
+
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+  ctx.fillRect(10 + (i % 3) * 20, 10 + (i % 4) * 15, 30, 30);
+  ctx.fillRect(50 + (i % 2) * 25, 50 + (i % 3) * 20, 25, 25);
+
+  return canvas.toDataURL('image/png');
+}
+
+/* ======= إدارة صور المستخدم ======= */
+function loadUserImages() {
+  try {
+    state.userImages = JSON.parse(localStorage.getItem(LS_KEYS.USER_IMAGES) || '[]');
+  } catch { state.userImages = []; }
+}
+function saveUserImages() {
+  localStorage.setItem(LS_KEYS.USER_IMAGES, JSON.stringify(state.userImages));
+}
+
+async function addUserImageFromFile(file, galleryId) {
+  if (!file || !file.type.startsWith('image/')) return;
+  const dataUrl = await readAndResize(file, 192);
+  const hash = await hashDataURL(dataUrl);
+  const id = 'u-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8);
+  const name = file.name || 'صورة';
+  state.userImages.unshift({ id, name, dataUrl, hash });
+  saveUserImages();
+  createImageGallery(galleryId, galleryId === 'settingsGallery');
+  // تحديد الصورة المضافة مباشرة
+  selectImage({ type: 'user', id, hash }, galleryId === 'settingsGallery');
+}
+
+function removeUserImage(id) {
+  const idx = state.userImages.findIndex(x => x.id === id);
+  if (idx >= 0) {
+    state.userImages.splice(idx, 1);
+    saveUserImages();
+    createImageGallery('verifyGallery', false);
+    createImageGallery('settingsGallery', true);
+  }
+}
+
+function renameUserImage(id, newName) {
+  const img = state.userImages.find(x => x.id === id);
+  if (img) {
+    img.name = newName || img.name;
+    saveUserImages();
+    createImageGallery('verifyGallery', false);
+    createImageGallery('settingsGallery', true);
+  }
+}
+
+function readFileAsDataURL(file) {
+  return new Promise((resolve, reject) => {
+    const fr = new FileReader();
+    fr.onload = () => resolve(fr.result);
+    fr.onerror = reject;
+    fr.readAsDataURL(file);
+  });
+}
+
+async function readAndResize(file, maxSize) {
+  const srcUrl = await readFileAsDataURL(file);
+  const img = new Image();
+  img.src = srcUrl;
+  await img.decode();
+  const scale = Math.min(maxSize / img.width, maxSize / img.height, 1);
+  const w = Math.max(1, Math.round(img.width * scale));
+  const h = Math.max(1, Math.round(img.height * scale));
+  const canvas = document.createElement('canvas');
+  canvas.width = w; canvas.height = h;
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(img, 0, 0, w, h);
+  // JPEG لتقليل الحجم
+  return canvas.toDataURL('image/jpeg', 0.8);
+}
+
+/* ======= بناء المعارض ======= */
+async function createImageGallery(containerId, isSettings = false) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = '';
+
+  // بطاقة الإضافة
+  const addTile = document.createElement('div');
+  addTile.className = 'image-item tile-upload';
+  addTile.innerHTML = '<i class="fas fa-plus"></i><span>إضافة من الاستديو</span>';
+  addTile.onclick = () => document.getElementById(isSettings ? 'fileSettings' : 'fileVerify').click();
+  container.appendChild(addTile);
+
+  // صور مضافة من المستخدم
+  state.userImages.forEach(img => {
+    const item = document.createElement('div');
+    item.className = 'image-item';
+    item.dataset.type = 'user';
+    item.dataset.id = img.id;
+    item.dataset.hash = img.hash;
+    item.title = img.name;
+
+    const image = document.createElement('img');
+    image.src = img.dataUrl;
+    image.alt = img.name;
+
+    const badge = document.createElement('div');
+    badge.className = 'image-badge';
+    badge.textContent = 'من الاستديو';
+
+    // أزرار صغيرة (إعادة تسمية/حذف)
+    const actions = document.createElement('div');
+    actions.className = 'user-image-actions';
+    const btnRename = document.createElement('button');
+    btnRename.innerHTML = '<i class="fas fa-pen"></i>';
+    btnRename.title = 'إعادة تسمية';
+    btnRename.onclick = (e) => {
+      e.stopPropagation();
+      const newName = prompt('اسم الصورة:', img.name);
+      if (newName !== null) renameUserImage(img.id, newName.trim());
+    };
+    const btnDelete = document.createElement('button');
+    btnDelete.innerHTML = '<i class="fas fa-trash"></i>';
+    btnDelete.title = 'حذف';
+    btnDelete.onclick = (e) => {
+      e.stopPropagation();
+      if (confirm('حذف هذه الصورة من القائمة؟')) removeUserImage(img.id);
+    };
+    actions.append(btnRename, btnDelete);
+
+    item.append(image, badge, actions);
+    item.onclick = () => {
+      selectImage({ type: 'user', id: img.id, hash: img.hash }, isSettings);
+    };
+    container.appendChild(item);
+  });
+
+  // المعرض المدمج
+  for (let i = 1; i <= 20; i++) {
+    const item = document.createElement('div');
+    item.className = 'image-item';
+    item.dataset.type = 'builtin';
+    item.dataset.id = String(i);
+
+    const dataUrl = generateBuiltinDataURL(i);
+    const hash = await hashDataURL(dataUrl);
+    item.dataset.hash = hash;
+
+    const image = document.createElement('img');
+    image.src = dataUrl; image.alt = `صورة ${i}`;
+    const numberDiv = document.createElement('div');
+    numberDiv.className = 'image-number'; numberDiv.textContent = i;
+
+    const badge = document.createElement('div');
+    badge.className = 'image-badge'; badge.textContent = 'مدمج';
+
+    item.append(image, numberDiv, badge);
+    item.onclick = () => {
+      selectImage({ type: 'builtin', id: i, hash }, isSettings);
+    };
+    container.appendChild(item);
+  }
+}
+
+function selectImage(sel, isSettings) {
+  const galleryId = isSettings ? 'settingsGallery' : 'verifyGallery';
+  const container = document.getElementById(galleryId);
+  container.querySelectorAll('.image-item').forEach(el => el.classList.remove('selected'));
+
+  // اجعل العنصر المختار مميزاً (عدا بطاقة الإضافة)
+  const query = `.image-item[data-id="${sel.id}"][data-type="${sel.type}"]`;
+  const selectedEl = container.querySelector(query);
+  if (selectedEl) selectedEl.classList.add('selected');
+
+  if (isSettings) state.selectedSettings = sel;
+  else state.selectedVerify = sel;
+}
+
+/* ======= تبويبات ======= */
+function openTab(tabName) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active-tab'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  const content = document.getElementById(tabName);
+  content.classList.add('active-tab');
+  const tabBtn = document.querySelector(`.tab-btn[data-tab="${tabName}"]`);
+  if (tabBtn) tabBtn.classList.add('active');
+}
+
+/* ======= التحقق/التعيين/الجلسة ======= */
+async function verifyKey() {
+  const lockMsLeft = isLockedOut();
+  if (lockMsLeft > 0) {
+    showResult(`محظور مؤقتاً. انتظر ${fmtTime(lockMsLeft)} ثم أعد المحاولة.`, 'warning');
+    return;
+  }
+
+  if (!state.selectedVerify) {
+    showResult('يرجى اختيار صورة للتحقق منها', 'fail'); return;
+  }
+  const password = document.getElementById('verifyPassword').value;
+  if (!password) {
+    showResult('يرجى إدخال كلمة المرور', 'fail'); return;
+  }
+
+  const storedHash = localStorage.getItem(LS_KEYS.COMBINED_HASH);
+  if (!storedHash) {
+    showResult('لا يوجد مفتاح محفوظ، قم بتعيين مفتاح أولاً من الإعدادات', 'warning');
+    openTab('settings');
+    return;
+  }
+
+  showResult('جاري التحقق...', 'warning');
+  const currentHash = await combinedHash(state.selectedVerify.hash, password);
+  if (currentHash === storedHash) {
+    showResult('تم التحقق بنجاح! الجلسة مفعلة الآن', 'success');
+    document.getElementById('securedActions').classList.remove('hidden');
+    document.getElementById('settings-content').classList.remove('hidden');
+    document.getElementById('no-key-section').classList.add('hidden');
+    setAttempts(0); // إعادة الضبط
+    startSessionTimer();
+  } else {
+    const n = getAttempts() + 1;
+    setAttempts(n);
+    if (n >= 5) {
+      setLockout(30_000); // 30 ثانية حظر
+      showResult('محاولات خاطئة متكررة. تم الحظر المؤقت لمدة 30 ثانية.', 'fail');
+    } else {
+      showResult('الصورة أو كلمة المرور غير صحيحة', 'fail');
+    }
+  }
+}
+
+async function setKey() {
+  if (!state.selectedSettings) {
+    showResult('يرجى اختيار صورة لتعيينها كمفتاح', 'fail'); return;
+  }
+  const pw = document.getElementById('setKeyPassword').value;
+  if (!pw) { showResult('يرجى إدخال كلمة مرور', 'fail'); return; }
+  if (pw.length < 6) { showResult('كلمة المرور يجب أن تكون 6 أحرف على الأقل', 'fail'); return; }
+
+  const ok = await confirmDialog('تأكيد تغيير المفتاح؟ لن تتمكن من فتح القفل بدون هذه الصورة وهذه الكلمة.');
+  if (!ok) return;
+
+  const hash = await combinedHash(state.selectedSettings.hash, pw);
+  localStorage.setItem(LS_KEYS.COMBINED_HASH, hash);
+  localStorage.setItem(LS_KEYS.KEY_META, JSON.stringify({
+    type: state.selectedSettings.type, id: state.selectedSettings.id, imageHash: state.selectedSettings.hash
+  }));
+  showResult('تم حفظ المفتاح الجديد بنجاح', 'success');
+
+  // تنظيف كلمة المرور فقط
+  document.getElementById('setKeyPassword').value = '';
+  document.getElementById('pwStrength').textContent = '';
+}
+
+function removeKey() {
+  if (!localStorage.getItem(LS_KEYS.COMBINED_HASH)) {
+    showResult('لا يوجد مفتاح محفوظ', 'fail'); return;
+  }
+  confirmDialog('إزالة المفتاح؟ لن تتمكن من استخدام القفل بعد ذلك حتى تعيين مفتاح جديد.')
+    .then(ok => {
+      if (!ok) return;
+      localStorage.removeItem(LS_KEYS.COMBINED_HASH);
+      localStorage.removeItem(LS_KEYS.KEY_META);
+      localStorage.removeItem(LS_KEYS.PROTECTED_TARGET);
+      document.getElementById('securedActions').classList.add('hidden');
+      document.getElementById('settings-content').classList.remove('hidden'); // للسماح بتعيين مفتاح جديد
+      document.getElementById('no-key-section').classList.remove('hidden');
+      showResult('تمت إزالة المفتاح بنجاح', 'success');
+      showStatus('protectionStatus', '', 'success');
+    });
+}
+
+function startSessionTimer() {
+  clearInterval(sessionTimerHandle);
+  let timeLeft = 600; // 10 دقائق
+  const timerElement = document.getElementById('sessionTimer');
+  sessionTimerHandle = setInterval(() => {
+    const m = Math.floor(timeLeft / 60), s = timeLeft % 60;
+    timerElement.textContent = `${m}:${s < 10 ? '0' : ''}${s}`;
+    if (timeLeft-- <= 0) {
+      clearInterval(sessionTimerHandle);
+      lockSession();
+    }
+  }, 1000);
+}
+
+function lockSession() {
+  clearInterval(sessionTimerHandle);
+  document.getElementById('securedActions').classList.add('hidden');
+  showResult('انتهت صلاحية الجلسة، يرجى إعادة التحقق', 'warning');
+  // تنظيف اختياري (لا نحذف الصور)
+  state.selectedVerify = null;
+  state.selectedSettings = null;
+  document.getElementById('verifyPassword').value = '';
+  document.querySelectorAll('.image-item').forEach(item => item.classList.remove('selected'));
+}
+
+/* ======= حوار تأكيد بسيط ======= */
+function confirmDialog(message) {
+  return new Promise(resolve => {
+    const modal = document.createElement('div');
+    modal.style.cssText = `
+      position: fixed; inset: 0; background: rgba(0,0,0,.55);
+      display: flex; align-items: center; justify-content: center; z-index: 9999;
+    `;
+    modal.innerHTML = `
+      <div style="background: var(--dark-light); padding: 22px; border-radius: 14px; width: min(420px, 92vw);
+        border: 1px solid rgba(255,255,255,.1); text-align: center;">
+        <i class="fas fa-question-circle" style="font-size: 44px; color: var(--warning);"></i>
+        <p style="margin: 16px 0 22px; line-height: 1.6;">${message}</p>
+        <div style="display:flex; gap:10px; justify-content:center;">
+          <button id="cCancel" class="icon-btn">إلغاء</button>
+          <button id="cOk" class="btn" style="margin:0; padding:10px 18px;">تأكيد</button>
+        </div>
+      </div>
+    `;
+    modal.addEventListener('click', (e) => { if (e.target === modal) { document.body.removeChild(modal); resolve(false); }});
+    modal.querySelector('#cCancel').onclick = () => { document.body.removeChild(modal); resolve(false); };
+    modal.querySelector('#cOk').onclick = () => { document.body.removeChild(modal); resolve(true); };
+    document.body.appendChild(modal);
+  });
+}
+
+/* ======= حماية الأهداف (تجريبية) ======= */
+function protectSelected() {
+  const target = document.getElementById('protectedTarget').value;
+  if (!target) { showResult('يرجى اختيار هدف للحماية', 'fail'); return; }
+  localStorage.setItem(LS_KEYS.PROTECTED_TARGET, target);
+  showStatus('protectionStatus', `تم تفعيل الحماية على: ${getTargetName(target)}`, 'success');
+}
+function clearProtection() {
+  if (!localStorage.getItem(LS_KEYS.PROTECTED_TARGET)) {
+    showStatus('protectionStatus', 'لا توجد حماية مفعلة حالياً', 'fail'); return;
+  }
+  localStorage.removeItem(LS_KEYS.PROTECTED_TARGET);
+  showStatus('protectionStatus', 'تم إلغاء الحماية بنجاح', 'success');
+}
+function getTargetName(target) {
+  const m = { images: 'الصور', docs: 'المستندات', apps: 'التطبيقات', custom: 'مخصص' };
+  return m[target] || target;
+}
+
+/* ======= تهيئة الأحداث ======= */
+function wireEvents() {
+  // تبويبات
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => openTab(btn.dataset.tab));
+  });
+  document.querySelectorAll('[data-tab-jump]').forEach(btn => {
+    btn.addEventListener('click', () => openTab(btn.getAttribute('data-tab-jump')));
+  });
+
+  // أزرار رئيسية
+  document.getElementById('btnVerify').onclick = verifyKey;
+  document.getElementById('btnSetKey').onclick = setKey;
+  document.getElementById('btnRemoveKey').onclick = removeKey;
+  document.getElementById('btnLock').onclick = lockSession;
+
+  // حماية
+  document.getElementById('btnProtect').onclick = protectSelected;
+  document.getElementById('btnUnprotect').onclick = clearProtection;
+
+  // اختيار الملف (التحقق/الإعدادات)
+  document.getElementById('fileVerify').addEventListener('change', async (e) => {
+    const file = e.target.files?.[0];
+    if (file) await addUserImageFromFile(file, 'verifyGallery');
+    e.target.value = ''; // للسماح باختيار نفس الملف لاحقاً
+  });
+  document.getElementById('fileSettings').addEventListener('change', async (e) => {
+    const file = e.target.files?.[0];
+    if (file) await addUserImageFromFile(file, 'settingsGallery');
+    e.target.value = '';
+  });
+
+  // إظهار/إخفاء كلمات المرور
+  document.querySelectorAll('.toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const input = document.querySelector(btn.getAttribute('data-toggle'));
+      if (!input) return;
+      input.type = input.type === 'password' ? 'text' : 'password';
+      btn.innerHTML = input.type === 'password' ? '<i class="far fa-eye"></i>' : '<i class="far fa-eye-slash"></i>';
+    });
+  });
+
+  // قوة كلمة المرور
+  document.getElementById('setKeyPassword').addEventListener('input', (e) => {
+    const score = assessPassword(e.target.value);
+    const tips = ['ضعيفة جداً', 'ضعيفة', 'متوسطة', 'جيدة', 'قوية', 'قوية جداً'];
+    const colors = ['#ff6b6b', '#ff9e6b', '#ffbb33', '#ffd166', '#9cff6b', '#00ff99'];
+    const el = document.getElementById('pwStrength');
+    el.textContent = e.target.value ? `قوة الكلمة: ${tips[score]}` : '';
+    el.style.color = colors[score];
+  });
+}
+
+/* ======= بدء التشغيل ======= */
+async function init() {
+  loadUserImages();
+  await createImageGallery('verifyGallery', false);
+  await createImageGallery('settingsGallery', true);
+
+  // حالة الحماية إن وجدت
+  const storedTarget = localStorage.getItem(LS_KEYS.PROTECTED_TARGET);
+  if (storedTarget) showStatus('protectionStatus', `الحماية مفعّلة على: ${getTargetName(storedTarget)}`, 'success');
+
+  // حالة المفتاح
+  const hasKey = !!localStorage.getItem(LS_KEYS.COMBINED_HASH);
+  document.getElementById('settings-content').classList.remove('hidden'); // نُظهرها لتعيين مفتاح
+  if (!hasKey) {
+    document.getElementById('no-key-section').classList.remove('hidden');
+  } else {
+    document.getElementById('no-key-section').classList.add('hidden');
+  }
+
+  // المحاولات/الحظر
+  setAttempts(getAttempts());
+}
+
+window.addEventListener('load', () => {
+  wireEvents();
+  init();
+});
+</script>
+</body>
+</html>
