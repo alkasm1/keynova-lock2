@@ -1059,7 +1059,7 @@ showResult("حدث خطأ أثناء عملية التحقق", "fail");
 function unlockSystem() {
 document.getElementById("securedActions").classList.remove("hidden");
 document.getElementById("protection-content").classList.remove("hidden");
-document.getElementById("protection-locked").classList.remove("hidden");
+document.getElementById("protection-locked").classList.add("hidden");
 startSessionTimer();
 }
 
@@ -1118,7 +1118,23 @@ if (!confirmDelete) return;
 localStorage.removeItem("keynova_combined_hash");
 localStorage.removeItem("protected_items");
 
-lockSession();
+// قفل النظام وإظهار واجهة تعيين مفتاح جديد
+document.getElementById("securedActions").classList.add("hidden");
+document.getElementById("protection-content").classList.add("hidden");
+document.getElementById("protection-locked").classList.remove("hidden");
+document.getElementById("no-key-section").classList.remove("hidden");
+
+// مسح التحديدات
+selectedVerifyImage = null;
+selectedSettingsImage = null;
+document.getElementById("verifyPassword").value = '';
+document.getElementById("setKeyPassword").value = '';
+document.querySelectorAll('.image-item').forEach(item => {
+item.classList.remove('selected');
+});
+
+if (sessionTimer) clearInterval(sessionTimer);
+
 showResultSettings("تمت إزالة المفتاح بنجاح", "success");
 }
 
@@ -1298,9 +1314,17 @@ timeLeft--;
 function lockSession() {
 if (sessionTimer) clearInterval(sessionTimer);
 
-document.getElementById("securedActions").classList.remove("hidden");
-document.getElementById("protection-content").classList.remove("hidden");
+document.getElementById("securedActions").classList.add("hidden");
+document.getElementById("protection-content").classList.add("hidden");
 document.getElementById("protection-locked").classList.remove("hidden");
+
+// التحقق من وجود مفتاح لإظهار الواجهة المناسبة
+const hasKey = localStorage.getItem("keynova_combined_hash") !== null;
+if (!hasKey) {
+document.getElementById("no-key-section").classList.remove("hidden");
+} else {
+document.getElementById("no-key-section").classList.add("hidden");
+}
 
 showResult("تم قفل الجلسة، يرجى إعادة التحقق للوصول", "warning");
 
@@ -1380,7 +1404,7 @@ const hasKey = localStorage.getItem("keynova_combined_hash") !== null;
 if (!hasKey) {
 document.getElementById("no-key-section").classList.remove("hidden");
 } else {
-document.getElementById("no-key-section").classList.remove("hidden");
+document.getElementById("no-key-section").classList.add("hidden");
 }
 
 console.log("Keynova Lock Pro - نظام حماية متقدم جاهز للاستخدام");
