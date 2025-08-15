@@ -1059,7 +1059,7 @@ showResult("حدث خطأ أثناء عملية التحقق", "fail");
 function unlockSystem() {
 document.getElementById("securedActions").classList.remove("hidden");
 document.getElementById("protection-content").classList.remove("hidden");
-document.getElementById("protection-locked").classList.add("hidden");
+document.getElementById("protection-locked").classList.remove("hidden");
 startSessionTimer();
 }
 
@@ -1298,8 +1298,8 @@ timeLeft--;
 function lockSession() {
 if (sessionTimer) clearInterval(sessionTimer);
 
-document.getElementById("securedActions").classList.add("hidden");
-document.getElementById("protection-content").classList.add("hidden");
+document.getElementById("securedActions").classList.remove("hidden");
+document.getElementById("protection-content").classList.remove("hidden");
 document.getElementById("protection-locked").classList.remove("hidden");
 
 showResult("تم قفل الجلسة، يرجى إعادة التحقق للوصول", "warning");
