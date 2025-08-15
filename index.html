@@ -1119,7 +1119,7 @@ localStorage.removeItem("keynova_combined_hash");
 localStorage.removeItem("protected_items");
 
 // قفل النظام وإظهار واجهة تعيين مفتاح جديد
-document.getElementById("securedActions").classList.add("hidden");
+document.getElementById("securedActions"). remove("hidden");
 document.getElementById("protection-content").classList.remove("hidden");
 document.getElementById("protection-locked").classList.remove("hidden");
 document.getElementById("no-key-section").classList.remove("hidden");
