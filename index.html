@@ -1098,7 +1098,7 @@ document.querySelectorAll('#settingsGallery .image-item').forEach(item => {
 item.classList.remove('selected');
 });
 
-document.getElementById("no-key-section").classList.add("hidden");
+document.getElementById("no-key-section"). remove("hidden");
 } catch (error) {
 console.error("Error setting key:", error);
 showResultSettings("حدث خطأ أثناء حفظ المفتاح", "fail");
@@ -1120,7 +1120,7 @@ localStorage.removeItem("protected_items");
 
 // قفل النظام وإظهار واجهة تعيين مفتاح جديد
 document.getElementById("securedActions").classList.add("hidden");
-document.getElementById("protection-content").classList.add("hidden");
+document.getElementById("protection-content").classList.remove("hidden");
 document.getElementById("protection-locked").classList.remove("hidden");
 document.getElementById("no-key-section").classList.remove("hidden");
 
