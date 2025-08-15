@@ -18,7 +18,6 @@
 --warning: #ffbb33;
 --gray: #8d8d8d;
 --info: #2196f3;
---purple: #9c27b0;
 }
 
 * {
@@ -558,59 +557,6 @@ background: var(--primary);
 color: white;
 }
 
-.attempts-monitor {
-background: rgba(255, 68, 68, 0.1);
-border: 1px solid rgba(255, 68, 68, 0.2);
-border-radius: 10px;
-padding: 15px;
-margin-top: 20px;
-}
-
-.attempts-monitor h4 {
-color: var(--danger);
-margin-bottom: 10px;
-display: flex;
-align-items: center;
-}
-
-.attempts-monitor h4 i {
-margin-left: 10px;
-}
-
-.attempt-item {
-background: rgba(255, 255, 255, 0.05);
-padding: 10px;
-border-radius: 6px;
-margin-bottom: 8px;
-font-size: 14px;
-}
-
-.security-stats {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-gap: 15px;
-margin-top: 20px;
-}
-
-.stat-card {
-background: rgba(255, 255, 255, 0.05);
-padding: 20px;
-border-radius: 10px;
-text-align: center;
-border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.stat-card h3 {
-font-size: 28px;
-color: var(--primary);
-margin-bottom: 5px;
-}
-
-.stat-card p {
-color: var(--gray);
-font-size: 14px;
-}
-
 @media (max-width: 480px) {
 .container {
 padding: 10px;
@@ -643,10 +589,6 @@ flex-direction: column;
 .tab-btn {
 margin-bottom: 5px;
 }
-
-.security-stats {
-grid-template-columns: 1fr;
-}
 }
 
 /* Dark mode detection */
@@ -664,14 +606,13 @@ background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
 <i class="fas fa-shield-alt"></i>
 </div>
 <h1>Keynova Lock Pro</h1>
-<p class="subtitle">نظام حماية متقدم للصور والتطبيقات</p>
+<p class="subtitle">قفل بصري آمن مع حماية التطبيقات والصور</p>
 <p class="subtitle">مطور البرنامج م: رأفت عمر</p>
 </header>
 
 <div class="tabs">
 <button id="verify-tab" class="tab-btn active" onclick="openTab('verify')">فتح القفل</button>
 <button id="protection-tab" class="tab-btn" onclick="openTab('protection')">إدارة الحماية</button>
-<button id="monitor-tab" class="tab-btn" onclick="openTab('monitor')">المراقبة</button>
 <button id="settings-tab" class="tab-btn" onclick="openTab('settings')">الإعدادات</button>
 </div>
 
@@ -707,7 +648,7 @@ background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
 <ul>
 <li>اختر نفس الصورة التي تم تعيينها كمفتاح</li>
 <li>أدخل كلمة المرور الصحيحة التي تم تعيينها مع الصورة</li>
-<li>سيتم تسجيل جميع محاولات الوصول</li>
+<li>سيتم تسجيل جميع محاولات الوصول للمراقبة</li>
 <li>بعد 3 محاولات فاشلة، سيتم تفعيل الحماية المشددة</li>
 </ul>
 </div>
@@ -728,85 +669,88 @@ background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
 <h3>التطبيقات والصور المحمية</h3>
 </div>
 
-<div id="protectedItems">
-<!-- سيتم إنشاء العناصر المحمية ديناميكياً -->
+<div id="protectedItemsList">
+<div class="protected-item">
+<div class="protected-item-info">
+<i class="fas fa-images"></i>
+<div class="protected-item-details">
+<h4>معرض الصور</h4>
+<p>حماية جميع الصور في الجهاز</p>
+</div>
+</div>
+<div class="protected-item-status">
+<span class="status-badge status-protected">محمي</span>
+<button class="toggle-protection" onclick="toggleProtection('gallery')">إلغاء</button>
+</div>
 </div>
 
-<button class="btn btn-info" onclick="addProtectedItem()">
-<i class="fas fa-plus"></i> إضافة عنصر للحماية
-</button>
+<div class="protected-item">
+<div class="protected-item-info">
+<i class="fab fa-whatsapp"></i>
+<div class="protected-item-details">
+<h4>واتساب</h4>
+<p>حماية تطبيق المراسلة</p>
+</div>
+</div>
+<div class="protected-item-status">
+<span class="status-badge status-unlocked">غير محمي</span>
+<button class="toggle-protection" onclick="toggleProtection('whatsapp')">تفعيل</button>
+</div>
 </div>
 
-<div class="card">
-<div class="card-header">
-<i class="fas fa-cog"></i>
-<h3>إعدادات الحماية</h3>
+<div class="protected-item">
+<div class="protected-item-info">
+<i class="fas fa-file-alt"></i>
+<div class="protected-item-details">
+<h4>المستندات</h4>
+<p>حماية الملفات والمستندات المهمة</p>
+</div>
+</div>
+<div class="protected-item-status">
+<span class="status-badge status-unlocked">غير محمي</span>
+<button class="toggle-protection" onclick="toggleProtection('documents')">تفعيل</button>
+</div>
 </div>
 
-<div class="form-group">
-<label style="color: var(--primary); margin-bottom: 10px; display: block; font-weight: 500;">نوع الحماية:</label>
-<select id="protectionType">
-<option value="basic">حماية أساسية</option>
-<option value="advanced">حماية متقدمة</option>
-<option value="maximum">حماية قصوى</option>
-</select>
+<div class="protected-item">
+<div class="protected-item-info">
+<i class="fas fa-camera"></i>
+<div class="protected-item-details">
+<h4>الكاميرا</h4>
+<p>حماية تطبيق الكاميرا</p>
+</div>
+</div>
+<div class="protected-item-status">
+<span class="status-badge status-unlocked">غير محمي</span>
+<button class="toggle-protection" onclick="toggleProtection('camera')">تفعيل</button>
+</div>
+</div>
+
+<div class="protected-item">
+<div class="protected-item-info">
+<i class="fas fa-address-book"></i>
+<div class="protected-item-details">
+<h4>جهات الاتصال</h4>
+<p>حماية قائمة جهات الاتصال</p>
+</div>
+</div>
+<div class="protected-item-status">
+<span class="status-badge status-protected">محمي</span>
+<button class="toggle-protection" onclick="toggleProtection('contacts')">إلغاء</button>
+</div>
+</div>
 </div>
 
 <div class="action-buttons">
-<button class="btn btn-success" onclick="applyProtectionSettings()">
-<i class="fas fa-save"></i> تطبيق الإعدادات
+<button class="btn btn-success" onclick="protectAll()">
+<i class="fas fa-lock"></i> حماية الكل
 </button>
-<button class="btn btn-danger" onclick="removeAllProtection()">
-<i class="fas fa-times"></i> إزالة جميع الحماية
-</button>
-</div>
-</div>
-</div>
-</div>
-
-<!-- واجهة المراقبة -->
-<div id="monitor" class="tab-content">
-<div id="monitor-locked" class="access-denied">
-<i class="fas fa-lock"></i>
-<h3>تم رفض الوصول</h3>
-<p>يجب فتح القفل أولاً للوصول إلى نظام المراقبة</p>
-</div>
-
-<div id="monitor-content" class="hidden">
-<div class="security-stats">
-<div class="stat-card">
-<h3 id="totalAttempts">0</h3>
-<p>محاولات الوصول</p>
-</div>
-<div class="stat-card">
-<h3 id="failedAttempts">0</h3>
-<p>محاولات فاشلة</p>
-</div>
-<div class="stat-card">
-<h3 id="protectedItems">0</h3>
-<p>عناصر محمية</p>
-</div>
-<div class="stat-card">
-<h3 id="lastAccess">--</h3>
-<p>آخر وصول</p>
-</div>
-</div>
-
-<div class="attempts-monitor">
-<h4><i class="fas fa-exclamation-triangle"></i> سجل محاولات الوصول</h4>
-<div id="attemptsLog">
-<p style="color: var(--gray); text-align: center; padding: 20px;">لا توجد محاولات وصول مسجلة</p>
-</div>
-</div>
-
-<div class="action-buttons">
-<button class="btn btn-secondary" onclick="clearAttemptsLog()">
-<i class="fas fa-trash"></i> مسح السجل
-</button>
-<button class="btn btn-info" onclick="exportSecurityReport()">
-<i class="fas fa-download"></i> تصدير تقرير أمني
+<button class="btn btn-danger" onclick="unprotectAll()">
+<i class="fas fa-unlock"></i> إلغاء حماية الكل
 </button>
 </div>
+
+<div class="result" id="protectionResult"></div>
 </div>
 </div>
 
@@ -815,10 +759,10 @@ background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
 <div id="no-key-section" class="no-key-message hidden">
 <i class="fas fa-key"></i>
 <h3>لا يوجد مفتاح قفل محفوظ</h3>
-<p>يرجى فتح القفل أولاً باستخدام مفتاحك الحالي لتعيين مفتاح جديد</p>
+<p>يرجى تعيين مفتاح جديد أولاً</p>
 </div>
 
-<div id="settings-content" class="hidden">
+<div id="settings-content">
 <div class="card">
 <div class="card-header">
 <i class="fas fa-key"></i>
@@ -834,7 +778,7 @@ background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
 
 <div class="form-group">
 <label style="color: var(--primary); margin-bottom: 10px; display: block; font-weight: 500;">كلمة المرور الجديدة:</label>
-<input type="password" class="file-input" id="setKeyPassword" placeholder="أدخل كلمة مرور قوية (8 أحرف على الأقل)" style="font-size: 16px;">
+<input type="password" class="file-input" id="setKeyPassword" placeholder="أدخل كلمة مرور قوية (4 أحرف على الأقل)" style="font-size: 16px;">
 </div>
 
 <button class="btn" onclick="setKey()">
@@ -849,6 +793,38 @@ background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
 <i class="fas fa-lock"></i> قفل الجلسة
 </button>
 </div>
+
+<div class="result" id="settingsResult"></div>
+</div>
+
+<div class="card">
+<div class="card-header">
+<i class="fas fa-cog"></i>
+<h3>إعدادات الحماية</h3>
+</div>
+
+<div class="form-group">
+<label style="color: var(--primary); margin-bottom: 10px; display: block; font-weight: 500;">مستوى الحماية:</label>
+<select id="protectionLevel">
+<option value="basic">حماية أساسية (3 محاولات)</option>
+<option value="advanced">حماية متقدمة (2 محاولات)</option>
+<option value="maximum">حماية قصوى (محاولة واحدة)</option>
+</select>
+</div>
+
+<div class="form-group">
+<label style="color: var(--primary); margin-bottom: 10px; display: block; font-weight: 500;">مدة الجلسة:</label>
+<select id="sessionDuration">
+<option value="300">5 دقائق</option>
+<option value="600">10 دقائق</option>
+<option value="900" selected>15 دقيقة</option>
+<option value="1800">30 دقيقة</option>
+</select>
+</div>
+
+<button class="btn btn-info" onclick="saveSettings()">
+<i class="fas fa-save"></i> حفظ الإعدادات
+</button>
 </div>
 </div>
 
@@ -861,23 +837,12 @@ background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
 </div>
 
 <script>
-// متغيرات عامة لحفظ البيانات (بديل localStorage)
-let appData = {
-keyHash: null,
-protectedItems: [],
-accessAttempts: [],
-settings: {
-protectionType: 'basic',
-maxFailedAttempts: 3,
-sessionTimeout: 900 // 15 دقيقة
-},
-isUnlocked: false,
-failedAttempts: 0
-};
-
 let selectedVerifyImage = null;
 let selectedSettingsImage = null;
 let sessionTimer = null;
+let failedAttempts = 0;
+let maxFailedAttempts = 3;
+let sessionDuration = 900; // 15 دقيقة
 
 // تفعيل dark mode
 if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -975,50 +940,6 @@ name: 'قمم الألب'
 }
 ];
 
-// التطبيقات والصور الافتراضية للحماية
-const defaultProtectedItems = [
-{
-id: 'gallery',
-name: 'معرض الصور',
-type: 'images',
-icon: 'fas fa-images',
-description: 'جميع الصور في الجهاز',
-protected: true
-},
-{
-id: 'whatsapp',
-name: 'واتساب',
-type: 'app',
-icon: 'fab fa-whatsapp',
-description: 'تطبيق المراسلة',
-protected: false
-},
-{
-id: 'documents',
-name: 'المستندات',
-type: 'files',
-icon: 'fas fa-file-alt',
-description: 'الملفات والمستندات المهمة',
-protected: false
-},
-{
-id: 'camera',
-name: 'الكاميرا',
-type: 'app',
-icon: 'fas fa-camera',
-description: 'تطبيق الكاميرا',
-protected: false
-},
-{
-id: 'contacts',
-name: 'جهات الاتصال',
-type: 'data',
-icon: 'fas fa-address-book',
-description: 'قائمة جهات الاتصال',
-protected: true
-}
-];
-
 // إنشاء معرض الصور
 function createImageGallery(containerId, isSettings = false) {
 const container = document.getElementById(containerId);
@@ -1061,12 +982,14 @@ item.classList.remove('selected');
 });
 
 const selectedItem = container.querySelector(`[data-image-id="${imageId}"]`);
+if (selectedItem) {
 selectedItem.classList.add('selected');
 
 if (isSettings) {
 selectedSettingsImage = imageId;
 } else {
 selectedVerifyImage = imageId;
+}
 }
 }
 
@@ -1100,13 +1023,9 @@ showResult("يرجى إدخال كلمة المرور", "fail");
 return;
 }
 
-// تسجيل محاولة الوصول
-logAccessAttempt('verify', false);
-
-if (!appData.keyHash) {
+const storedHash = localStorage.getItem("keynova_combined_hash");
+if (!storedHash) {
 showResult("لا يوجد مفتاح محفوظ، يرجى تعيين مفتاح أولًا", "warning");
-document.getElementById("settings-content").classList.remove("hidden");
-document.getElementById("no-key-section").classList.add("hidden");
 return;
 }
 
@@ -1116,22 +1035,18 @@ try {
 const currentHash = await calculateCombinedHash(selectedVerifyImage, password);
 if (!currentHash) return;
 
-if (currentHash === appData.keyHash) {
-appData.isUnlocked = true;
-appData.failedAttempts = 0;
-logAccessAttempt('verify', true);
-
+if (currentHash === storedHash) {
+failedAttempts = 0;
 showResult("تم التحقق بنجاح! تم إلغاء قفل النظام", "success");
 unlockSystem();
 } else {
-appData.failedAttempts++;
-logAccessAttempt('verify', false, 'كلمة مرور خاطئة');
+failedAttempts++;
 
-if (appData.failedAttempts >= appData.settings.maxFailedAttempts) {
-showResult(`تم تجاوز عدد المحاولات المسموحة (${appData.settings.maxFailedAttempts}). تم تفعيل الحماية المشددة`, "fail");
-activateSecurityLockdown();
+if (failedAttempts >= maxFailedAttempts) {
+showResult(`تم تجاوز عدد المحاولات المسموحة (${maxFailedAttempts}). تم تفعيل الحماية المشددة`, "fail");
+// يمكن إضافة إجراءات حماية إضافية هنا
 } else {
-showResult(`الصورة أو كلمة المرور غير صحيحة. المحاولات المتبقية: ${appData.settings.maxFailedAttempts - appData.failedAttempts}`, "fail");
+showResult(`الصورة أو كلمة المرور غير صحيحة. المحاولات المتبقية: ${maxFailedAttempts - failedAttempts}`, "fail");
 }
 }
 } catch (error) {
@@ -1143,85 +1058,68 @@ showResult("حدث خطأ أثناء عملية التحقق", "fail");
 // إلغاء قفل النظام
 function unlockSystem() {
 document.getElementById("securedActions").classList.remove("hidden");
-document.getElementById("settings-content").classList.remove("hidden");
 document.getElementById("protection-content").classList.remove("hidden");
-document.getElementById("monitor-content").classList.remove("hidden");
 document.getElementById("protection-locked").classList.add("hidden");
-document.getElementById("monitor-locked").classList.add("hidden");
-document.getElementById("no-key-section").classList.add("hidden");
-
 startSessionTimer();
-updateProtectedItemsDisplay();
-updateSecurityStats();
 }
 
 // تعيين مفتاح جديد
 async function setKey() {
 if (!selectedSettingsImage) {
-showResult("يرجى اختيار صورة لتعيينها كمفتاح", "fail");
+showResultSettings("يرجى اختيار صورة لتعيينها كمفتاح", "fail");
 return;
 }
 
 const password = document.getElementById("setKeyPassword").value;
 if (!password) {
-showResult("يرجى إدخال كلمة مرور", "fail");
+showResultSettings("يرجى إدخال كلمة مرور", "fail");
 return;
 }
 
-if (password.length < 8) {
-showResult("كلمة المرور يجب أن تكون 8 أحرف على الأقل", "fail");
+if (password.length < 4) {
+showResultSettings("كلمة المرور يجب أن تكون 4 أحرف على الأقل", "fail");
 return;
 }
 
-const confirmChange = await showConfirmDialog("هل أنت متأكد من تغيير المفتاح؟ سيتم إعادة تعيين جميع إعدادات الحماية.");
+const confirmChange = await showConfirmDialog("هل أنت متأكد من تغيير المفتاح؟ لن تتمكن من فتح القفل بدون هذه الصورة وكلمة المرور.");
 if (!confirmChange) return;
 
 try {
 const hash = await calculateCombinedHash(selectedSettingsImage, password);
 if (!hash) return;
 
-appData.keyHash = hash;
-logAccessAttempt('key_change', true);
+localStorage.setItem("keynova_combined_hash", hash);
+showResultSettings("تم حفظ المفتاح الجديد بنجاح", "success");
 
-showResult("تم حفظ المفتاح الجديد بنجاح", "success");
-
+// مسح الحقول
 document.getElementById("setKeyPassword").value = '';
 selectedSettingsImage = null;
 document.querySelectorAll('#settingsGallery .image-item').forEach(item => {
 item.classList.remove('selected');
 });
+
+document.getElementById("no-key-section").classList.add("hidden");
 } catch (error) {
 console.error("Error setting key:", error);
-showResult("حدث خطأ أثناء حفظ المفتاح", "fail");
+showResultSettings("حدث خطأ أثناء حفظ المفتاح", "fail");
 }
 }
 
 // إزالة المفتاح
 async function removeKey() {
-if (!appData.keyHash) {
-showResult("لا يوجد مفتاح محفوظ", "fail");
+if (!localStorage.getItem("keynova_combined_hash")) {
+showResultSettings("لا يوجد مفتاح محفوظ", "fail");
 return;
 }
 
-const confirmDelete = await showConfirmDialog("هل أنت متأكد من إزالة المفتاح؟ سيتم حذف جميع البيانات والإعدادات.");
+const confirmDelete = await showConfirmDialog("هل أنت متأكد من إزالة المفتاح؟ لن تتمكن من استخدام القفل بعد هذه العملية.");
 if (!confirmDelete) return;
 
-// إعادة تعيين جميع البيانات
-appData = {
-keyHash: null,
-protectedItems: [],
-accessAttempts: [],
-settings: {
-protectionType: 'basic',
-maxFailedAttempts: 3,
-sessionTimeout: 900
-},
-isUnlocked: false,
-failedAttempts: 0
-};
+localStorage.removeItem("keynova_combined_hash");
+localStorage.removeItem("protected_items");
 
 lockSession();
-showResult("تمت إزالة المفتاح وجميع البيانات بنجاح", "success");
+showResultSettings("تمت إزالة المفتاح بنجاح", "success");
 }
 
 // إنشاء modal تأكيد مخصص
@@ -1300,233 +1198,85 @@ resolve(false);
 });
 }
 
-// إضافة عنصر للحماية
-function addProtectedItem() {
-const availableItems = defaultProtectedItems.filter(item => 
-!appData.protectedItems.find(p => p.id === item.id)
-);
-
-if (availableItems.length === 0) {
-showResult("جميع العناصر المتاحة محمية بالفعل", "info");
-return;
-}
-
-// اختيار عنصر عشوائي من المتاح
-const randomItem = availableItems[Math.floor(Math.random() * availableItems.length)];
-randomItem.protected = true;
-appData.protectedItems.push({...randomItem});
-
-updateProtectedItemsDisplay();
-showResult(`تم إضافة "${randomItem.name}" للحماية`, "success");
-logAccessAttempt('add_protection', true, randomItem.name);
-}
-
-// عرض العناصر المحمية
-function updateProtectedItemsDisplay() {
-const container = document.getElementById('protectedItems');
-container.innerHTML = '';
-
-if (appData.protectedItems.length === 0) {
-container.innerHTML = '<p style="text-align: center; color: var(--gray); padding: 20px;">لا توجد عناصر محمية</p>';
-return;
-}
-
-appData.protectedItems.forEach(item => {
-const itemDiv = document.createElement('div');
-itemDiv.className = 'protected-item';
-itemDiv.innerHTML = `
-<div class="protected-item-info">
-<i class="${item.icon}"></i>
-<div class="protected-item-details">
-<h4>${item.name}</h4>
-<p>${item.description}</p>
-</div>
-</div>
-<div class="protected-item-status">
-<span class="status-badge ${item.protected ? 'status-protected' : 'status-unlocked'}">
-${item.protected ? 'محمي' : 'غير محمي'}
-</span>
-<button class="toggle-protection" onclick="toggleProtection('${item.id}')">
-${item.protected ? 'إلغاء' : 'تفعيل'}
-</button>
-</div>
-`;
-container.appendChild(itemDiv);
-});
-}
-
 // تبديل حالة الحماية
 function toggleProtection(itemId) {
-const item = appData.protectedItems.find(p => p.id === itemId);
-if (item) {
-item.protected = !item.protected;
-updateProtectedItemsDisplay();
-logAccessAttempt('toggle_protection', true, `${item.name} - ${item.protected ? 'محمي' : 'غير محمي'}`);
-showResult(`تم ${item.protected ? 'تفعيل' : 'إلغاء'} حماية ${item.name}`, "success");
+const item = document.querySelector(`[onclick="toggleProtection('${itemId}')"]`);
+const badge = item.parentElement.querySelector('.status-badge');
+const isProtected = badge.classList.contains('status-protected');
+
+if (isProtected) {
+badge.classList.remove('status-protected');
+badge.classList.add('status-unlocked');
+badge.textContent = 'غير محمي';
+item.textContent = 'تفعيل';
+showResultProtection(`تم إلغاء حماية ${getItemName(itemId)}`, "warning");
+} else {
+badge.classList.remove('status-unlocked');
+badge.classList.add('status-protected');
+badge.textContent = 'محمي';
+item.textContent = 'إلغاء';
+showResultProtection(`تم تفعيل حماية ${getItemName(itemId)}`, "success");
 }
 }
 
-// تطبيق إعدادات الحماية
-function applyProtectionSettings() {
-const protectionType = document.getElementById('protectionType').value;
-appData.settings.protectionType = protectionType;
+// حماية جميع العناصر
+function protectAll() {
+const buttons = document.querySelectorAll('.toggle-protection');
+buttons.forEach(button => {
+const badge = button.parentElement.querySelector('.status-badge');
+badge.classList.remove('status-unlocked');
+badge.classList.add('status-protected');
+badge.textContent = 'محمي';
+button.textContent = 'إلغاء';
+});
+showResultProtection("تم تفعيل الحماية على جميع العناصر", "success");
+}
 
-switch (protectionType) {
+// إلغاء حماية جميع العناصر
+function unprotectAll() {
+const buttons = document.querySelectorAll('.toggle-protection');
+buttons.forEach(button => {
+const badge = button.parentElement.querySelector('.status-badge');
+badge.classList.remove('status-protected');
+badge.classList.add('status-unlocked');
+badge.textContent = 'غير محمي';
+button.textContent = 'تفعيل';
+});
+showResultProtection("تم إلغاء الحماية عن جميع العناصر", "warning");
+}
+
+// حفظ الإعدادات
+function saveSettings() {
+const protectionLevel = document.getElementById('protectionLevel').value;
+const sessionDur = parseInt(document.getElementById('sessionDuration').value);
+
+switch (protectionLevel) {
 case 'basic':
-appData.settings.maxFailedAttempts = 3;
-appData.settings.sessionTimeout = 900;
+maxFailedAttempts = 3;
 break;
 case 'advanced':
-appData.settings.maxFailedAttempts = 2;
-appData.settings.sessionTimeout = 600;
+maxFailedAttempts = 2;
 break;
 case 'maximum':
-appData.settings.maxFailedAttempts = 1;
-appData.settings.sessionTimeout = 300;
+maxFailedAttempts = 1;
 break;
 }
 
-showResult(`تم تطبيق إعدادات الحماية: ${getProtectionTypeName(protectionType)}`, "success");
-logAccessAttempt('settings_change', true, protectionType);
-}
+sessionDuration = sessionDur;
+localStorage.setItem('keynova_settings', JSON.stringify({
+protectionLevel: protectionLevel,
+sessionDuration: sessionDuration,
+maxFailedAttempts: maxFailedAttempts
+}));
 
-// إزالة جميع الحماية
-async function removeAllProtection() {
-if (appData.protectedItems.length === 0) {
-showResult("لا توجد عناصر محمية لإزالتها", "info");
-return;
-}
-
-const confirm = await showConfirmDialog("هل أنت متأكد من إزالة الحماية عن جميع العناصر؟");
-if (!confirm) return;
-
-appData.protectedItems = [];
-updateProtectedItemsDisplay();
-showResult("تم إزالة الحماية عن جميع العناصر", "success");
-logAccessAttempt('remove_all_protection', true);
-}
-
-// تسجيل محاولة الوصول
-function logAccessAttempt(action, success, details = '') {
-const attempt = {
-timestamp: new Date().toLocaleString('ar-SA'),
-action: action,
-success: success,
-details: details,
-ip: '192.168.1.1' // محاكاة IP
-};
-
-appData.accessAttempts.unshift(attempt);
-if (appData.accessAttempts.length > 50) {
-appData.accessAttempts = appData.accessAttempts.slice(0, 50);
-}
-
-if (appData.isUnlocked) {
-updateAttemptsLog();
-updateSecurityStats();
-}
-}
-
-// تحديث سجل المحاولات
-function updateAttemptsLog() {
-const container = document.getElementById('attemptsLog');
-
-if (appData.accessAttempts.length === 0) {
-container.innerHTML = '<p style="color: var(--gray); text-align: center; padding: 20px;">لا توجد محاولات وصول مسجلة</p>';
-return;
-}
-
-container.innerHTML = '';
-appData.accessAttempts.slice(0, 10).forEach(attempt => {
-const attemptDiv = document.createElement('div');
-attemptDiv.className = 'attempt-item';
-attemptDiv.innerHTML = `
-<div style="display: flex; justify-content: space-between; align-items: center;">
-<span>${getActionName(attempt.action)} ${attempt.details ? `- ${attempt.details}` : ''}</span>
-<span style="color: ${attempt.success ? 'var(--success)' : 'var(--danger)'};">
-<i class="fas ${attempt.success ? 'fa-check' : 'fa-times'}"></i>
-</span>
-</div>
-<small style="color: var(--gray);">${attempt.timestamp}</small>
-`;
-container.appendChild(attemptDiv);
-});
-}
-
-// تحديث الإحصائيات الأمنية
-function updateSecurityStats() {
-document.getElementById('totalAttempts').textContent = appData.accessAttempts.length;
-document.getElementById('failedAttempts').textContent = 
-appData.accessAttempts.filter(a => !a.success).length;
-document.getElementById('protectedItems').textContent = 
-appData.protectedItems.filter(p => p.protected).length;
-
-const lastAccess = appData.accessAttempts.find(a => a.success);
-document.getElementById('lastAccess').textContent = 
-lastAccess ? lastAccess.timestamp.split(' ')[1] : '--';
-}
-
-// مسح سجل المحاولات
-function clearAttemptsLog() {
-appData.accessAttempts = [];
-updateAttemptsLog();
-updateSecurityStats();
-showResult("تم مسح سجل المحاولات", "success");
-}
-
-// تصدير تقرير أمني
-function exportSecurityReport() {
-const report = {
-timestamp: new Date().toLocaleString('ar-SA'),
-totalAttempts: appData.accessAttempts.length,
-failedAttempts: appData.accessAttempts.filter(a => !a.success).length,
-protectedItems: appData.protectedItems.filter(p => p.protected).length,
-securityLevel: appData.settings.protectionType,
-recentAttempts: appData.accessAttempts.slice(0, 20)
-};
-
-const reportText = `
-=== تقرير أمني - Keynova Lock Pro ===
-تاريخ التقرير: ${report.timestamp}
-
-الإحصائيات العامة:
-- إجمالي محاولات الوصول: ${report.totalAttempts}
-- المحاولات الفاشلة: ${report.failedAttempts}
-- العناصر المحمية: ${report.protectedItems}
-- مستوى الأمان: ${getProtectionTypeName(report.securityLevel)}
-
-آخر المحاولات:
-${report.recentAttempts.map(a => 
-`${a.timestamp} - ${getActionName(a.action)} - ${a.success ? 'نجح' : 'فشل'}`
-).join('\n')}
-
-=== نهاية التقرير ===
-`;
-
-const blob = new Blob([reportText], { type: 'text/plain;charset=utf-8' });
-const url = URL.createObjectURL(blob);
-const a = document.createElement('a');
-a.href = url;
-a.download = `security-report-${new Date().toISOString().split('T')[0]}.txt`;
-a.click();
-URL.revokeObjectURL(url);
-
-showResult("تم تصدير التقرير الأمني", "success");
-}
-
-// تفعيل الحماية المشددة
-function activateSecurityLockdown() {
-appData.isUnlocked = false;
-lockSession();
-showResult("تم تفعيل الحماية المشددة بسبب تجاوز عدد المحاولات", "fail");
-logAccessAttempt('security_lockdown', true);
+showResultSettings("تم حفظ الإعدادات بنجاح", "success");
 }
 
 // بدء مؤقت الجلسة
 function startSessionTimer() {
 if (sessionTimer) clearInterval(sessionTimer);
 
-let timeLeft = appData.settings.sessionTimeout;
+let timeLeft = sessionDuration;
 const timerElement = document.getElementById("sessionTimer");
 
 sessionTimer = setInterval(() => {
@@ -1546,21 +1296,11 @@ timeLeft--;
 
 // قفل الجلسة
 function lockSession() {
-appData.isUnlocked = false;
 if (sessionTimer) clearInterval(sessionTimer);
 
 document.getElementById("securedActions").classList.add("hidden");
-document.getElementById("settings-content").classList.add("hidden");
 document.getElementById("protection-content").classList.add("hidden");
-document.getElementById("monitor-content").classList.add("hidden");
 document.getElementById("protection-locked").classList.remove("hidden");
-document.getElementById("monitor-locked").classList.remove("hidden");
-
-if (appData.keyHash) {
-document.getElementById("no-key-section").classList.add("hidden");
-} else {
-document.getElementById("no-key-section").classList.remove("hidden");
-}
 
 showResult("تم قفل الجلسة، يرجى إعادة التحقق للوصول", "warning");
 
@@ -1571,8 +1311,6 @@ document.getElementById("verifyPassword").value = '';
 document.querySelectorAll('.image-item').forEach(item => {
 item.classList.remove('selected');
 });
-
-logAccessAttempt('session_lock', true);
 }
 
 // تبديل التبويبات
@@ -1597,29 +1335,28 @@ resultDiv.textContent = message;
 resultDiv.className = "result " + type;
 }
 
-// الحصول على اسم الإجراء
-function getActionName(action) {
-const actions = {
-'verify': 'محاولة فتح القفل',
-'key_change': 'تغيير المفتاح',
-'add_protection': 'إضافة حماية',
-'toggle_protection': 'تبديل الحماية',
-'settings_change': 'تغيير الإعدادات',
-'remove_all_protection': 'إزالة جميع الحماية',
-'session_lock': 'قفل الجلسة',
-'security_lockdown': 'تفعيل الحماية المشددة'
-};
-return actions[action] || action;
+function showResultSettings(message, type) {
+const resultDiv = document.getElementById("settingsResult");
+resultDiv.textContent = message;
+resultDiv.className = "result " + type;
 }
 
-// الحصول على اسم نوع الحماية
-function getProtectionTypeName(type) {
-const types = {
-'basic': 'حماية أساسية',
-'advanced': 'حماية متقدمة',
-'maximum': 'حماية قصوى'
+function showResultProtection(message, type) {
+const resultDiv = document.getElementById("protectionResult");
+resultDiv.textContent = message;
+resultDiv.className = "result " + type;
+}
+
+// الحصول على اسم العنصر
+function getItemName(itemId) {
+const names = {
+'gallery': 'معرض الصور',
+'whatsapp': 'واتساب',
+'documents': 'المستندات',
+'camera': 'الكاميرا',
+'contacts': 'جهات الاتصال'
 };
-return types[type] || type;
+return names[itemId] || itemId;
 }
 
 // تهيئة الصفحة عند التحميل
@@ -1628,22 +1365,23 @@ window.onload = function() {
 createImageGallery('verifyGallery', false);
 createImageGallery('settingsGallery', true);
 
-// تحميل العناصر المحمية الافتراضية
-appData.protectedItems = defaultProtectedItems.filter(item => item.protected).map(item => ({...item}));
-
-// التحقق من حالة النظام
-if (appData.keyHash) {
-document.getElementById("settings-content").classList.add("hidden");
-document.getElementById("no-key-section").classList.add("hidden");
-} else {
-document.getElementById("settings-content").classList.remove("hidden");
-document.getElementById("no-key-section").classList.remove("hidden");
+// تحميل الإعدادات المحفوظة
+const savedSettings = localStorage.getItem('keynova_settings');
+if (savedSettings) {
+const settings = JSON.parse(savedSettings);
+maxFailedAttempts = settings.maxFailedAttempts || 3;
+sessionDuration = settings.sessionDuration || 900;
+document.getElementById('protectionLevel').value = settings.protectionLevel || 'basic';
+document.getElementById('sessionDuration').value = settings.sessionDuration || 900;
 }
 
-// تحديث العرض
-updateProtectedItemsDisplay();
-updateSecurityStats();
-updateAttemptsLog();
+// التحقق من وجود مفتاح
+const hasKey = localStorage.getItem("keynova_combined_hash") !== null;
+if (!hasKey) {
+document.getElementById("no-key-section").classList.remove("hidden");
+} else {
+document.getElementById("no-key-section").classList.add("hidden");
+}
 
 console.log("Keynova Lock Pro - نظام حماية متقدم جاهز للاستخدام");
 };
