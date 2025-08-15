@@ -1380,7 +1380,7 @@ const hasKey = localStorage.getItem("keynova_combined_hash") !== null;
 if (!hasKey) {
 document.getElementById("no-key-section").classList.remove("hidden");
 } else {
-document.getElementById("no-key-section").classList.add("hidden");
+document.getElementById("no-key-section").classList.remove("hidden");
 }
 
 console.log("Keynova Lock Pro - نظام حماية متقدم جاهز للاستخدام");
