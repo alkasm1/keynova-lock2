@@ -1,0 +1,1652 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Keynova Lock Pro - قفل بصري متقدم</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+--primary: #ff8800;
+--primary-dark: #e67600;
+--dark: #121212;
+--dark-light: #1e1e1e;
+--light: #f5f5f5;
+--success: #00c853;
+--danger: #ff4444;
+--warning: #ffbb33;
+--gray: #8d8d8d;
+--info: #2196f3;
+--purple: #9c27b0;
+}
+
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+body {
+font-family: 'Tajawal', Arial, sans-serif;
+background: linear-gradient(135deg, var(--dark) 0%, #2d2d2d 100%);
+color: var(--light);
+min-height: 100vh;
+padding: 20px;
+direction: rtl;
+text-align: right;
+}
+
+body.dark {
+background: linear-gradient(135deg, var(--dark) 0%, #1a1a1a 100%);
+}
+
+.container {
+max-width: 500px;
+margin: 0 auto;
+padding: 20px;
+}
+
+header {
+text-align: center;
+padding: 20px 0 30px;
+position: relative;
+}
+
+.logo {
+background: linear-gradient(135deg, #ff8800, #ff5500);
+width: 80px;
+height: 80px;
+border-radius: 50%;
+margin: 0 auto 15px;
+display: flex;
+align-items: center;
+justify-content: center;
+box-shadow: 0 5px 15px rgba(255, 136, 0, 0.3);
+position: relative;
+overflow: hidden;
+}
+
+.logo::before {
+content: '';
+position: absolute;
+top: -50%;
+left: -50%;
+width: 200%;
+height: 200%;
+background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+animation: shine 3s infinite;
+}
+
+@keyframes shine {
+0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+.logo i {
+font-size: 36px;
+color: white;
+z-index: 1;
+}
+
+h1 {
+color: var(--primary);
+font-size: 28px;
+margin-bottom: 5px;
+background: linear-gradient(45deg, #ff8800, #ff5500);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+}
+
+.subtitle {
+color: var(--gray);
+font-size: 16px;
+font-weight: 400;
+}
+
+.card {
+background: linear-gradient(135deg, var(--dark-light), #252525);
+border-radius: 16px;
+padding: 25px;
+margin-bottom: 20px;
+box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+transition: all 0.3s ease;
+border: 1px solid rgba(255, 255, 255, 0.05);
+position: relative;
+overflow: hidden;
+}
+
+.card::before {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+height: 2px;
+background: linear-gradient(90deg, transparent, var(--primary), transparent);
+}
+
+.card-header {
+display: flex;
+align-items: center;
+margin-bottom: 20px;
+color: var(--primary);
+}
+
+.card-header i {
+font-size: 22px;
+margin-left: 10px;
+}
+
+.card-header h3 {
+font-size: 20px;
+font-weight: 700;
+}
+
+.form-group {
+margin-bottom: 20px;
+}
+
+.file-input {
+width: 100%;
+padding: 15px;
+background: rgba(255, 255, 255, 0.05);
+border: 1px solid rgba(255, 255, 255, 0.1);
+border-radius: 10px;
+color: var(--light);
+font-size: 16px;
+cursor: pointer;
+transition: all 0.3s ease;
+}
+
+.file-input:hover {
+border-color: var(--primary);
+background: rgba(255, 136, 0, 0.05);
+}
+
+.file-input:focus {
+outline: none;
+border-color: var(--primary);
+box-shadow: 0 0 0 2px rgba(255, 136, 0, 0.2);
+}
+
+.image-gallery {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+gap: 10px;
+max-height: 300px;
+overflow-y: auto;
+padding: 10px;
+background: rgba(255, 255, 255, 0.03);
+border-radius: 10px;
+border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.image-item {
+position: relative;
+aspect-ratio: 1;
+border-radius: 8px;
+overflow: hidden;
+cursor: pointer;
+transition: all 0.3s ease;
+border: 2px solid transparent;
+}
+
+.image-item:hover {
+transform: scale(1.05);
+border-color: var(--primary);
+box-shadow: 0 5px 15px rgba(255, 136, 0, 0.3);
+}
+
+.image-item.selected {
+border-color: var(--primary);
+box-shadow: 0 0 10px rgba(255, 136, 0, 0.5);
+}
+
+.image-item img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+}
+
+.image-number {
+position: absolute;
+top: 5px;
+right: 5px;
+background: rgba(0, 0, 0, 0.7);
+color: white;
+border-radius: 50%;
+width: 20px;
+height: 20px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 12px;
+font-weight: bold;
+}
+
+.image-name {
+position: absolute;
+bottom: 0;
+left: 0;
+right: 0;
+background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+color: white;
+padding: 8px 6px 6px;
+font-size: 10px;
+text-align: center;
+opacity: 0;
+transition: opacity 0.3s ease;
+}
+
+.image-item:hover .image-name {
+opacity: 1;
+}
+
+.btn {
+display: block;
+width: 100%;
+padding: 15px;
+background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+color: white;
+border: none;
+border-radius: 10px;
+font-size: 18px;
+font-weight: 700;
+cursor: pointer;
+transition: all 0.3s ease;
+margin-top: 10px;
+text-align: center;
+position: relative;
+overflow: hidden;
+}
+
+.btn::before {
+content: '';
+position: absolute;
+top: 0;
+left: -100%;
+width: 100%;
+height: 100%;
+background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+transition: left 0.5s;
+}
+
+.btn:hover::before {
+left: 100%;
+}
+
+.btn:hover {
+transform: translateY(-2px);
+box-shadow: 0 5px 15px rgba(255, 136, 0, 0.3);
+}
+
+.btn:active {
+transform: translateY(0);
+}
+
+.btn-secondary {
+background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+}
+
+.btn-secondary:hover {
+background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-danger {
+background: linear-gradient(135deg, var(--danger), #e53935);
+}
+
+.btn-danger:hover {
+box-shadow: 0 5px 15px rgba(255, 68, 68, 0.3);
+}
+
+.btn-success {
+background: linear-gradient(135deg, var(--success), #00b248);
+}
+
+.btn-success:hover {
+box-shadow: 0 5px 15px rgba(0, 200, 83, 0.3);
+}
+
+.btn-info {
+background: linear-gradient(135deg, var(--info), #1976d2);
+}
+
+.btn-info:hover {
+box-shadow: 0 5px 15px rgba(33, 150, 243, 0.3);
+}
+
+select {
+width: 100%;
+padding: 15px;
+background: rgba(255, 255, 255, 0.05);
+border: 1px solid rgba(255, 255, 255, 0.1);
+border-radius: 10px;
+color: var(--light);
+font-size: 16px;
+margin-bottom: 15px;
+}
+
+select:focus {
+outline: none;
+border-color: var(--primary);
+box-shadow: 0 0 0 2px rgba(255, 136, 0, 0.2);
+}
+
+.result {
+padding: 15px;
+border-radius: 10px;
+margin-top: 20px;
+text-align: center;
+font-size: 18px;
+font-weight: 500;
+display: none;
+}
+
+.success {
+background: linear-gradient(135deg, rgba(0, 200, 83, 0.15), rgba(0, 200, 83, 0.05));
+color: #00ff99;
+border: 1px solid rgba(0, 200, 83, 0.3);
+display: block;
+}
+
+.fail {
+background: linear-gradient(135deg, rgba(255, 68, 68, 0.15), rgba(255, 68, 68, 0.05));
+color: #ff4444;
+border: 1px solid rgba(255, 68, 68, 0.3);
+display: block;
+}
+
+.warning {
+background: linear-gradient(135deg, rgba(255, 187, 51, 0.15), rgba(255, 187, 51, 0.05));
+color: #ffbb33;
+border: 1px solid rgba(255, 187, 51, 0.3);
+display: block;
+}
+
+.info {
+background: linear-gradient(135deg, rgba(33, 150, 243, 0.15), rgba(33, 150, 243, 0.05));
+color: #2196f3;
+border: 1px solid rgba(33, 150, 243, 0.3);
+display: block;
+}
+
+.hidden {
+display: none;
+}
+
+.action-buttons {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 15px;
+margin-top: 20px;
+}
+
+.action-buttons .btn {
+margin: 0;
+}
+
+.session-timeout {
+background: linear-gradient(135deg, rgba(255, 187, 51, 0.1), rgba(255, 187, 51, 0.05));
+border: 1px solid rgba(255, 187, 51, 0.2);
+padding: 15px;
+border-radius: 10px;
+text-align: center;
+margin-top: 20px;
+font-size: 14px;
+color: var(--warning);
+}
+
+.instructions {
+background: rgba(255, 255, 255, 0.03);
+border-radius: 10px;
+padding: 15px;
+margin-top: 25px;
+border-left: 3px solid var(--primary);
+}
+
+.instructions h4 {
+color: var(--primary);
+margin-bottom: 10px;
+}
+
+.instructions ul {
+padding-right: 20px;
+}
+
+.instructions li {
+margin-bottom: 8px;
+color: var(--gray);
+}
+
+.tab-content {
+display: none;
+}
+
+.active-tab {
+display: block;
+}
+
+.tabs {
+display: flex;
+justify-content: space-between;
+background: rgba(255, 255, 255, 0.05);
+border-radius: 12px;
+padding: 5px;
+margin-bottom: 20px;
+}
+
+.tab-btn {
+flex: 1;
+padding: 12px;
+text-align: center;
+background: transparent;
+color: var(--gray);
+border: none;
+border-radius: 10px;
+cursor: pointer;
+font-weight: 500;
+transition: all 0.3s ease;
+}
+
+.tab-btn.active {
+background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+color: white;
+box-shadow: 0 4px 10px rgba(255, 136, 0, 0.3);
+}
+
+.status-icon {
+margin-left: 10px;
+}
+
+.no-key-message {
+text-align: center;
+padding: 30px;
+color: var(--warning);
+}
+
+.access-denied {
+text-align: center;
+padding: 30px;
+color: var(--danger);
+font-size: 18px;
+}
+
+.access-denied i {
+font-size: 48px;
+margin-bottom: 15px;
+display: block;
+}
+
+.protected-item {
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 15px;
+background: rgba(255, 255, 255, 0.05);
+border-radius: 10px;
+margin-bottom: 10px;
+border: 1px solid rgba(255, 255, 255, 0.1);
+transition: all 0.3s ease;
+}
+
+.protected-item:hover {
+background: rgba(255, 255, 255, 0.08);
+border-color: var(--primary);
+}
+
+.protected-item-info {
+display: flex;
+align-items: center;
+}
+
+.protected-item-info i {
+font-size: 24px;
+margin-left: 15px;
+color: var(--primary);
+}
+
+.protected-item-details h4 {
+color: var(--light);
+margin-bottom: 5px;
+}
+
+.protected-item-details p {
+color: var(--gray);
+font-size: 14px;
+}
+
+.protected-item-status {
+display: flex;
+align-items: center;
+gap: 10px;
+}
+
+.status-badge {
+padding: 5px 10px;
+border-radius: 20px;
+font-size: 12px;
+font-weight: 600;
+}
+
+.status-protected {
+background: rgba(255, 68, 68, 0.2);
+color: var(--danger);
+}
+
+.status-unlocked {
+background: rgba(0, 200, 83, 0.2);
+color: var(--success);
+}
+
+.toggle-protection {
+background: none;
+border: 1px solid var(--primary);
+color: var(--primary);
+padding: 8px 15px;
+border-radius: 6px;
+cursor: pointer;
+transition: all 0.3s ease;
+font-size: 12px;
+}
+
+.toggle-protection:hover {
+background: var(--primary);
+color: white;
+}
+
+.attempts-monitor {
+background: rgba(255, 68, 68, 0.1);
+border: 1px solid rgba(255, 68, 68, 0.2);
+border-radius: 10px;
+padding: 15px;
+margin-top: 20px;
+}
+
+.attempts-monitor h4 {
+color: var(--danger);
+margin-bottom: 10px;
+display: flex;
+align-items: center;
+}
+
+.attempts-monitor h4 i {
+margin-left: 10px;
+}
+
+.attempt-item {
+background: rgba(255, 255, 255, 0.05);
+padding: 10px;
+border-radius: 6px;
+margin-bottom: 8px;
+font-size: 14px;
+}
+
+.security-stats {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+gap: 15px;
+margin-top: 20px;
+}
+
+.stat-card {
+background: rgba(255, 255, 255, 0.05);
+padding: 20px;
+border-radius: 10px;
+text-align: center;
+border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-card h3 {
+font-size: 28px;
+color: var(--primary);
+margin-bottom: 5px;
+}
+
+.stat-card p {
+color: var(--gray);
+font-size: 14px;
+}
+
+@media (max-width: 480px) {
+.container {
+padding: 10px;
+}
+
+.card {
+padding: 20px;
+}
+
+.action-buttons {
+grid-template-columns: 1fr;
+}
+
+h1 {
+font-size: 24px;
+}
+
+.card-header h3 {
+font-size: 18px;
+}
+
+.image-gallery {
+grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+}
+
+.tabs {
+flex-direction: column;
+}
+
+.tab-btn {
+margin-bottom: 5px;
+}
+
+.security-stats {
+grid-template-columns: 1fr;
+}
+}
+
+/* Dark mode detection */
+@media (prefers-color-scheme: dark) {
+body {
+background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+}
+}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+<div class="logo">
+<i class="fas fa-shield-alt"></i>
+</div>
+<h1>Keynova Lock Pro</h1>
+<p class="subtitle">نظام حماية متقدم للصور والتطبيقات</p>
+<p class="subtitle">مطور البرنامج م: رأفت عمر</p>
+</header>
+
+<div class="tabs">
+<button id="verify-tab" class="tab-btn active" onclick="openTab('verify')">فتح القفل</button>
+<button id="protection-tab" class="tab-btn" onclick="openTab('protection')">إدارة الحماية</button>
+<button id="monitor-tab" class="tab-btn" onclick="openTab('monitor')">المراقبة</button>
+<button id="settings-tab" class="tab-btn" onclick="openTab('settings')">الإعدادات</button>
+</div>
+
+<!-- واجهة التحقق -->
+<div id="verify" class="tab-content active-tab">
+<div class="card">
+<div class="card-header">
+<i class="fas fa-unlock-alt"></i>
+<h3>فتح القفل باستخدام الصورة وكلمة المرور</h3>
+</div>
+
+<div class="form-group">
+<label style="color: var(--primary); margin-bottom: 10px; display: block; font-weight: 500;">اختر الصورة:</label>
+<div class="image-gallery" id="verifyGallery">
+<!-- سيتم إنشاء الصور ديناميكياً -->
+</div>
+</div>
+
+<div class="form-group">
+<label style="color: var(--primary); margin-bottom: 10px; display: block; font-weight: 500;">كلمة المرور:</label>
+<input type="password" class="file-input" id="verifyPassword" placeholder="أدخل كلمة المرور" style="font-size: 16px;">
+</div>
+
+<button class="btn" onclick="verifyKey()">
+<i class="fas fa-check-circle"></i> تحقق من المفتاح
+</button>
+
+<div class="result" id="result"></div>
+</div>
+
+<div class="instructions">
+<h4><i class="fas fa-info-circle"></i> تعليمات هامة</h4>
+<ul>
+<li>اختر نفس الصورة التي تم تعيينها كمفتاح</li>
+<li>أدخل كلمة المرور الصحيحة التي تم تعيينها مع الصورة</li>
+<li>سيتم تسجيل جميع محاولات الوصول</li>
+<li>بعد 3 محاولات فاشلة، سيتم تفعيل الحماية المشددة</li>
+</ul>
+</div>
+</div>
+
+<!-- واجهة إدارة الحماية -->
+<div id="protection" class="tab-content">
+<div id="protection-locked" class="access-denied">
+<i class="fas fa-lock"></i>
+<h3>تم رفض الوصول</h3>
+<p>يجب فتح القفل أولاً للوصول إلى إدارة الحماية</p>
+</div>
+
+<div id="protection-content" class="hidden">
+<div class="card">
+<div class="card-header">
+<i class="fas fa-shield-alt"></i>
+<h3>التطبيقات والصور المحمية</h3>
+</div>
+
+<div id="protectedItems">
+<!-- سيتم إنشاء العناصر المحمية ديناميكياً -->
+</div>
+
+<button class="btn btn-info" onclick="addProtectedItem()">
+<i class="fas fa-plus"></i> إضافة عنصر للحماية
+</button>
+</div>
+
+<div class="card">
+<div class="card-header">
+<i class="fas fa-cog"></i>
+<h3>إعدادات الحماية</h3>
+</div>
+
+<div class="form-group">
+<label style="color: var(--primary); margin-bottom: 10px; display: block; font-weight: 500;">نوع الحماية:</label>
+<select id="protectionType">
+<option value="basic">حماية أساسية</option>
+<option value="advanced">حماية متقدمة</option>
+<option value="maximum">حماية قصوى</option>
+</select>
+</div>
+
+<div class="action-buttons">
+<button class="btn btn-success" onclick="applyProtectionSettings()">
+<i class="fas fa-save"></i> تطبيق الإعدادات
+</button>
+<button class="btn btn-danger" onclick="removeAllProtection()">
+<i class="fas fa-times"></i> إزالة جميع الحماية
+</button>
+</div>
+</div>
+</div>
+</div>
+
+<!-- واجهة المراقبة -->
+<div id="monitor" class="tab-content">
+<div id="monitor-locked" class="access-denied">
+<i class="fas fa-lock"></i>
+<h3>تم رفض الوصول</h3>
+<p>يجب فتح القفل أولاً للوصول إلى نظام المراقبة</p>
+</div>
+
+<div id="monitor-content" class="hidden">
+<div class="security-stats">
+<div class="stat-card">
+<h3 id="totalAttempts">0</h3>
+<p>محاولات الوصول</p>
+</div>
+<div class="stat-card">
+<h3 id="failedAttempts">0</h3>
+<p>محاولات فاشلة</p>
+</div>
+<div class="stat-card">
+<h3 id="protectedItems">0</h3>
+<p>عناصر محمية</p>
+</div>
+<div class="stat-card">
+<h3 id="lastAccess">--</h3>
+<p>آخر وصول</p>
+</div>
+</div>
+
+<div class="attempts-monitor">
+<h4><i class="fas fa-exclamation-triangle"></i> سجل محاولات الوصول</h4>
+<div id="attemptsLog">
+<p style="color: var(--gray); text-align: center; padding: 20px;">لا توجد محاولات وصول مسجلة</p>
+</div>
+</div>
+
+<div class="action-buttons">
+<button class="btn btn-secondary" onclick="clearAttemptsLog()">
+<i class="fas fa-trash"></i> مسح السجل
+</button>
+<button class="btn btn-info" onclick="exportSecurityReport()">
+<i class="fas fa-download"></i> تصدير تقرير أمني
+</button>
+</div>
+</div>
+</div>
+
+<!-- واجهة الإعدادات -->
+<div id="settings" class="tab-content">
+<div id="no-key-section" class="no-key-message hidden">
+<i class="fas fa-key"></i>
+<h3>لا يوجد مفتاح قفل محفوظ</h3>
+<p>يرجى فتح القفل أولاً باستخدام مفتاحك الحالي لتعيين مفتاح جديد</p>
+</div>
+
+<div id="settings-content" class="hidden">
+<div class="card">
+<div class="card-header">
+<i class="fas fa-key"></i>
+<h3>إدارة المفتاح</h3>
+</div>
+
+<div class="form-group">
+<label style="color: var(--primary); margin-bottom: 10px; display: block; font-weight: 500;">اختر صورة المفتاح:</label>
+<div class="image-gallery" id="settingsGallery">
+<!-- سيتم إنشاء الصور ديناميكياً -->
+</div>
+</div>
+
+<div class="form-group">
+<label style="color: var(--primary); margin-bottom: 10px; display: block; font-weight: 500;">كلمة المرور الجديدة:</label>
+<input type="password" class="file-input" id="setKeyPassword" placeholder="أدخل كلمة مرور قوية (8 أحرف على الأقل)" style="font-size: 16px;">
+</div>
+
+<button class="btn" onclick="setKey()">
+<i class="fas fa-save"></i> تعيين مفتاح جديد
+</button>
+
+<div class="action-buttons">
+<button class="btn btn-danger" onclick="removeKey()">
+<i class="fas fa-trash-alt"></i> إزالة المفتاح
+</button>
+<button class="btn btn-secondary" onclick="lockSession()">
+<i class="fas fa-lock"></i> قفل الجلسة
+</button>
+</div>
+</div>
+</div>
+
+<!-- قسم الإجراءات بعد التحقق -->
+<div id="securedActions" class="hidden">
+<div class="session-timeout">
+<i class="fas fa-clock"></i> الجلسة ستنتهي خلال <span id="sessionTimer">15:00</span>
+</div>
+</div>
+</div>
+
+<script>
+// متغيرات عامة لحفظ البيانات (بديل localStorage)
+let appData = {
+keyHash: null,
+protectedItems: [],
+accessAttempts: [],
+settings: {
+protectionType: 'basic',
+maxFailedAttempts: 3,
+sessionTimeout: 900 // 15 دقيقة
+},
+isUnlocked: false,
+failedAttempts: 0
+};
+
+let selectedVerifyImage = null;
+let selectedSettingsImage = null;
+let sessionTimer = null;
+
+// تفعيل dark mode
+if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+document.documentElement.classList.add('dark');
+}
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+if (event.matches) {
+document.documentElement.classList.add('dark');
+} else {
+document.documentElement.classList.remove('dark');
+}
+});
+
+// مصفوفة الصور الطبيعية
+const naturalImages = [
+{
+url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300',
+name: 'جبال الثلج'
+},
+{
+url: 'https://images.unsplash.com/photo-1464822759844-d150b9014e9e?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300',
+name: 'قمم الجبال'
+},
+{
+url: 'https://images.unsplash.com/photo-1519904981063-b0cf448d479e?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300',
+name: 'جبال الضباب'
+},
+{
+url: 'https://images.unsplash.com/photo-1533310266094-8898a03807dd?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300',
+name: 'الوديان الخضراء'
+},
+{
+url: 'https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300',
+name: 'جبال الغروب'
+},
+{
+url: 'https://images.unsplash.com/photo-1454391304352-2bf4678b1a7a?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300',
+name: 'المرتفعات الصخرية'
+},
+{
+url: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300',
+name: 'الغابات المطيرة'
+},
+{
+url: 'https://images.unsplash.com/photo-1440342359743-84fcb8c21f21?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300',
+name: 'أشجار الصنوبر'
+},
+{
+url: 'https://images.unsplash.com/photo-1574263867128-dd9a5af88cff?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300',
+name: 'ممر الغابة'
+},
+{
+url: 'https://images.unsplash.com/photo-1511593358241-7eea1f3c84e5?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300',
+name: 'الغابة الخضراء'
+},
+{
+url: 'https://images.unsplash.com/photo-1505142468610-359e7d316be0?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300',
+name: 'الشاطئ الذهبي'
+},
+{
+url: 'https://images.unsplash.com/photo-1439066615861-d1af74d74000?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300',
+name: 'أمواج المحيط'
+},
+{
+url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300',
+name: 'البحر الهادئ'
+},
+{
+url: 'https://images.unsplash.com/photo-1476673160081-cf065607f449?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300',
+name: 'الجزر الاستوائية'
+},
+{
+url: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300',
+name: 'الشعاب المرجانية'
+},
+{
+url: 'https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300',
+name: 'أشجار الخريف'
+},
+{
+url: 'https://images.unsplash.com/photo-1516736923451-535b262d6ff9?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300',
+name: 'غابة البامبو'
+},
+{
+url: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300',
+name: 'غروب البحر'
+},
+{
+url: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300',
+name: 'الجبال البعيدة'
+},
+{
+url: 'https://images.unsplash.com/photo-1506142167881-95188f25d5c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300',
+name: 'قمم الألب'
+}
+];
+
+// التطبيقات والصور الافتراضية للحماية
+const defaultProtectedItems = [
+{
+id: 'gallery',
+name: 'معرض الصور',
+type: 'images',
+icon: 'fas fa-images',
+description: 'جميع الصور في الجهاز',
+protected: true
+},
+{
+id: 'whatsapp',
+name: 'واتساب',
+type: 'app',
+icon: 'fab fa-whatsapp',
+description: 'تطبيق المراسلة',
+protected: false
+},
+{
+id: 'documents',
+name: 'المستندات',
+type: 'files',
+icon: 'fas fa-file-alt',
+description: 'الملفات والمستندات المهمة',
+protected: false
+},
+{
+id: 'camera',
+name: 'الكاميرا',
+type: 'app',
+icon: 'fas fa-camera',
+description: 'تطبيق الكاميرا',
+protected: false
+},
+{
+id: 'contacts',
+name: 'جهات الاتصال',
+type: 'data',
+icon: 'fas fa-address-book',
+description: 'قائمة جهات الاتصال',
+protected: true
+}
+];
+
+// إنشاء معرض الصور
+function createImageGallery(containerId, isSettings = false) {
+const container = document.getElementById(containerId);
+container.innerHTML = '';
+
+for (let i = 0; i < naturalImages.length; i++) {
+const imageItem = document.createElement('div');
+imageItem.className = 'image-item';
+imageItem.onclick = () => selectImage(i + 1, isSettings);
+
+const img = document.createElement('img');
+img.src = naturalImages[i].url;
+img.alt = naturalImages[i].name;
+img.loading = 'lazy';
+
+const numberDiv = document.createElement('div');
+numberDiv.className = 'image-number';
+numberDiv.textContent = i + 1;
+
+const nameDiv = document.createElement('div');
+nameDiv.className = 'image-name';
+nameDiv.textContent = naturalImages[i].name;
+
+imageItem.appendChild(img);
+imageItem.appendChild(numberDiv);
+imageItem.appendChild(nameDiv);
+imageItem.dataset.imageId = i + 1;
+
+container.appendChild(imageItem);
+}
+}
+
+// اختيار صورة
+function selectImage(imageId, isSettings = false) {
+const galleryId = isSettings ? 'settingsGallery' : 'verifyGallery';
+const container = document.getElementById(galleryId);
+
+container.querySelectorAll('.image-item').forEach(item => {
+item.classList.remove('selected');
+});
+
+const selectedItem = container.querySelector(`[data-image-id="${imageId}"]`);
+selectedItem.classList.add('selected');
+
+if (isSettings) {
+selectedSettingsImage = imageId;
+} else {
+selectedVerifyImage = imageId;
+}
+}
+
+// حساب الهاش المركب
+async function calculateCombinedHash(imageId, password) {
+try {
+const combinedData = `keynova_image_${imageId}_password_${password}_security_salt`;
+const encoder = new TextEncoder();
+const data = encoder.encode(combinedData);
+
+const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+const hashArray = Array.from(new Uint8Array(hashBuffer));
+return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+} catch (error) {
+console.error("Error calculating hash:", error);
+showResult("حدث خطأ أثناء معالجة البيانات", "fail");
+return null;
+}
+}
+
+// التحقق من المفتاح
+async function verifyKey() {
+if (!selectedVerifyImage) {
+showResult("يرجى اختيار صورة للتحقق منها", "fail");
+return;
+}
+
+const password = document.getElementById("verifyPassword").value;
+if (!password) {
+showResult("يرجى إدخال كلمة المرور", "fail");
+return;
+}
+
+// تسجيل محاولة الوصول
+logAccessAttempt('verify', false);
+
+if (!appData.keyHash) {
+showResult("لا يوجد مفتاح محفوظ، يرجى تعيين مفتاح أولًا", "warning");
+document.getElementById("settings-content").classList.remove("hidden");
+document.getElementById("no-key-section").classList.add("hidden");
+return;
+}
+
+showResult("جاري التحقق من المفتاح...", "info");
+
+try {
+const currentHash = await calculateCombinedHash(selectedVerifyImage, password);
+if (!currentHash) return;
+
+if (currentHash === appData.keyHash) {
+appData.isUnlocked = true;
+appData.failedAttempts = 0;
+logAccessAttempt('verify', true);
+
+showResult("تم التحقق بنجاح! تم إلغاء قفل النظام", "success");
+unlockSystem();
+} else {
+appData.failedAttempts++;
+logAccessAttempt('verify', false, 'كلمة مرور خاطئة');
+
+if (appData.failedAttempts >= appData.settings.maxFailedAttempts) {
+showResult(`تم تجاوز عدد المحاولات المسموحة (${appData.settings.maxFailedAttempts}). تم تفعيل الحماية المشددة`, "fail");
+activateSecurityLockdown();
+} else {
+showResult(`الصورة أو كلمة المرور غير صحيحة. المحاولات المتبقية: ${appData.settings.maxFailedAttempts - appData.failedAttempts}`, "fail");
+}
+}
+} catch (error) {
+console.error("Verification error:", error);
+showResult("حدث خطأ أثناء عملية التحقق", "fail");
+}
+}
+
+// إلغاء قفل النظام
+function unlockSystem() {
+document.getElementById("securedActions").classList.remove("hidden");
+document.getElementById("settings-content").classList.remove("hidden");
+document.getElementById("protection-content").classList.remove("hidden");
+document.getElementById("monitor-content").classList.remove("hidden");
+document.getElementById("protection-locked").classList.add("hidden");
+document.getElementById("monitor-locked").classList.add("hidden");
+document.getElementById("no-key-section").classList.add("hidden");
+
+startSessionTimer();
+updateProtectedItemsDisplay();
+updateSecurityStats();
+}
+
+// تعيين مفتاح جديد
+async function setKey() {
+if (!selectedSettingsImage) {
+showResult("يرجى اختيار صورة لتعيينها كمفتاح", "fail");
+return;
+}
+
+const password = document.getElementById("setKeyPassword").value;
+if (!password) {
+showResult("يرجى إدخال كلمة مرور", "fail");
+return;
+}
+
+if (password.length < 8) {
+showResult("كلمة المرور يجب أن تكون 8 أحرف على الأقل", "fail");
+return;
+}
+
+const confirmChange = await showConfirmDialog("هل أنت متأكد من تغيير المفتاح؟ سيتم إعادة تعيين جميع إعدادات الحماية.");
+if (!confirmChange) return;
+
+try {
+const hash = await calculateCombinedHash(selectedSettingsImage, password);
+if (!hash) return;
+
+appData.keyHash = hash;
+logAccessAttempt('key_change', true);
+
+showResult("تم حفظ المفتاح الجديد بنجاح", "success");
+
+document.getElementById("setKeyPassword").value = '';
+selectedSettingsImage = null;
+document.querySelectorAll('#settingsGallery .image-item').forEach(item => {
+item.classList.remove('selected');
+});
+} catch (error) {
+console.error("Error setting key:", error);
+showResult("حدث خطأ أثناء حفظ المفتاح", "fail");
+}
+}
+
+// إزالة المفتاح
+async function removeKey() {
+if (!appData.keyHash) {
+showResult("لا يوجد مفتاح محفوظ", "fail");
+return;
+}
+
+const confirmDelete = await showConfirmDialog("هل أنت متأكد من إزالة المفتاح؟ سيتم حذف جميع البيانات والإعدادات.");
+if (!confirmDelete) return;
+
+// إعادة تعيين جميع البيانات
+appData = {
+keyHash: null,
+protectedItems: [],
+accessAttempts: [],
+settings: {
+protectionType: 'basic',
+maxFailedAttempts: 3,
+sessionTimeout: 900
+},
+isUnlocked: false,
+failedAttempts: 0
+};
+
+lockSession();
+showResult("تمت إزالة المفتاح وجميع البيانات بنجاح", "success");
+}
+
+// إنشاء modal تأكيد مخصص
+function showConfirmDialog(message) {
+return new Promise((resolve) => {
+const modal = document.createElement('div');
+modal.style.cssText = `
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: rgba(0, 0, 0, 0.7);
+display: flex;
+align-items: center;
+justify-content: center;
+z-index: 1000;
+`;
+
+modal.innerHTML = `
+<div style="
+background: linear-gradient(135deg, var(--dark-light), #252525);
+padding: 30px;
+border-radius: 15px;
+box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+max-width: 400px;
+width: 90%;
+text-align: center;
+border: 1px solid rgba(255, 255, 255, 0.1);
+">
+<i class="fas fa-question-circle" style="font-size: 48px; color: var(--warning); margin-bottom: 20px;"></i>
+<p style="color: var(--light); margin-bottom: 30px; font-size: 16px; line-height: 1.5;">${message}</p>
+<div style="display: flex; gap: 15px; justify-content: center;">
+<button id="cancelBtn" style="
+padding: 12px 24px;
+background: rgba(255, 255, 255, 0.1);
+color: var(--light);
+border: none;
+border-radius: 8px;
+cursor: pointer;
+font-size: 16px;
+transition: all 0.3s ease;
+">إلغاء</button>
+<button id="confirmBtn" style="
+padding: 12px 24px;
+background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+color: white;
+border: none;
+border-radius: 8px;
+cursor: pointer;
+font-size: 16px;
+transition: all 0.3s ease;
+">تأكيد</button>
+</div>
+</div>
+`;
+
+document.body.appendChild(modal);
+
+modal.querySelector('#cancelBtn').onclick = () => {
+document.body.removeChild(modal);
+resolve(false);
+};
+
+modal.querySelector('#confirmBtn').onclick = () => {
+document.body.removeChild(modal);
+resolve(true);
+};
+
+modal.onclick = (e) => {
+if (e.target === modal) {
+document.body.removeChild(modal);
+resolve(false);
+}
+};
+});
+}
+
+// إضافة عنصر للحماية
+function addProtectedItem() {
+const availableItems = defaultProtectedItems.filter(item => 
+!appData.protectedItems.find(p => p.id === item.id)
+);
+
+if (availableItems.length === 0) {
+showResult("جميع العناصر المتاحة محمية بالفعل", "info");
+return;
+}
+
+// اختيار عنصر عشوائي من المتاح
+const randomItem = availableItems[Math.floor(Math.random() * availableItems.length)];
+randomItem.protected = true;
+appData.protectedItems.push({...randomItem});
+
+updateProtectedItemsDisplay();
+showResult(`تم إضافة "${randomItem.name}" للحماية`, "success");
+logAccessAttempt('add_protection', true, randomItem.name);
+}
+
+// عرض العناصر المحمية
+function updateProtectedItemsDisplay() {
+const container = document.getElementById('protectedItems');
+container.innerHTML = '';
+
+if (appData.protectedItems.length === 0) {
+container.innerHTML = '<p style="text-align: center; color: var(--gray); padding: 20px;">لا توجد عناصر محمية</p>';
+return;
+}
+
+appData.protectedItems.forEach(item => {
+const itemDiv = document.createElement('div');
+itemDiv.className = 'protected-item';
+itemDiv.innerHTML = `
+<div class="protected-item-info">
+<i class="${item.icon}"></i>
+<div class="protected-item-details">
+<h4>${item.name}</h4>
+<p>${item.description}</p>
+</div>
+</div>
+<div class="protected-item-status">
+<span class="status-badge ${item.protected ? 'status-protected' : 'status-unlocked'}">
+${item.protected ? 'محمي' : 'غير محمي'}
+</span>
+<button class="toggle-protection" onclick="toggleProtection('${item.id}')">
+${item.protected ? 'إلغاء' : 'تفعيل'}
+</button>
+</div>
+`;
+container.appendChild(itemDiv);
+});
+}
+
+// تبديل حالة الحماية
+function toggleProtection(itemId) {
+const item = appData.protectedItems.find(p => p.id === itemId);
+if (item) {
+item.protected = !item.protected;
+updateProtectedItemsDisplay();
+logAccessAttempt('toggle_protection', true, `${item.name} - ${item.protected ? 'محمي' : 'غير محمي'}`);
+showResult(`تم ${item.protected ? 'تفعيل' : 'إلغاء'} حماية ${item.name}`, "success");
+}
+}
+
+// تطبيق إعدادات الحماية
+function applyProtectionSettings() {
+const protectionType = document.getElementById('protectionType').value;
+appData.settings.protectionType = protectionType;
+
+switch (protectionType) {
+case 'basic':
+appData.settings.maxFailedAttempts = 3;
+appData.settings.sessionTimeout = 900;
+break;
+case 'advanced':
+appData.settings.maxFailedAttempts = 2;
+appData.settings.sessionTimeout = 600;
+break;
+case 'maximum':
+appData.settings.maxFailedAttempts = 1;
+appData.settings.sessionTimeout = 300;
+break;
+}
+
+showResult(`تم تطبيق إعدادات الحماية: ${getProtectionTypeName(protectionType)}`, "success");
+logAccessAttempt('settings_change', true, protectionType);
+}
+
+// إزالة جميع الحماية
+async function removeAllProtection() {
+if (appData.protectedItems.length === 0) {
+showResult("لا توجد عناصر محمية لإزالتها", "info");
+return;
+}
+
+const confirm = await showConfirmDialog("هل أنت متأكد من إزالة الحماية عن جميع العناصر؟");
+if (!confirm) return;
+
+appData.protectedItems = [];
+updateProtectedItemsDisplay();
+showResult("تم إزالة الحماية عن جميع العناصر", "success");
+logAccessAttempt('remove_all_protection', true);
+}
+
+// تسجيل محاولة الوصول
+function logAccessAttempt(action, success, details = '') {
+const attempt = {
+timestamp: new Date().toLocaleString('ar-SA'),
+action: action,
+success: success,
+details: details,
+ip: '192.168.1.1' // محاكاة IP
+};
+
+appData.accessAttempts.unshift(attempt);
+if (appData.accessAttempts.length > 50) {
+appData.accessAttempts = appData.accessAttempts.slice(0, 50);
+}
+
+if (appData.isUnlocked) {
+updateAttemptsLog();
+updateSecurityStats();
+}
+}
+
+// تحديث سجل المحاولات
+function updateAttemptsLog() {
+const container = document.getElementById('attemptsLog');
+
+if (appData.accessAttempts.length === 0) {
+container.innerHTML = '<p style="color: var(--gray); text-align: center; padding: 20px;">لا توجد محاولات وصول مسجلة</p>';
+return;
+}
+
+container.innerHTML = '';
+appData.accessAttempts.slice(0, 10).forEach(attempt => {
+const attemptDiv = document.createElement('div');
+attemptDiv.className = 'attempt-item';
+attemptDiv.innerHTML = `
+<div style="display: flex; justify-content: space-between; align-items: center;">
+<span>${getActionName(attempt.action)} ${attempt.details ? `- ${attempt.details}` : ''}</span>
+<span style="color: ${attempt.success ? 'var(--success)' : 'var(--danger)'};">
+<i class="fas ${attempt.success ? 'fa-check' : 'fa-times'}"></i>
+</span>
+</div>
+<small style="color: var(--gray);">${attempt.timestamp}</small>
+`;
+container.appendChild(attemptDiv);
+});
+}
+
+// تحديث الإحصائيات الأمنية
+function updateSecurityStats() {
+document.getElementById('totalAttempts').textContent = appData.accessAttempts.length;
+document.getElementById('failedAttempts').textContent = 
+appData.accessAttempts.filter(a => !a.success).length;
+document.getElementById('protectedItems').textContent = 
+appData.protectedItems.filter(p => p.protected).length;
+
+const lastAccess = appData.accessAttempts.find(a => a.success);
+document.getElementById('lastAccess').textContent = 
+lastAccess ? lastAccess.timestamp.split(' ')[1] : '--';
+}
+
+// مسح سجل المحاولات
+function clearAttemptsLog() {
+appData.accessAttempts = [];
+updateAttemptsLog();
+updateSecurityStats();
+showResult("تم مسح سجل المحاولات", "success");
+}
+
+// تصدير تقرير أمني
+function exportSecurityReport() {
+const report = {
+timestamp: new Date().toLocaleString('ar-SA'),
+totalAttempts: appData.accessAttempts.length,
+failedAttempts: appData.accessAttempts.filter(a => !a.success).length,
+protectedItems: appData.protectedItems.filter(p => p.protected).length,
+securityLevel: appData.settings.protectionType,
+recentAttempts: appData.accessAttempts.slice(0, 20)
+};
+
+const reportText = `
+=== تقرير أمني - Keynova Lock Pro ===
+تاريخ التقرير: ${report.timestamp}
+
+الإحصائيات العامة:
+- إجمالي محاولات الوصول: ${report.totalAttempts}
+- المحاولات الفاشلة: ${report.failedAttempts}
+- العناصر المحمية: ${report.protectedItems}
+- مستوى الأمان: ${getProtectionTypeName(report.securityLevel)}
+
+آخر المحاولات:
+${report.recentAttempts.map(a => 
+`${a.timestamp} - ${getActionName(a.action)} - ${a.success ? 'نجح' : 'فشل'}`
+).join('\n')}
+
+=== نهاية التقرير ===
+`;
+
+const blob = new Blob([reportText], { type: 'text/plain;charset=utf-8' });
+const url = URL.createObjectURL(blob);
+const a = document.createElement('a');
+a.href = url;
+a.download = `security-report-${new Date().toISOString().split('T')[0]}.txt`;
+a.click();
+URL.revokeObjectURL(url);
+
+showResult("تم تصدير التقرير الأمني", "success");
+}
+
+// تفعيل الحماية المشددة
+function activateSecurityLockdown() {
+appData.isUnlocked = false;
+lockSession();
+showResult("تم تفعيل الحماية المشددة بسبب تجاوز عدد المحاولات", "fail");
+logAccessAttempt('security_lockdown', true);
+}
+
+// بدء مؤقت الجلسة
+function startSessionTimer() {
+if (sessionTimer) clearInterval(sessionTimer);
+
+let timeLeft = appData.settings.sessionTimeout;
+const timerElement = document.getElementById("sessionTimer");
+
+sessionTimer = setInterval(() => {
+const minutes = Math.floor(timeLeft / 60);
+const seconds = timeLeft % 60;
+
+timerElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+if (timeLeft <= 0) {
+clearInterval(sessionTimer);
+lockSession();
+} else {
+timeLeft--;
+}
+}, 1000);
+}
+
+// قفل الجلسة
+function lockSession() {
+appData.isUnlocked = false;
+if (sessionTimer) clearInterval(sessionTimer);
+
+document.getElementById("securedActions").classList.add("hidden");
+document.getElementById("settings-content").classList.add("hidden");
+document.getElementById("protection-content").classList.add("hidden");
+document.getElementById("monitor-content").classList.add("hidden");
+document.getElementById("protection-locked").classList.remove("hidden");
+document.getElementById("monitor-locked").classList.remove("hidden");
+
+if (appData.keyHash) {
+document.getElementById("no-key-section").classList.add("hidden");
+} else {
+document.getElementById("no-key-section").classList.remove("hidden");
+}
+
+showResult("تم قفل الجلسة، يرجى إعادة التحقق للوصول", "warning");
+
+// مسح التحديدات
+selectedVerifyImage = null;
+selectedSettingsImage = null;
+document.getElementById("verifyPassword").value = '';
+document.querySelectorAll('.image-item').forEach(item => {
+item.classList.remove('selected');
+});
+
+logAccessAttempt('session_lock', true);
+}
+
+// تبديل التبويبات
+function openTab(tabName) {
+document.querySelectorAll('.tab-content').forEach(tab => {
+tab.classList.remove('active-tab');
+});
+
+document.getElementById(tabName).classList.add('active-tab');
+
+document.querySelectorAll('.tab-btn').forEach(btn => {
+btn.classList.remove('active');
+});
+
+event.currentTarget.classList.add('active');
+}
+
+// عرض النتائج
+function showResult(message, type) {
+const resultDiv = document.getElementById("result");
+resultDiv.textContent = message;
+resultDiv.className = "result " + type;
+}
+
+// الحصول على اسم الإجراء
+function getActionName(action) {
+const actions = {
+'verify': 'محاولة فتح القفل',
+'key_change': 'تغيير المفتاح',
+'add_protection': 'إضافة حماية',
+'toggle_protection': 'تبديل الحماية',
+'settings_change': 'تغيير الإعدادات',
+'remove_all_protection': 'إزالة جميع الحماية',
+'session_lock': 'قفل الجلسة',
+'security_lockdown': 'تفعيل الحماية المشددة'
+};
+return actions[action] || action;
+}
+
+// الحصول على اسم نوع الحماية
+function getProtectionTypeName(type) {
+const types = {
+'basic': 'حماية أساسية',
+'advanced': 'حماية متقدمة',
+'maximum': 'حماية قصوى'
+};
+return types[type] || type;
+}
+
+// تهيئة الصفحة عند التحميل
+window.onload = function() {
+// إنشاء معارض الصور
+createImageGallery('verifyGallery', false);
+createImageGallery('settingsGallery', true);
+
+// تحميل العناصر المحمية الافتراضية
+appData.protectedItems = defaultProtectedItems.filter(item => item.protected).map(item => ({...item}));
+
+// التحقق من حالة النظام
+if (appData.keyHash) {
+document.getElementById("settings-content").classList.add("hidden");
+document.getElementById("no-key-section").classList.add("hidden");
+} else {
+document.getElementById("settings-content").classList.remove("hidden");
+document.getElementById("no-key-section").classList.remove("hidden");
+}
+
+// تحديث العرض
+updateProtectedItemsDisplay();
+updateSecurityStats();
+updateAttemptsLog();
+
+console.log("Keynova Lock Pro - نظام حماية متقدم جاهز للاستخدام");
+};
+</script>
+</body>
+</html>
